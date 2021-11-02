@@ -3,11 +3,12 @@ package sweng.project.evoting;
 import java.util.Objects;
 
 /*
- * OVERVIEW: questa classe istanzia un oggetto scrutatore per un sistema di voto elettronico
+ * OVERVIEW: questa classe istanzia un oggetto scrutatore per un sistema di voto elettronico, che rappresenta l'impiegato 
+ * che gestisce la configurazione del sistema per permettere la votazione. 
  */
 public class Scrutatore extends Elettore {
 	/*
-     * L'attributo specialID identifica univocamente uno scrutatore
+     * L'attributo specialID identifica univocamente uno scrutatore.
     */
     private final String specialID;
 
@@ -16,8 +17,8 @@ public class Scrutatore extends Elettore {
      *          carta d'identità e da un ID speciale a lui dedicato.
      *          Solleva un'eccezione di tipo NullPointerException se specialID è null.
     */
-    public Scrutatore(String id, String name, String surname, String documentID, String specialID){
-        super(id, name, surname, documentID);
+    public Scrutatore(String name, String surname, String documentID, String specialID){
+        super(name, surname, documentID);
 
         Objects.requireNonNull(specialID);
         this.specialID = specialID;
