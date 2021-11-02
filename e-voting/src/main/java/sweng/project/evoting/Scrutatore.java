@@ -2,6 +2,9 @@ package sweng.project.evoting;
 
 import java.util.Objects;
 
+/*
+ * OVERVIEW: questa classe istanzia un oggetto scrutatore per un sistema di voto elettronico
+ */
 public class Scrutatore extends Elettore {
 	/*
      * L'attributo specialID identifica univocamente uno scrutatore

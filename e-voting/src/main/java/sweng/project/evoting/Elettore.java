@@ -2,6 +2,9 @@ package sweng.project.evoting;
 
 import java.util.Objects;
 
+/*
+ * OVERVIEW: questa classe istanzia un oggetto elettore per un sistema di voto elettronico 
+ */
 public class Elettore implements Utente {
 	/*
      * Gli attributi name e surname rappresentano rispettivamente il nome e il cognome dell'elettore.
