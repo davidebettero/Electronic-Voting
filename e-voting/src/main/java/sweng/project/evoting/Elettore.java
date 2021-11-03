@@ -21,8 +21,8 @@ public class Elettore implements Utente {
 
     /*
      * Effects: inizializza this affinché rappresenti un elettore che è identificato da nome, cognome 
-     * e codice della carta d'identità passati come parametro al costruttore stesso.
-     * Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
+     * 			e codice della carta d'identità passati come parametro al costruttore stesso.
+     * 			Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
     */
     
     public Elettore(String name, String surname, String documentID) {
@@ -44,7 +44,7 @@ public class Elettore implements Utente {
     /* 
      * Effects: consente all'utente di effettuare la fase di identificazione 
     */
-    public void login(){}
+    public boolean login(){}
 
     /*
      * Modifies: potrebbe modificare canVote e city
@@ -61,4 +61,16 @@ public class Elettore implements Utente {
      *          false altrimenti.
     */
     public boolean checkAlreadyVoted(){}
+    
+    @Override
+    public String toString() {
+    }
+
+    @Override
+    public int hashCode() {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+    }
 }

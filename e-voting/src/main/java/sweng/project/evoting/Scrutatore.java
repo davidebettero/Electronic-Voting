@@ -48,4 +48,16 @@ public class Scrutatore extends Elettore {
      * Effects: permette allo scrutatore di visualizzare l'esito della votazione
     */
     public void visualizzaEsiti(){}
+    
+    @Override
+    public String toString() {
+    }
+
+    @Override
+    public int hashCode() {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+    }
 }
