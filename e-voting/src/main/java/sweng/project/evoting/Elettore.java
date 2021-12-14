@@ -44,7 +44,9 @@ public class Elettore implements Utente {
     /* 
      * Effects: consente all'utente di effettuare la fase di identificazione 
     */
-    public boolean login(){}
+    public boolean login(){
+    	return false;
+    }
 
     /*
      * Modifies: potrebbe modificare canVote e city
@@ -53,24 +55,31 @@ public class Elettore implements Utente {
      *          se l'elettore abita in un comune con più di 15.000 abitanti modifica city assegnandogli true,
      *          false altrimenti.
     */
-    public boolean checkRightToVote(){}   
+    public boolean checkRightToVote(){
+    	return false;
+    }   
     
 
     /*
      * Effects: restituisce true se l'elettore ha già effettuato la votazione,
      *          false altrimenti.
     */
-    public boolean checkAlreadyVoted(){}
+    public boolean checkAlreadyVoted(){
+    	return false;
+    }
     
     @Override
     public String toString() {
+    	return "";
     }
 
     @Override
     public int hashCode() {
+    	return 0;
     }
 
     @Override
     public boolean equals(Object obj) {
+    	return false;
     }
 }
