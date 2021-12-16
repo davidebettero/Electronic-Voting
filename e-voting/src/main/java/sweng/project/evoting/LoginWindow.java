@@ -6,35 +6,30 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.scene.control.PasswordField;
 
 public class LoginWindow {
-	@FXML
-	private ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Impiegato/gestore del sistema");
-
+	
     @FXML
     private Text errorMsg;
-
-    @FXML
-    private Label header;
 
     @FXML
     private Button login;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
-    private ChoiceBox tipoUtente;
+    private ChoiceBox<String> tipoUtente;
 
     @FXML
     private TextField username;
 
     @FXML
     private void handleLogin(ActionEvent event) {
-    	String psw = password.getText();
+    	//String psw = password.getText();
     	String user = username.getText();
     	//String type = tipoUtente.getValue().toString();
 
@@ -56,7 +51,15 @@ public class LoginWindow {
     
     @FXML
     private void initialize() {
+    	assert errorMsg != null : "fx:id=\"errorMsg\" was not injected: check your FXML file 'loginWindow.fxml'.";
+        assert login != null : "fx:id=\"login\" was not injected: check your FXML file 'loginWindow.fxml'.";
+        assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'loginWindow.fxml'.";
+        assert tipoUtente != null : "fx:id=\"tipoUtente\" was not injected: check your FXML file 'loginWindow.fxml'.";
+        assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'loginWindow.fxml'.";
+        
+    	ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Impiegato/gestore del sistema");
     	tipoUtente.setItems(tipiUtente);
+    	tipoUtente.setValue(tipiUtente.get(0));
     }
 
 }

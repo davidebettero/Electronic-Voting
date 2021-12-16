@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,7 +14,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginWindow">
    <top>
-      <Label fx:id="header" contentDisplay="CENTER" prefHeight="49.0" prefWidth="338.0" text="Votazione Elettronica" textFill="#ef0303" underline="true" BorderPane.alignment="CENTER">
+      <Label contentDisplay="CENTER" prefHeight="49.0" prefWidth="338.0" text="Votazione Elettronica" textFill="#ef0303" underline="true" BorderPane.alignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
@@ -38,7 +39,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="username" onAction="#handleUsername" prefHeight="30.0" prefWidth="180.0">
+                  <TextField fx:id="username" onAction="#handleUsername" prefHeight="30.0" prefWidth="180.0" promptText="username">
                      <HBox.margin>
                         <Insets top="21.0" />
                      </HBox.margin>
@@ -52,14 +53,19 @@
                         <Font size="26.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="password" onAction="#handlePassword" prefHeight="30.0" prefWidth="180.0">
+                  <PasswordField fx:id="password" onAction="#handlePassword" prefHeight="30.0" prefWidth="180.0" promptText="password">
                      <HBox.margin>
                         <Insets top="21.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
                </children>
             </HBox>
             <ChoiceBox fx:id="tipoUtente" layoutX="200.0" layoutY="192.0" prefWidth="180.0" AnchorPane.topAnchor="192.0" />
+            <Label layoutX="14.0" layoutY="185.0" text="Tipo di Utente">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
@@ -74,7 +80,10 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Text fx:id="errorMsg" layoutX="168.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="231.13671875" />
+            <Text fx:id="errorMsg" fill="#f20202" layoutX="131.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="263.93670654296875">
+               <font>
+                  <Font size="14.0" />
+               </font></Text>
          </children>
       </AnchorPane>
    </bottom>
