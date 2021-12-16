@@ -12,7 +12,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception{
 		Parent root = FXMLLoader.load(getClass().getResource("loginWindow.fxml"));
 		
-		primaryStage.setTitle("Login Window");
+		primaryStage.setTitle("Votazione Elettronica - Login");
 		primaryStage.setScene(new Scene(root, 600, 400));
 		primaryStage.setResizable(false);
 		primaryStage.show();

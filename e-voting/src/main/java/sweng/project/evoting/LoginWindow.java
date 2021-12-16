@@ -71,7 +71,7 @@ public class LoginWindow {
         assert tipoUtente != null : "fx:id=\"tipoUtente\" was not injected: check your FXML file 'loginWindow.fxml'.";
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'loginWindow.fxml'.";
         
-    	ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Impiegato/gestore del sistema");
+    	ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Amministratore del sistema");
     	tipoUtente.setItems(tipiUtente);
     	tipoUtente.setValue(tipiUtente.get(0));
     	
