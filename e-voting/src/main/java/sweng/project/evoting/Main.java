@@ -10,7 +10,9 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		Parent root = FXMLLoader.load(getClass().getResource("loginWindow.fxml"));
+		//Parent root = FXMLLoader.load(getClass().getResource("loginWindow.fxml"));
+		FXMLLoader loader = new FXMLLoader(Main.class.getResource("loginWindow.fxml"));
+		Parent root =  loader.load();
 		
 		primaryStage.setTitle("Votazione Elettronica - Login");
 		primaryStage.setScene(new Scene(root, 600, 400));

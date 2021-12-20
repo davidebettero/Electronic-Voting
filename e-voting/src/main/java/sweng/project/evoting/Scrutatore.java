@@ -63,4 +63,5 @@ public class Scrutatore extends Elettore {
     public boolean equals(Object obj) {
     	return false;
     }
+    
 }
