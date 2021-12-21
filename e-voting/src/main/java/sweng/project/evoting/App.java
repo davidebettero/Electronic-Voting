@@ -8,15 +8,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author postgresqltutorial.com
- */
-public class App{
+public class App {
 
-    private final String url = "jdbc:postgresql://localhost/sweng";
-    private final String user = "postgres";
-    private final String password = "postgres";
+    static final String url = "jdbc:postgresql://localhost/sweng";
+    static final String user = "postgres";
+    static final String password = "postgres";
 
     /**
      * Connect to the PostgreSQL database
@@ -34,20 +30,21 @@ public class App{
         return conn;
     }
     
+    // metodo per criptare la password passata come argomento
     public static String encoding (String password) {
     		try {
-	    		MessageDigest md= MessageDigest.getInstance("SHA-1");
+	    		MessageDigest md = MessageDigest.getInstance("SHA-1");
 	    		md.update(password.getBytes()) ;
-	    		byte byteData[]= md.digest();
-	    		StringBuilder sb=new StringBuilder();
-	    		for (int i=0;i<byteData.length;i++) {
-	    			sb.append (Integer.toString (
-	    		    		(byteData[i] & 0xFf) + 0x100, 16).substring (1));	
+	    		byte byteData[] = md.digest();
+	    		StringBuilder sb = new StringBuilder();
+	    		for (int i=0; i<byteData.length; i++) {
+	    			sb.append(Integer.toString((byteData[i] & 0xFf) + 0x100, 16).substring (1));	
 	    		}
 	    		
 	    		return sb.toString();
+	    		
     	    } catch (NoSuchAlgorithmException ex) {
-	    		Logger.getLogger("SHA-1").log (Level.SEVERE, null, ex) ;
+	    		Logger.getLogger("SHA-1").log(Level.SEVERE, null, ex) ;
 	    		return null;
     	    }  
     }

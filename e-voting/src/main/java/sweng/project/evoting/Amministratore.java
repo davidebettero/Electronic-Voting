@@ -1,26 +1,15 @@
 package sweng.project.evoting;
 
-import java.util.Objects;
-
 /*
  * OVERVIEW: questa classe istanzia un oggetto scrutatore per un sistema di voto elettronico, che rappresenta l'impiegato 
  * che gestisce la configurazione del sistema per permettere la votazione. 
  */
-public class Amministratore implements Utente {
-	/*
-     * L'attributo specialID identifica univocamente uno scrutatore.
-    */
-    private final String specialID;
-
+public class Amministratore extends Utente {
     /*
-     * Effects: istanzia this affinché rappresenti uno scrutatore che è identificato da nome, cognome,
-     *          carta d'identità e da un ID speciale a lui dedicato.
-     *          Solleva un'eccezione di tipo NullPointerException se specialID è null.
+     * Effects: istanzia this affinché rappresenti un amministratore
     */
-    public Amministratore(String name, String surname, String documentID, String specialID){
-
-        Objects.requireNonNull(specialID);
-        this.specialID = specialID;
+    public Amministratore(String name, String surname, String password){
+    	super(name, surname, password, "Amministratore");
     }
 
     /*
@@ -62,29 +51,5 @@ public class Amministratore implements Utente {
     public boolean equals(Object obj) {
     	return false;
     }
-
-	@Override
-	public void vote() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean checkRightToVote() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean checkAlreadyVoted() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean login() {
-		// TODO Auto-generated method stub
-		return false;
-	}
     
 }

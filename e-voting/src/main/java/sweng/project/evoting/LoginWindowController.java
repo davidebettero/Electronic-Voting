@@ -1,8 +1,5 @@
 package sweng.project.evoting;
 
-import java.sql.Connection;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,22 +14,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.control.PasswordField;
 
-public class LoginWindow {
+public class LoginWindowController {
 	
     @FXML
     private Text errorMsg;
 
     @FXML
     private Button login;
+    
+    @FXML
+    private TextField username;
 
     @FXML
     private PasswordField password;
 
     @FXML
     private ChoiceBox<String> tipoUtente;
-
-    @FXML
-    private TextField username;
     
     @FXML
     private void enterPressed(KeyEvent ke) {
@@ -45,36 +42,21 @@ public class LoginWindow {
     private void handleLogin(ActionEvent event) {
     	
     	String user = username.getText();
-    	String type = tipoUtente.getValue().toString();
     	String psw = password.getText();
+    	String type = tipoUtente.getValue().toString();
     	
+    	// variabile che vale true se l'utente identificato da user, psw e type è presente nel database, false altrimenti
+    	boolean isIn = LoginWindowView.authenticate(user, psw, type);
     	
-    	App app = new App();
-	    Connection conn=app.connect();
-	        //System.out.println(App.encoding("a"));
-	    DigitalVotingDaoImpl d=new DigitalVotingDaoImpl(conn);
-    	if(d.isValid(user,psw,type)) {
+    	if(isIn) {
     		errorMsg.setFill(Color.GREEN);
 			errorMsg.setText("Benvenuto "+ user + "!");
     	}else {
     		errorMsg.setFill(Color.RED);
 	    	errorMsg.setText("Errore. Username o password errati.");
 		}
-    	try {
-	    conn.close();
-    	}catch(Exception e) {}
     }
-
-    @FXML
-    private void handlePassword(ActionEvent event) {
-    	return;
-    }
-
-    @FXML
-    private void handleUsername(ActionEvent event) {
-    	return;
-    }
-    
+     
     @FXML
     private void initialize() {
     	assert errorMsg != null : "fx:id=\"errorMsg\" was not injected: check your FXML file 'loginWindow.fxml'.";

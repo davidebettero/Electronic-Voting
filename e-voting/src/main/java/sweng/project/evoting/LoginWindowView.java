@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-public class LoginWindowLaunch extends Application {
+public class LoginWindowView extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -20,6 +20,10 @@ public class LoginWindowLaunch extends Application {
 
 	public static void run() {
 		launch();
+	}
+	
+	public static boolean authenticate(String user, String psw, String type) {
+		return new DigitalVotingDaoImpl().isValid(user, App.encoding(psw), type);	// cripta la password inserita prima di sostituirla nella query
 	}
 
 }

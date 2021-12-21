@@ -1,23 +1,32 @@
 package sweng.project.evoting;
 
-import java.util.Objects;
+import java.util.GregorianCalendar;
 
 /*
  * OVERVIEW: questa classe istanzia un oggetto di tipo Elettore che fa parte di un sistema di voto elettronico.
  * Esso rappresenta il cittadino elettore che deve votare.
  */
-public class Elettore implements Utente {
+public class Elettore extends Utente {
 	/*
-     * Gli attributi name e surname rappresentano rispettivamente il nome e il cognome dell'elettore.
-     * documentID è una stringa che rappresenta il codice della carta d'identità di ogni elettore.
-    */
-    private final String documentID, name, surname;
+	 * Attributi che rappresentano giorno, mese e anno dell'elettore
+	*/
+	private int birthDay, birthMonth, birthYear;
     /*
      * L'attributo booleano hasVoted indica se l'elettore ha già votato (true) oppure no (false),
-     * city indica se l'elettore vive in un comune con più di 15.000 abitanti (true) o no (false),
-     * canVote indica se l'elettore ha diritto di voto (true) oppure no (false).
+     * city15K indica se l'elettore vive in un comune con più di 15.000 abitanti (true) o no (false),
+     * ofAge indica se l'elettore è maggiorenne (true) oppure no (false),
+     * birthDateValid indica se la data di nascita è una data valida.
     */
-    private boolean hasVoted, city, canVote;
+    private boolean birthDateValid, ofAge, hasVoted, city15K;
+    /*
+	 * Attributi che rappresentano il paese e la città di nascita dell'elettore
+	*/
+    private String birthPlace, countryOfBirth;
+    /*
+	 * Attributi che rappresentano il genere e il codice fiscale dell'elettore
+	*/
+    private char[] taxCode;
+    private char gender;
 
     /*
      * Effects: inizializza this affinché rappresenti un elettore che è identificato da nome, cognome 
@@ -25,40 +34,44 @@ public class Elettore implements Utente {
      * 			Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
     */
     
-    public Elettore(String name, String surname, String documentID) {
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(surname);
-        Objects.requireNonNull(documentID);
-
-        this.name = name;
-        this.surname = surname;
-        this.documentID = documentID;
-    }
+    public Elettore(String name, String surname, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, String codiceFiscale){
+		super(name, surname, password, "Elettore");
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.birthMonth = birthMonth;
+		this.birthYear = birthYear;
+		this.birthDateValid = this.isDateOfBirthValid();
+		this.ofAge = this.isOfAge();
+		this.hasVoted = false;
+		this.countryOfBirth = countryOfBirth;
+		this.birthPlace = birthPlace;
+		this.taxCode = codiceFiscale.toCharArray();
+	}
     
+    /* Effects: restituisce true se la data di nascita è valida (ovvero non successiva alla data corrente),
+	 * 			false altrimenti.
+	 */
+    public boolean isDateOfBirthValid(){
+		GregorianCalendar birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay);
+        GregorianCalendar today = new GregorianCalendar();
+        return birthDate.before(today);
+	}
+    
+    /* Effects: restituisce true se l'elettore è maggiorenne (ovvero ha 18 o più anni),
+	 * 			false altrimenti.
+	 */
+	public boolean isOfAge(){
+		GregorianCalendar birthDate = new GregorianCalendar(birthYear + 18, birthMonth - 1, birthDay);
+        GregorianCalendar today = new GregorianCalendar();
+        return birthDate.before(today);
+	}
 
     /*
      * Effects: permette all'elettore di votare
     */
-    public void vote(){}
-    
-    /* 
-     * Effects: consente all'utente di effettuare la fase di identificazione 
-    */
-    public boolean login(){
-    	return false;
+    public void esprimi_voto(){
+    	hasVoted = true;
     }
-
-    /*
-     * Modifies: potrebbe modificare canVote e city
-     * Effects: se l'elettore ha diritto di voto modifica canVote assegnandogli valore true,
-     *          false altrimenti.
-     *          se l'elettore abita in un comune con più di 15.000 abitanti modifica city assegnandogli true,
-     *          false altrimenti.
-    */
-    public boolean checkRightToVote(){
-    	return false;
-    }   
-    
 
     /*
      * Effects: restituisce true se l'elettore ha già effettuato la votazione,

@@ -1,12 +1,45 @@
 package sweng.project.evoting;
 
-/*
- * OVERVIEW: questa interfaccia specifica dei metodi utili a gestire un oggetto di tipo Utente, in particolare 
- * nel caso del nostro progetto, l'interfaccia verrà implementata da piu' classi che rappresentano l'elettore e lo scrutatore.
- */
-public interface Utente {
-	public void vote();
-    public boolean checkRightToVote();
-    public boolean checkAlreadyVoted();
-    public boolean login();
+import java.util.Objects;
+
+public class Utente {
+	private String name;
+	private String surname;
+	private String password;
+	private String tipo;
+	
+	public Utente(String name, String surname, String password, String tipo) {
+		Objects.requireNonNull(name);
+		Objects.requireNonNull(surname);
+		Objects.requireNonNull(password);
+		Objects.requireNonNull(tipo);
+		
+		this.name = name;
+		this.surname = surname;
+		this.password = password;
+		this.tipo = tipo;
+	}
+	
+	/* 
+     * Effects: consente all'utente di effettuare la fase di identificazione 
+    */
+	public boolean login(String username, String password, String tipo) {
+		return false;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getSurname() {
+		return this.surname;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public String getTipo() {
+		return this.tipo;
+	}
 }
