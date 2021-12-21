@@ -1,5 +1,8 @@
 package sweng.project.evoting;
 
+import java.sql.Connection;
+
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,17 +43,26 @@ public class LoginWindow {
 
     @FXML
     private void handleLogin(ActionEvent event) {
-    	//String psw = password.getText();
+    	
     	String user = username.getText();
-    	//String type = tipoUtente.getValue().toString();
-
-    	if (!user.equals("Andrea") && !user.equals("Davide")) {
-    		errorMsg.setFill(Color.RED);
-    		errorMsg.setText("Errore. Username o password errati.");
-    	} else {
+    	String type = tipoUtente.getValue().toString();
+    	String psw = password.getText();
+    	
+    	
+    	App app = new App();
+	    Connection conn=app.connect();
+	        //System.out.println(App.encoding("a"));
+	    DigitalVotingDaoImpl d=new DigitalVotingDaoImpl(conn);
+    	if(d.isValid(user,psw,type)) {
     		errorMsg.setFill(Color.GREEN);
-    		errorMsg.setText("Benvenuto "+ user + "!");
-    	}
+			errorMsg.setText("Benvenuto "+ user + "!");
+    	}else {
+    		errorMsg.setFill(Color.RED);
+	    	errorMsg.setText("Errore. Username o password errati.");
+		}
+    	try {
+	    conn.close();
+    	}catch(Exception e) {}
     }
 
     @FXML
@@ -71,7 +83,9 @@ public class LoginWindow {
         assert tipoUtente != null : "fx:id=\"tipoUtente\" was not injected: check your FXML file 'loginWindow.fxml'.";
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'loginWindow.fxml'.";
         
-    	ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Amministratore del sistema");
+        
+        
+    	ObservableList<String> tipiUtente = FXCollections.observableArrayList("Elettore", "Amministratore");
     	tipoUtente.setItems(tipiUtente);
     	tipoUtente.setValue(tipiUtente.get(0));
     	
