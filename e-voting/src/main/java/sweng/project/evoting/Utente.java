@@ -3,19 +3,16 @@ package sweng.project.evoting;
 import java.util.Objects;
 
 public class Utente {
-	private String name;
-	private String surname;
+	private String username;
 	private String password;
 	private String tipo;
 	
-	public Utente(String name, String surname, String password, String tipo) {
-		Objects.requireNonNull(name);
-		Objects.requireNonNull(surname);
+	public Utente(String username, String password, String tipo) {
+		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(tipo);
 		
-		this.name = name;
-		this.surname = surname;
+		this.username = username;
 		this.password = password;
 		this.tipo = tipo;
 	}
@@ -27,12 +24,8 @@ public class Utente {
 		return false;
 	}
 	
-	public String getName() {
-		return this.name;
-	}
-	
-	public String getSurname() {
-		return this.surname;
+	public String getUsername() {
+		return this.username;
 	}
 	
 	public String getPassword() {
@@ -42,4 +35,19 @@ public class Utente {
 	public String getTipo() {
 		return this.tipo;
 	}
+	
+	@Override
+    public String toString() {
+    	return username + ", " + tipo;
+    }
+
+    @Override
+    public int hashCode() {
+    	return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+    	return false;
+    }
 }

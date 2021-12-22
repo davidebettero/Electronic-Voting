@@ -5,20 +5,24 @@ package sweng.project.evoting;
  * che gestisce la configurazione del sistema per permettere la votazione. 
  */
 public class Amministratore extends Utente {
+	private String name, surname;
+	
     /*
-     * Effects: istanzia this affinché rappresenti un amministratore
+     * Effects: istanzia this affinchï¿½ rappresenti un amministratore
     */
-    public Amministratore(String name, String surname, String password){
-    	super(name, surname, password, "Amministratore");
+    public Amministratore(String name, String surname, String username, String password){
+    	super(username, password, "Amministratore");
+    	this.name = name;
+    	this.surname = surname;
     }
 
     /*
-     * Effects: permette allo scrutatore di settare la modalità di voto (referendum / politiche)
+     * Effects: permette allo scrutatore di settare la modalitï¿½ di voto (referendum / politiche)
     */
     public void setVotingMethod(){}
 
     /*
-     * Effects: permette allo scrutatore di settare le modalità di calcolo del vincitore
+     * Effects: permette allo scrutatore di settare le modalitï¿½ di calcolo del vincitore
     */
     public void setWinnerCalculation(){}
 

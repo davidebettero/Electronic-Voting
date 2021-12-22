@@ -7,19 +7,20 @@ import java.util.GregorianCalendar;
  * Esso rappresenta il cittadino elettore che deve votare.
  */
 public class Elettore extends Utente {
+	private String name, surname;
 	/*
 	 * Attributi che rappresentano giorno, mese e anno dell'elettore
 	*/
 	private int birthDay, birthMonth, birthYear;
     /*
-     * L'attributo booleano hasVoted indica se l'elettore ha già votato (true) oppure no (false),
-     * city15K indica se l'elettore vive in un comune con più di 15.000 abitanti (true) o no (false),
-     * ofAge indica se l'elettore è maggiorenne (true) oppure no (false),
-     * birthDateValid indica se la data di nascita è una data valida.
+     * L'attributo booleano hasVoted indica se l'elettore ha giï¿½ votato (true) oppure no (false),
+     * city15K indica se l'elettore vive in un comune con piï¿½ di 15.000 abitanti (true) o no (false),
+     * ofAge indica se l'elettore ï¿½ maggiorenne (true) oppure no (false),
+     * birthDateValid indica se la data di nascita ï¿½ una data valida.
     */
     private boolean birthDateValid, ofAge, hasVoted, city15K;
     /*
-	 * Attributi che rappresentano il paese e la città di nascita dell'elettore
+	 * Attributi che rappresentano il paese e la cittï¿½ di nascita dell'elettore
 	*/
     private String birthPlace, countryOfBirth;
     /*
@@ -29,13 +30,15 @@ public class Elettore extends Utente {
     private char gender;
 
     /*
-     * Effects: inizializza this affinché rappresenti un elettore che è identificato da nome, cognome 
-     * 			e codice della carta d'identità passati come parametro al costruttore stesso.
+     * Effects: inizializza this affinchï¿½ rappresenti un elettore che ï¿½ identificato da nome, cognome 
+     * 			e codice della carta d'identitï¿½ passati come parametro al costruttore stesso.
      * 			Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
     */
     
-    public Elettore(String name, String surname, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, String codiceFiscale){
-		super(name, surname, password, "Elettore");
+    public Elettore(String name, String surname, String username, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, String codiceFiscale){
+		super(username, password, "Elettore");
+		this.name = name;
+		this.surname = surname;
 		this.gender = gender;
 		this.birthDay = birthDay;
 		this.birthMonth = birthMonth;
@@ -48,7 +51,7 @@ public class Elettore extends Utente {
 		this.taxCode = codiceFiscale.toCharArray();
 	}
     
-    /* Effects: restituisce true se la data di nascita è valida (ovvero non successiva alla data corrente),
+    /* Effects: restituisce true se la data di nascita ï¿½ valida (ovvero non successiva alla data corrente),
 	 * 			false altrimenti.
 	 */
     public boolean isDateOfBirthValid(){
@@ -57,7 +60,7 @@ public class Elettore extends Utente {
         return birthDate.before(today);
 	}
     
-    /* Effects: restituisce true se l'elettore è maggiorenne (ovvero ha 18 o più anni),
+    /* Effects: restituisce true se l'elettore ï¿½ maggiorenne (ovvero ha 18 o piï¿½ anni),
 	 * 			false altrimenti.
 	 */
 	public boolean isOfAge(){
@@ -74,7 +77,7 @@ public class Elettore extends Utente {
     }
 
     /*
-     * Effects: restituisce true se l'elettore ha già effettuato la votazione,
+     * Effects: restituisce true se l'elettore ha giï¿½ effettuato la votazione,
      *          false altrimenti.
     */
     public boolean checkAlreadyVoted(){

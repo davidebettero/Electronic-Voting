@@ -6,7 +6,7 @@ package sweng.project.evoting;
  */
 public class DaoPatternDemo {
 	public static void main(String[] args) {
-		
+
 	    LoginWindowView.run();
 
 	}
