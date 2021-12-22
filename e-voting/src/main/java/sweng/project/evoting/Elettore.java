@@ -51,6 +51,14 @@ public class Elettore extends Utente {
 		this.taxCode = codiceFiscale.toCharArray();
 	}
     
+    public String getName() {
+    	return this.name;
+    }
+    
+    public String getSurname() {
+    	return this.surname;
+    }
+    
     /* Effects: restituisce true se la data di nascita � valida (ovvero non successiva alla data corrente),
 	 * 			false altrimenti.
 	 */

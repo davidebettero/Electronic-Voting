@@ -22,6 +22,10 @@ public class LoginWindowView extends Application {
 		launch();
 	}
 	
+	/* 
+	 * Effects: restituisce true se l'autenticazione mediante la finestra di login è andata a buon fine;
+	 * 			false altrimenti.
+	 */
 	public static boolean authenticate(String user, String psw, String type) {
 		return new DigitalVotingDaoImpl().isValid(user, App.encoding(psw), type);	// cripta la password inserita prima di sostituirla nella query
 	}

@@ -13,6 +13,11 @@ import java.util.List;
 public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	private Connection conn = null;
 	
+	// restituisce un oggetto che rappresenta la connessione al database
+	private static Connection getConnection() {
+		return new App().connect();
+	}
+	
 	/*
 	 * Metodo che controlla se un utente identificato dai parametri passati come argomento � presente nel database
 	 * restituendo true; false altrimenti.
@@ -50,11 +55,6 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			 e.printStackTrace();
 		 }  	
 		 return false;
-	}
-	
-	// restituisce un oggetto che rappresenta la connessione al database
-	private static Connection getConnection() {
-		return new App().connect();
 	}
 	
 	// restituisce una lista contenente tutti gli username di tutti gli elettori presenti nel database

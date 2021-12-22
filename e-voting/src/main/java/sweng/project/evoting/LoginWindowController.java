@@ -71,6 +71,10 @@ public class LoginWindowController {
     	tipoUtente.setItems(tipiUtente);
     	tipoUtente.setValue(tipiUtente.get(0));
     	
+    	/*
+    	 * Premere "Enter" da tastiera quando il cursore si trova nella TextField username o nella 
+    	 * PasswordField password equivale a premere il login Button.
+    	 */
     	password.setOnKeyPressed(new EventHandler<KeyEvent>() {
     		@Override
     		public void handle(KeyEvent ke) {

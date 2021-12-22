@@ -14,10 +14,10 @@ public class App {
     static final String user = "postgres";
     static final String password = "postgres";
 
-    /**
-     * Connect to the PostgreSQL database
+    /*
+     * metodo che permette la connessione al database PostgreSQL
      *
-     * @return a Connection object
+     * @return un oggetto Connection
      */
     public Connection connect() {
         Connection conn = null;
@@ -30,7 +30,10 @@ public class App {
         return conn;
     }
     
-    // metodo per criptare la password passata come argomento
+    /*
+     * Metodo per criptare la password passata come argomento.
+     * L'algoritmo scelto è l'algoritmo Secure Hash Algorithm 1
+     */
     public static String encoding (String password) {
     		try {
 	    		MessageDigest md = MessageDigest.getInstance("SHA-1");
