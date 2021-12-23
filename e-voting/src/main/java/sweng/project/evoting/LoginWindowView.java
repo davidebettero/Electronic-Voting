@@ -27,7 +27,7 @@ public class LoginWindowView extends Application {
 	 * 			false altrimenti.
 	 */
 	public static boolean authenticate(String user, String psw, String type) {
-		return new DigitalVotingDaoImpl().isValid(user, App.encoding(psw), type);	// cripta la password inserita prima di sostituirla nella query
+		return new DigitalVotingDaoImpl().isValid(user, App.encoding(psw), type);	// cifra la password inserita prima di sostituirla nella query
 	}
 
 }

@@ -31,7 +31,7 @@ public class App {
     }
     
     /*
-     * Metodo per criptare la password passata come argomento.
+     * Metodo per cifrare la password passata come argomento.
      * L'algoritmo scelto è l'algoritmo Secure Hash Algorithm 1
      */
     public static String encoding (String password) {
