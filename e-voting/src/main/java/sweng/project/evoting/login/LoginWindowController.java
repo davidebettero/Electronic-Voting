@@ -64,6 +64,8 @@ public class LoginWindowController {
     		}catch (Exception e) {
     			e.printStackTrace();
     		}
+    	} else if(isIn && type.equals("Elettore")) {
+    		login.getScene().getWindow().hide();
     	}else {
     		errorMsg.setFill(Color.RED);
 	    	errorMsg.setText("Errore. Username o password errati.");
