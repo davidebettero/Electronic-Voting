@@ -1,10 +1,13 @@
-package sweng.project.evoting;
+package sweng.project.evoting.login;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -12,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.scene.control.PasswordField;
 
 public class LoginWindowController {
@@ -48,9 +52,18 @@ public class LoginWindowController {
     	// variabile che vale true se l'utente identificato da user, psw e type è presente nel database, false altrimenti
     	boolean isIn = LoginWindowView.authenticate(user, psw, type);
     	
-    	if(isIn) {
-    		errorMsg.setFill(Color.GREEN);
-			errorMsg.setText("Benvenuto "+ user + "!");
+    	if(isIn && type.equals("Amministratore")) {
+    		login.getScene().getWindow().hide();
+    		try {
+    			Parent root = FXMLLoader.load(getClass().getResource("..//administrator//administratorWindow.fxml"));
+    			Stage stage = new Stage();
+    			stage.setTitle("Benvenuto " + user);
+    			stage.setScene(new Scene(root, 600, 400));
+    			stage.setResizable(false);
+    			stage.show();
+    		}catch (Exception e) {
+    			e.printStackTrace();
+    		}
     	}else {
     		errorMsg.setFill(Color.RED);
 	    	errorMsg.setText("Errore. Username o password errati.");

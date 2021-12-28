@@ -1,9 +1,11 @@
-package sweng.project.evoting;
+package sweng.project.evoting.login;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import sweng.project.evoting.App;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import javafx.scene.Scene;
 
 public class LoginWindowView extends Application {
