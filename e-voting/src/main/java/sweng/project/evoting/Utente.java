@@ -2,6 +2,8 @@ package sweng.project.evoting;
 
 import java.util.Objects;
 
+import sweng.project.evoting.login.LoginWindowView;
+
 public class Utente {
 	private String username;
 	private String password;
@@ -20,8 +22,8 @@ public class Utente {
 	/* 
      * Effects: consente all'utente di effettuare la fase di identificazione 
     */
-	public boolean login(String username, String password, String tipo) {
-		return false;
+	public boolean login() {
+		return LoginWindowView.authenticate(username, password, tipo);
 	}
 	
 	public String getUsername() {

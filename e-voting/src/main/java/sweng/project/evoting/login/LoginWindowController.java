@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.Utente;
 import javafx.scene.control.PasswordField;
 
 public class LoginWindowController {
@@ -50,7 +51,7 @@ public class LoginWindowController {
     	String type = tipoUtente.getValue().toString();
     	
     	// variabile che vale true se l'utente identificato da user, psw e type è presente nel database, false altrimenti
-    	boolean isIn = LoginWindowView.authenticate(user, psw, type);
+    	boolean isIn = new Utente(user, psw, type).login();
     	
     	if(isIn && type.equals("Amministratore")) {
     		login.getScene().getWindow().hide();
@@ -59,13 +60,13 @@ public class LoginWindowController {
     			Stage stage = new Stage();
     			stage.setTitle("Benvenuto " + user);
     			stage.setScene(new Scene(root, 600, 400));
-    			stage.setResizable(false);
     			stage.show();
     		}catch (Exception e) {
     			e.printStackTrace();
     		}
     	} else if(isIn && type.equals("Elettore")) {
-    		login.getScene().getWindow().hide();
+    		errorMsg.setFill(Color.GREEN);
+	    	errorMsg.setText("Benvenuto elettore " + user);
     	}else {
     		errorMsg.setFill(Color.RED);
 	    	errorMsg.setText("Errore. Username o password errati.");

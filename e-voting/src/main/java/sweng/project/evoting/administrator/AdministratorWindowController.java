@@ -3,6 +3,7 @@ package sweng.project.evoting.administrator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,15 +25,15 @@ public class AdministratorWindowController {
     private Button visualizzaRisultati;
 
     @FXML
-    private Text welcomeMsg;
+    private Text titleMsg;
 
     @FXML
-    void endVote(ActionEvent event) {
+    private void endVote(ActionEvent event) {
     	
     }
 
     @FXML
-    void handleLogout(ActionEvent event) {
+    private void handleLogout(ActionEvent event) {
     	try {
     		logoutButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//login//loginWindow.fxml"));
@@ -47,22 +48,31 @@ public class AdministratorWindowController {
     }
 
     @FXML
-    void handleNewVote(ActionEvent event) {
+    private void handleNewVote(ActionEvent event) {  	
+    	try {
+    		creaNuovaVotazione.getScene().getWindow().hide();
+    		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
+    		Stage stage = new Stage();
+    		stage.setTitle(((Stage) ((Node) event.getSource()).getScene().getWindow()).getTitle());
+    		stage.setScene(new Scene(root, 600, 400));
+    		stage.show();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+
+    @FXML
+    private void viewElectionResults(ActionEvent event) {
 
     }
 
     @FXML
-    void viewElectionResults(ActionEvent event) {
-
-    }
-
-    @FXML
-    void initialize() {
+    private void initialize() {
         assert creaNuovaVotazione != null : "fx:id=\"creaNuovaVotazione\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
         assert terminaVotazione != null : "fx:id=\"terminaVotazione\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
         assert visualizzaRisultati != null : "fx:id=\"visualizzaRisultati\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
-        assert welcomeMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
+        assert titleMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
 
     }
 
