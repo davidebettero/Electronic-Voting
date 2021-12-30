@@ -68,11 +68,11 @@ public class AdministratorWindowController {
 
     @FXML
     private void initialize() {
-        assert creaNuovaVotazione != null : "fx:id=\"creaNuovaVotazione\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
-        assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
-        assert terminaVotazione != null : "fx:id=\"terminaVotazione\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
-        assert visualizzaRisultati != null : "fx:id=\"visualizzaRisultati\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
-        assert titleMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'AdministratorWindow.fxml'.";
+        assert creaNuovaVotazione != null : "fx:id=\"creaNuovaVotazione\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        assert terminaVotazione != null : "fx:id=\"terminaVotazione\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        assert visualizzaRisultati != null : "fx:id=\"visualizzaRisultati\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        assert titleMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'administratorWindow.fxml'.";
 
     }
 

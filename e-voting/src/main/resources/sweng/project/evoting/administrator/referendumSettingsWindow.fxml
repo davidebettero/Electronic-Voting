@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.ReferendumSettingsController">
+   <children>
+      <Button fx:id="undoButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#hanldeUndo" text="←" />
+      <Text fill="#2b00ff" layoutX="93.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il testo del referendum">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="referendumText" layoutX="24.0" layoutY="76.0" onDragDetected="#handleReferendumText" prefHeight="253.0" prefWidth="552.0" promptText="Inserisci il testo del referendum" />
+      <Button fx:id="okButton" layoutX="533.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleOk" text="OK">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

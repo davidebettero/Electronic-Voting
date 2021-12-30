@@ -25,17 +25,17 @@ public class ModalitaCalcoloVincitoreCategoricoPreferenzeController {
     private Button undoButton;
 
     @FXML
-    void handleMaggioranza(ActionEvent event) {
+    private void handleMaggioranza(ActionEvent event) {
 
     }
 
     @FXML
-    void handleMaggioranzaAssoluta(ActionEvent event) {
+    private void handleMaggioranzaAssoluta(ActionEvent event) {
 
     }
 
     @FXML
-    void hanldeUndo(ActionEvent event) {
+    private void hanldeUndo(ActionEvent event) {
     	try {
     		undoButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
@@ -46,6 +46,15 @@ public class ModalitaCalcoloVincitoreCategoricoPreferenzeController {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+    }
+    
+    @FXML
+    private void initialize() {
+        assert maggioranza != null : "fx:id=\"maggioranza\" was not injected: check your FXML file 'modalitaCalcoloVincitoreCategoricoPreferenzeWindow.fxml'.";
+        assert maggioranzaAssoluta != null : "fx:id=\"maggioranzaAssoluta\" was not injected: check your FXML file 'modalitaCalcoloVincitoreCategoricoPreferenzeWindow.fxml'.";
+        assert pane != null : "fx:id=\"pane\" was not injected: check your FXML file 'modalitaCalcoloVincitoreCategoricoPreferenzeWindow.fxml'.";
+        assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'modalitaCalcoloVincitoreCategoricoPreferenzeWindow.fxml'.";
+
     }
 
 }
