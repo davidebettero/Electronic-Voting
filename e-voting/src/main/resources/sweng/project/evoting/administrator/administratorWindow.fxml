@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.AdministratorWindowController">
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.AdministratorWindowController">
    <children>
-      <Button fx:id="logoutButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleLogout" text="logout" />
-      <Text fx:id="welcomeMsg" fill="RED" layoutX="107.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impostazioni Amministratore" wrappingWidth="385.8734130859375">
+      <Button fx:id="creaNuovaVotazione" layoutX="69.0" layoutY="129.0" mnemonicParsing="false" onAction="#handleNewVote" prefHeight="59.0" prefWidth="200.0" text="Crea nuova votazione">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="terminaVotazione" layoutX="334.0" layoutY="129.0" mnemonicParsing="false" onAction="#endVote" prefHeight="59.0" prefWidth="200.0" text="Termina votazione">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="visualizzaRisultati" layoutX="200.0" layoutY="256.0" mnemonicParsing="false" onAction="#viewElectionResults" prefHeight="59.0" prefWidth="200.0" text="Visualizza risultati">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="logoutButton" layoutX="534.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleLogout" text="logout" />
+      <Text fx:id="welcomeMsg" fill="RED" layoutX="107.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impostazioni Amministratore" wrappingWidth="385.8734130859375">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <Button fx:id="creaNuovaVotazione" layoutX="66.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleNewVote" prefHeight="59.0" prefWidth="200.0" text="Crea nuova votazione">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="visualizzaRisultati" layoutX="200.0" layoutY="246.0" mnemonicParsing="false" onAction="#viewElectionResults" prefHeight="59.0" prefWidth="200.0" text="Visualizza risultati">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="terminaVotazione" layoutX="334.0" layoutY="119.0" mnemonicParsing="false" onAction="#endVote" prefHeight="59.0" prefWidth="200.0" text="Termina votazione">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
    </children>
-</Pane>
+</AnchorPane>

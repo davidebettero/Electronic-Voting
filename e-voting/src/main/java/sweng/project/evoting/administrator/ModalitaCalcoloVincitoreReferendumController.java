@@ -1,5 +1,6 @@
 package sweng.project.evoting.administrator;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -32,45 +33,24 @@ public class ModalitaCalcoloVincitoreReferendumController {
     private Button undoButton;
 
     @FXML
-    private void handleReferendumConQuorum(ActionEvent event) {
-    	try {
-    		referendumConQuorum.getScene().getWindow().hide();
-    		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
-    		Stage stage = new Stage();
-    		stage.setTitle(((Stage) ((Node) event.getSource()).getScene().getWindow()).getTitle());
-    		stage.setScene(new Scene(root, 600, 400));
-    		stage.show();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+    private void handleReferendumConQuorum(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML
-    private void handleReferendumSenzaQuorum(ActionEvent event) {
-    	try {
-    		referendumSenzaQuorum.getScene().getWindow().hide();
-    		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
-    		Stage stage = new Stage();
-    		stage.setTitle(((Stage) ((Node) event.getSource()).getScene().getWindow()).getTitle());
-    		stage.setScene(new Scene(root, 600, 400));
-    		stage.show();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+    private void handleReferendumSenzaQuorum(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML
-    private void hanldeUndo(ActionEvent event) {
-    	try {
-    		undoButton.getScene().getWindow().hide();
-    		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
-    		Stage stage = new Stage();
-    		stage.setTitle(((Stage) ((Node) event.getSource()).getScene().getWindow()).getTitle());
-    		stage.setScene(new Scene(root, 600, 400));
-    		stage.show();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+    private void hanldeUndo(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML

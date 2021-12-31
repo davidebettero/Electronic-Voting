@@ -1,5 +1,7 @@
 package sweng.project.evoting.administrator;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +9,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AdministratorWindowController {
+	
+	@FXML
+    private Pane pane;
 
     @FXML
     private Button creaNuovaVotazione;
@@ -48,17 +55,10 @@ public class AdministratorWindowController {
     }
 
     @FXML
-    private void handleNewVote(ActionEvent event) {  	
-    	try {
-    		creaNuovaVotazione.getScene().getWindow().hide();
-    		Parent root = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
-    		Stage stage = new Stage();
-    		stage.setTitle(((Stage) ((Node) event.getSource()).getScene().getWindow()).getTitle());
-    		stage.setScene(new Scene(root, 600, 400));
-    		stage.show();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+    private void handleNewVote(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML
