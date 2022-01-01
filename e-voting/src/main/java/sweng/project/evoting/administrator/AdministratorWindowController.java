@@ -62,8 +62,10 @@ public class AdministratorWindowController {
     }
 
     @FXML
-    private void viewElectionResults(ActionEvent event) {
-
+    private void viewElectionResults(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//errVotazioneApertaWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML

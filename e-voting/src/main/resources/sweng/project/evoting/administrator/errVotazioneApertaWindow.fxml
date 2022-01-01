@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.ErrVotazioneApertaController">
+   <children>
+      <Text fill="#fc0101" layoutX="236.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ERRORE" underline="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="102.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La votazione corrente è ancora attiva.">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="96.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Per visualizzarne i risultati è necessario">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="125.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impossibile visualizzare i risultati!">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="okButton" layoutX="268.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleOk" text="OK">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Text layoutX="207.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="che sia terminata.">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="68.0" fitWidth="85.0" layoutX="508.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@warning.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
