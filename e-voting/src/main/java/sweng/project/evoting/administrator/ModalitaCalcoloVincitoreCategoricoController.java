@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
@@ -29,13 +30,20 @@ public class ModalitaCalcoloVincitoreCategoricoController {
     private Button undoButton;
 
     @FXML
-    private void handleMaggioranza(ActionEvent event) {
-
+    private void handleMaggioranza(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML
-    private void handleMaggioranzaAssoluta(ActionEvent event) {
-
+    private void handleMaggioranzaAssoluta(ActionEvent event) throws IOException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	Parent root = next.load();
+    	InserimentoCandidatiController icc = next.getController();
+    	icc.setAssoluta();
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

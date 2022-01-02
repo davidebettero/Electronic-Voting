@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.InserimentoCandidatiController">
+   <children>
+      <Text layoutX="46.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Candidato:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="candidato" layoutX="188.0" layoutY="89.0" onAction="#handleCandidato" prefHeight="40.0" prefWidth="317.0" promptText="Inserisci candidato">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Text layoutX="66.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Partito:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="partito" layoutX="188.0" layoutY="152.0" onAction="#handlePartito" prefHeight="40.0" prefWidth="317.0" promptText="Inserisci Partito">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="candidatoPartitoUno" layoutX="75.0" layoutY="247.0" onAction="#handleCandidatoPartitoUno" promptText="Candidato di partito 1">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="candidatoPartitoDue" layoutX="347.0" layoutY="247.0" onAction="#handleCandidatoPartitoDue" promptText="Candidato di partito 2">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="candidatoPartitoTre" layoutX="75.0" layoutY="311.0" onAction="#handleCandidatoPartitoTre" promptText="Candidato di partito 3">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="candidatoPartitoQuattro" layoutX="347.0" layoutY="311.0" onAction="#handleCandidatoPartitoQuattro" promptText="Candidato di partito 4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Text layoutX="195.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Candidati di partito:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="53.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="326.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="53.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="326.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="undoButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#hanldeUndo" text="←" />
+      <Button fx:id="okButton" layoutX="543.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleOk" text="OK">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Text fill="RED" layoutX="81.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserire il candidato, il partito d'appoggio">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="184.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e i candidati di partito">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

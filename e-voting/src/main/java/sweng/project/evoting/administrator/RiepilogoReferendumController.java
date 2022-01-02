@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class RiepilogoReferendumController {
@@ -54,6 +55,16 @@ public class RiepilogoReferendumController {
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(next);
     }
+    
+    public void insertType(String type) {
+    	typeOfReferendum.setFill(Color.BLUE);
+    	typeOfReferendum.setText("Referendum " + type + " quorum");
+    }
+    
+    public void insertText(String text) {
+    	testo.setFill(Color.BLUE);
+    	testo.setText(text);
+    }
 
     @FXML
     private void initialize() {
@@ -63,6 +74,5 @@ public class RiepilogoReferendumController {
         assert typeOfReferendum != null : "fx:id=\"typeOfReferendum\" was not injected: check your FXML file 'riepilogoReferendumWindow.fxml'.";
         assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'riepilogoReferendumWindow.fxml'.";
 
-        typeOfReferendum.setText("Referendum " );
     }
 }

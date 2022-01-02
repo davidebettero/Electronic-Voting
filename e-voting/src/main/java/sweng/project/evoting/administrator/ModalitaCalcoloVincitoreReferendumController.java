@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
@@ -30,9 +31,12 @@ public class ModalitaCalcoloVincitoreReferendumController {
 
     @FXML
     private void handleReferendumConQuorum(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//referendumSettingsWindow.fxml"));
+    	Parent root = next.load();
+    	ReferendumSettingsController rsc = next.getController();
+    	rsc.setQuorum();
     	pane.getChildren().removeAll();
-    	pane.getChildren().setAll(next);
+    	pane.getChildren().setAll(root);
     }
 
     @FXML
