@@ -181,4 +181,60 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return null;
 	}
 	
+	
+	
+	
+	
+	
+	
+	//inserisce un voto all'interno del db nella tabella categorico
+	public void addVotoCategorico(String id,String idVoto,String [] scelte) {
+		try{
+			conn = getConnection();
+            conn.setAutoCommit(true);
+            Statement st = conn.createStatement();
+            st.execute("set search_path=digitalvoting");
+            st.execute("insert into categorico (id,id_votazione,partito,candidato_principale,candidato1,candidato2) values ("+id+","+idVoto+",'"+scelte[0]+"','"+scelte[1]+"','"+scelte[2]+"','"+scelte[3]+"');");
+            // Turn use of the cursor on.
+            st.setFetchSize(50);
+            st.close();
+    
+        }catch(SQLException e) {
+             e.printStackTrace();
+        }  	
+	}
+	
+	//inserisce un voto all interno del db nella tabella referendum
+	public void addVotoReferendum(String id,String idVoto,Boolean scelte) {
+         try{
+        	conn = getConnection();
+            conn.setAutoCommit(true);
+            Statement st = conn.createStatement();
+            st.execute("set search_path=digitalvoting");
+            st.execute("insert into referendum (id,id_votazione,scelta) values ("+id+","+idVoto+","+scelte+");");
+            // Turn use of the cursor on.
+            st.setFetchSize(50);
+            st.close();
+         }catch(SQLException e) {
+            e.printStackTrace();
+       }
+	
+    }
+	
+	//inserisce una votazione all interno del db 
+	public void insertVotingSession(String id, String inizio, String fine, String modVoto, String modCalcolo) {
+		try {
+			conn = getConnection();
+            conn.setAutoCommit(true);
+            Statement st = conn.createStatement();
+            st.execute("set search_path=digitalvoting");
+            st.execute("insert into votazione (id,inizio,fine,modVoto,modCalcolo) values ("+id+","+inizio+","+fine+","+modVoto+","+modCalcolo+");");
+            // Turn use of the cursor on.
+            st.setFetchSize(50);
+            st.close();
+         } catch(SQLException e) {
+            e.printStackTrace();
+       }
+	}
+	
 }

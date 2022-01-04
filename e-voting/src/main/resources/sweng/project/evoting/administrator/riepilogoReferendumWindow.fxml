@@ -18,22 +18,52 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Text layoutX="24.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo di voto:">
+      <Text layoutX="27.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo di voto:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="typeOfReferendum" layoutX="142.0" layoutY="88.0" onDragDetected="#handleType" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.89459228515625">
+      <Text fx:id="typeOfReferendum" layoutX="146.0" layoutY="112.0" onDragDetected="#handleType" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.89459228515625">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="24.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Testo:">
+      <Text layoutX="28.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Testo:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="testo" layoutX="24.0" layoutY="159.0" onDragDetected="#handleTesto" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="552.0">
+      <Text fx:id="testo" layoutX="28.0" layoutY="194.0" onDragDetected="#handleTesto" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="552.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="27.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="28.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ora inizio:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="304.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ora fine:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="dataVotazione" layoutX="82.0" layoutY="86.0" onDragDetected="#handleData" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.89459228515625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="oraInizioVotazione" layoutX="124.0" layoutY="139.0" onDragDetected="#handleOraInizio" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="145.8251953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="oraFineVotazione" layoutX="387.0" layoutY="138.0" onDragDetected="#handleOraFine" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="145.8251953125">
          <font>
             <Font size="20.0" />
          </font>
