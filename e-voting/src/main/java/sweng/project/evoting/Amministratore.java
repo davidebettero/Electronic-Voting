@@ -8,7 +8,7 @@ public class Amministratore extends Utente {
 	private String name, surname;
 	
     /*
-     * Effects: istanzia this affinch� rappresenti un amministratore
+     * Effects: istanzia this affinché rappresenti un amministratore
     */
     public Amministratore(String name, String surname, String username, String password){
     	super(username, password, "Amministratore");

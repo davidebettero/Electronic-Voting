@@ -1,5 +1,6 @@
 package sweng.project.evoting;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface DigitalVotingDao {
@@ -16,5 +17,5 @@ public interface DigitalVotingDao {
 	
 	public void addVotoReferendum(String id,String idVoto,Boolean scelte);
 	
-	public void insertVotingSession(String id,String inizio,String fine,String modVoto,String modCalcolo);
+	public void insertReferendumVotingSession(String id,Timestamp inizio,Timestamp fine,String tipo,String Testo);
 }

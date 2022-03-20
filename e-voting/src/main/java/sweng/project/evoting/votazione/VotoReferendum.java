@@ -2,15 +2,15 @@ package sweng.project.evoting.votazione;
 
 public class VotoReferendum extends Voto{
     
-    private Boolean scelta;
+    private boolean scelta;
 
-    public VotoReferendum(String id, String idVotazione, Boolean scelta){
-        super(id,idVotazione);
+    public VotoReferendum(String id, String idVotazione, boolean scelta){
+        super(id, idVotazione);
         
-        this.scelta=scelta;
+        this.scelta = scelta;
     }
 
-    public Boolean getPreferenza(){
+    public boolean getPreferenza(){
         return this.scelta;
     }
 }

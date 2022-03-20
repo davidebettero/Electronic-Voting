@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -222,13 +223,13 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
     }
 	
 	//inserisce una votazione all interno del db 
-	public void insertVotingSession(String id, String inizio, String fine, String modVoto, String modCalcolo) {
+	public void insertReferendumVotingSession(String id, Timestamp inizio, Timestamp fine, String tipo, String testo) {
 		try {
 			conn = getConnection();
             conn.setAutoCommit(true);
             Statement st = conn.createStatement();
             st.execute("set search_path=digitalvoting");
-            st.execute("insert into votazione (id,inizio,fine,modVoto,modCalcolo) values ("+id+","+inizio+","+fine+","+modVoto+","+modCalcolo+");");
+            st.execute("insert into referendum values (" + id + ",timestamp " + inizio + ",timestamp " + fine + "," + tipo + "," + testo + ");");
             // Turn use of the cursor on.
             st.setFetchSize(50);
             st.close();

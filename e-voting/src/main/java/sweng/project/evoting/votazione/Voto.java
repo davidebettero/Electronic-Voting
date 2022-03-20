@@ -2,17 +2,14 @@ package sweng.project.evoting.votazione;
 
 import java.util.Objects;
 
-public class Voto{
+public class Voto {
 
     private String idVotazione;
     private String idVoto;
 
     public Voto(String idVotazione, String idVoto) {
-        Objects.requireNonNull(idVoto);
-        Objects.requireNonNull(idVotazione);
-
-        this.idVotazione = idVotazione;
-        this.idVoto = idVoto;
+    	this.idVotazione = Objects.requireNonNull(idVotazione);
+    	this.idVoto = Objects.requireNonNull(idVoto);
     }
 
     //effects: restituisce l'id della votazione
