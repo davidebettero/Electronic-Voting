@@ -84,7 +84,7 @@ public class RiepilogoReferendumController {
     	Date dateF = sdf.parse(end);
     	long millisEnd = dateF.getTime();
 		final Timestamp fine = new Timestamp(millisEnd);
-		System.out.println(id);
+		//System.out.println(id);
     	VotazioneReferendum v = new VotazioneReferendum(id, inizio, fine, tipo, testo.toString());
     	v.insertVotazione();
 
