@@ -81,10 +81,9 @@ public class ReferendumSettingsController {
     private void handleOk(ActionEvent event) throws IOException {
     	if(data.getValue() == null) {
     		errorMsg.setText("Data della votazione NON inserita");
-    	}
-    	else if(!isTimeOk()) {
+    	} else if(!isTimeOk()) {
     		errorMsg.setText("L'ora di inizio NON può essere successiva o identica all'ora di fine!");
-    	} else {
+    	} else if(referendumText != null && !referendumText.getText().toString().isEmpty()){
 	    	String text = referendumText.getText();
 	    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//riepilogoReferendumWindow.fxml"));
 	    	Parent root = next.load();

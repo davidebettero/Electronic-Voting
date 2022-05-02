@@ -57,8 +57,10 @@ public class ModalitaVotoWindowController {
     }
 
     @FXML
-    private void handleVotoOrdinale(ActionEvent event) {
-
+    private void handleVotoOrdinale(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//ordinaleSettingsWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML

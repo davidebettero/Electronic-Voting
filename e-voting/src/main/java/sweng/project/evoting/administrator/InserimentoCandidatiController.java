@@ -85,9 +85,11 @@ public class InserimentoCandidatiController {
 
     @FXML
     private void handleOk(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//settingVotazioneWindow.fxml"));
-    	pane.getChildren().removeAll();
-    	pane.getChildren().setAll(next);
+    	if(candidato != null && partito != null && !candidato.getText().toString().isEmpty() && !partito.getText().toString().isEmpty()) {
+	    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//settingVotazioneWindow.fxml"));
+	    	pane.getChildren().removeAll();
+	    	pane.getChildren().setAll(next);
+    	}
     }
 
     @FXML

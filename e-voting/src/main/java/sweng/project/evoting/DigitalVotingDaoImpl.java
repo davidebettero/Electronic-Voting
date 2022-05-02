@@ -222,7 +222,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	
     }
 	
-	//inserisce una votazione all interno del db 
+	//inserisce una votazione ti tipo 'referendum' all'interno del db 
 	public void insertReferendumVotingSession(String id, Timestamp inizio, Timestamp fine, String tipo, String testo) {
 		String query = "INSERT INTO referendum (id,inizio,fine,tipo,testo) VALUES (?,?,?,?,?)"; //query da eseguire
 		
@@ -242,6 +242,63 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			ps.setTimestamp(3,fine);
 			ps.setString(4, tipo);
 			ps.setString(5, testo);
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertOrdinaleVotingSession(String id, Timestamp inizio, Timestamp fine) {
+		String query = "INSERT INTO ordinale (id,inizio,fine) VALUES (?,?,?)"; //query da eseguire
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id); 
+			ps.setTimestamp(2,inizio); 
+			ps.setTimestamp(3,fine);
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertCandidatoOrdinale(final String id, final Candidato c) {
+		Connection conn = getConnection(); //apro connessione 
+		PreparedStatement ps = null;
+		try {
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			String query = "INSERT INTO candidatiOrdinale VALUES(?,?,?)"; //query da eseguire
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+			ps.setString(1, id); 
+			ps.setString(2,c.getNome()); 
+			ps.setString(3,c.getCognome());
 			ps.executeUpdate();
 			
 		}catch(SQLException e){
