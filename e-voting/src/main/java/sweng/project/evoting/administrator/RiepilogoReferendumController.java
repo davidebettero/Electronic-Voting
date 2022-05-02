@@ -68,7 +68,7 @@ public class RiepilogoReferendumController {
     // inserisce il nuovo referendum nel database
     private void handleConferma(ActionEvent event) throws IOException, ParseException {
     	final String id = UUID.randomUUID().toString();  
-    	final String tipo = typeOfReferendum.toString().split(" ", 2)[1];
+    	final String tipo = typeOfReferendum.getText().toString().split(" ", 2)[1];
 
     	String[] d = dataVotazione.getText().toString().split("-");
     	String[] hI = oraInizioVotazione.getText().toString().split(":");
@@ -84,8 +84,8 @@ public class RiepilogoReferendumController {
     	Date dateF = sdf.parse(end);
     	long millisEnd = dateF.getTime();
 		final Timestamp fine = new Timestamp(millisEnd);
-		//System.out.println(id);
-    	VotazioneReferendum v = new VotazioneReferendum(id, inizio, fine, tipo, testo.toString());
+		//System.out.println(id);  // stampa di check per controllare il valore dell'id
+    	VotazioneReferendum v = new VotazioneReferendum(id, inizio, fine, tipo, testo.getText().toString());
     	v.insertVotazione();
 
     	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//referendumCreatoWindow.fxml"));

@@ -224,18 +224,36 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	
 	//inserisce una votazione all interno del db 
 	public void insertReferendumVotingSession(String id, Timestamp inizio, Timestamp fine, String tipo, String testo) {
+		String query = "INSERT INTO referendum (id,inizio,fine,tipo,testo) VALUES (?,?,?,?,?)"; //query da eseguire
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
 		try {
-			conn = getConnection();
-            conn.setAutoCommit(true);
-            Statement st = conn.createStatement();
-            st.execute("set search_path=digitalvoting");
-            st.execute("insert into referendum values (" + id + ",timestamp " + inizio + ",timestamp " + fine + "," + tipo + "," + testo + ");");
-            // Turn use of the cursor on.
-            st.setFetchSize(50);
-            st.close();
-         } catch(SQLException e) {
-            e.printStackTrace();
-       }
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id); 
+			ps.setTimestamp(2,inizio); 
+			ps.setTimestamp(3,fine);
+			ps.setString(4, tipo); // viene inserita una roba che non è corretta (vedi screen su discord) -andrea
+			ps.setString(5, testo); //viene inserita una roba che non è corretta (vedi screen su discord) -andrea
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
