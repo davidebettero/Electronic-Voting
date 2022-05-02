@@ -240,8 +240,8 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			ps.setString(1, id); 
 			ps.setTimestamp(2,inizio); 
 			ps.setTimestamp(3,fine);
-			ps.setString(4, tipo); // viene inserita una roba che non è corretta (vedi screen su discord) -andrea
-			ps.setString(5, testo); //viene inserita una roba che non è corretta (vedi screen su discord) -andrea
+			ps.setString(4, tipo);
+			ps.setString(5, testo);
 			ps.executeUpdate();
 			
 		}catch(SQLException e){
