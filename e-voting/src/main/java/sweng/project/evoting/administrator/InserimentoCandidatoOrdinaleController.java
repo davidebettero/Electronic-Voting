@@ -50,7 +50,7 @@ public class InserimentoCandidatoOrdinaleController {
 
     @FXML
     void handleOk(ActionEvent event) throws IOException {
-    	if(candidato != null && !candidato.getText().toString().isEmpty()) {
+    	if(candidato != null && !candidato.getText().toString().isEmpty() && !candidato.getText().toString().isBlank()) {
     		String[] generalita = candidato.getText().toString().split(" ");
     		v.insertCandidato(this.id, new Candidato(generalita[0], generalita[1], null));
 	    	

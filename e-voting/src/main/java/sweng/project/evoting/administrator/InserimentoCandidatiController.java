@@ -6,9 +6,12 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import sweng.project.evoting.Candidato;
+import sweng.project.evoting.votazione.VotazioneCategorica;
 
 public class InserimentoCandidatiController {
 	// variabile che vale true se la votazione è categorica con preferenze, false altrimenti. Di default è impostata a false.
@@ -16,6 +19,9 @@ public class InserimentoCandidatiController {
 	
 	// variabile che vale true se è una votazione a maggioranza assoluta, false altrimenti. Di default è impostata a false.
 	private boolean assoluta = false;
+	
+	private String id;
+	private VotazioneCategorica v;
 
     @FXML
     private ResourceBundle resources;
@@ -57,6 +63,14 @@ public class InserimentoCandidatiController {
     public void setAssoluta() {
     	assoluta = true;
     }
+    
+    public void setId(final String id) {
+    	this.id = id;
+    }
+    
+    public void setVotazione(final VotazioneCategorica v) {
+    	this.v = v;
+    }
 
     @FXML
     private void handleCandidato(ActionEvent event) {
@@ -85,10 +99,38 @@ public class InserimentoCandidatiController {
 
     @FXML
     private void handleOk(ActionEvent event) throws IOException {
-    	if(candidato != null && partito != null && !candidato.getText().toString().isEmpty() && !partito.getText().toString().isEmpty()) {
-	    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//settingVotazioneWindow.fxml"));
-	    	pane.getChildren().removeAll();
-	    	pane.getChildren().setAll(next);
+    	if(candidato != null && partito != null && !candidato.getText().toString().isEmpty() && !partito.getText().toString().isEmpty()) {   	
+	    	final String cP1, cP2, cP3, cP4;
+    		if(candidatoPartitoUno == null || candidatoPartitoUno.getText().toString().isEmpty() || candidatoPartitoUno.getText().toString().isBlank())
+    			cP1 = "";
+    		else
+    			cP1 = candidatoPartitoUno.getText().toString();
+    		
+    		if(candidatoPartitoDue == null || candidatoPartitoDue.getText().toString().isEmpty() || candidatoPartitoDue.getText().toString().isBlank())
+    			cP2 = "";
+    		else
+    			cP2 = candidatoPartitoDue.getText().toString();
+    		
+    		if(candidatoPartitoTre == null || candidatoPartitoTre.getText().toString().isEmpty() || candidatoPartitoTre.getText().toString().isBlank())
+    			cP3 = "";
+    		else
+    			cP3 = candidatoPartitoTre.getText().toString();
+    		
+    		if(candidatoPartitoQuattro == null || candidatoPartitoQuattro.getText().toString().isEmpty() || candidatoPartitoQuattro.getText().toString().isBlank())
+    			cP4 = "";
+    		else
+    			cP4 = candidatoPartitoQuattro.getText().toString();
+    			
+    		String[] generalita = candidato.getText().toString().split(" ");
+    		v.insertCandidato(new Candidato(generalita[0], generalita[1], partito.getText().toString()), cP1, cP2, cP3, cP4);
+    		
+    		FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//settingVotazioneWindow.fxml"));
+        	Parent root = next.load();
+        	SettingVotazioneController svc = next.getController();
+        	svc.setId(id);
+        	svc.setVotazione(v);
+        	pane.getChildren().removeAll();
+        	pane.getChildren().setAll(root);
     	}
     }
 

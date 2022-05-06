@@ -1,8 +1,6 @@
 package sweng.project.evoting.votazione;
 
 import java.sql.Timestamp;
-import java.util.List;
-
 import sweng.project.evoting.Candidato;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 

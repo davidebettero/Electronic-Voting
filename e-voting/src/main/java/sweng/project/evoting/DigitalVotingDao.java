@@ -18,4 +18,8 @@ public interface DigitalVotingDao {
 	public void addVotoReferendum(String id,String idVoto,Boolean scelte);
 	
 	public void insertReferendumVotingSession(String id,Timestamp inizio,Timestamp fine,String tipo,String Testo);
+	
+	public void insertOrdinaleVotingSession(String id, Timestamp inizio, Timestamp fine);
+	
+	public void insertCandidatoOrdinale(final String id, final Candidato c);
 }

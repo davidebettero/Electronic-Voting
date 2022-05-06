@@ -6,11 +6,15 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import sweng.project.evoting.votazione.VotazioneCategorica;
 
 public class SettingVotazioneController {
-
+	private String id;
+	private VotazioneCategorica v;
+	
     @FXML
     private ResourceBundle resources;
 
@@ -28,6 +32,14 @@ public class SettingVotazioneController {
 
     @FXML
     private AnchorPane pane;
+    
+    public void setId(final String id) {
+    	this.id = id;
+    }
+    
+    public void setVotazione(final VotazioneCategorica v) {
+    	this.v = v;
+    }
 
     @FXML
     void handleDeleteVote(ActionEvent event) throws IOException {
@@ -43,9 +55,13 @@ public class SettingVotazioneController {
 
     @FXML
     void handleInsertAnother(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	Parent root = next.load();
+    	InserimentoCandidatiController icc = next.getController();
+    	icc.setId(id);
+    	icc.setVotazione(v);
     	pane.getChildren().removeAll();
-    	pane.getChildren().setAll(next);
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

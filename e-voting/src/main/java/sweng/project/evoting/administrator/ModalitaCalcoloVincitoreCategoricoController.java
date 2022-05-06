@@ -31,17 +31,17 @@ public class ModalitaCalcoloVincitoreCategoricoController {
 
     @FXML
     private void handleMaggioranza(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//categoricoSettingsWindow.fxml"));
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(next);
     }
 
     @FXML
     private void handleMaggioranzaAssoluta(ActionEvent event) throws IOException {
-    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//categoricoSettingsWindow.fxml"));
     	Parent root = next.load();
-    	InserimentoCandidatiController icc = next.getController();
-    	icc.setAssoluta();
+    	CategoricoSettingsController csc = next.getController();
+    	csc.setAssoluta();
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(root);
     }

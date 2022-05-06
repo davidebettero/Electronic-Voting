@@ -24,21 +24,21 @@ public class ModalitaCalcoloVincitoreCategoricoPreferenzeController {
 
     @FXML
     private void handleMaggioranza(ActionEvent event) throws IOException {
-    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//categoricoSettingsWindow.fxml"));
     	Parent root = next.load();
-    	InserimentoCandidatiController icc = next.getController();
-    	icc.setPreferenze();
+    	CategoricoSettingsController csc = next.getController();
+    	csc.setPreferenze();
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(root);
     }
 
     @FXML
     private void handleMaggioranzaAssoluta(ActionEvent event) throws IOException {
-    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//categoricoSettingsWindow.fxml"));
     	Parent root = next.load();
-    	InserimentoCandidatiController icc = next.getController();
-    	icc.setAssoluta();
-    	icc.setPreferenze();
+    	CategoricoSettingsController csc = next.getController();
+    	csc.setPreferenze();
+    	csc.setAssoluta();
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(root);
     }

@@ -21,9 +21,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import sweng.project.evoting.votazione.VotazioneOrdinale;
+import sweng.project.evoting.votazione.VotazioneCategorica;
 
-public class OrdinaleSettingsController {
+public class CategoricoSettingsController {
+	private boolean conPreferenze = false;
+	private boolean maggioranzaAssoluta = false;
+	
 	@FXML
     private ResourceBundle resources;
 
@@ -56,6 +59,14 @@ public class OrdinaleSettingsController {
 
     @FXML
     private Button undoButton;
+    
+    public void setPreferenze() {
+    	this.conPreferenze = true;
+    }
+    
+    public void setAssoluta() {
+    	this.maggioranzaAssoluta = true;
+    }
 
     @FXML
     void handleData(ActionEvent event) {
@@ -86,7 +97,7 @@ public class OrdinaleSettingsController {
     }
 
     @FXML
-    void handleOk(ActionEvent event) throws IOException, ParseException {
+    void handleOk(ActionEvent event) throws ParseException, IOException {
     	if(data.getValue() == null) {
     		errorMsg.setText("Data della votazione NON inserita");
     	} else if(!isTimeOk()) {
@@ -109,18 +120,21 @@ public class OrdinaleSettingsController {
         	long millisEnd = dateF.getTime();
     		final Timestamp fine = new Timestamp(millisEnd);
     		
-    		VotazioneOrdinale v = new VotazioneOrdinale(id, inizio, fine);
+    		//CREARE VOTAZIONE CATEGORICA E INSERIRLA NEL DATABASE
+    		VotazioneCategorica v = new VotazioneCategorica(id, inizio, fine, conPreferenze, ((maggioranzaAssoluta) ? "maggioranza assoluta" : "maggioranza"));
         	v.insertVotazione();
     		
-        	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatoOrdinaleWindow.fxml"));
+        	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//inserimentoCandidatiWindow.fxml"));
         	Parent root = next.load();
-        	InserimentoCandidatoOrdinaleController icoc = next.getController();
-        	icoc.setId(id);
-        	icoc.setVotazione(v);
+        	InserimentoCandidatiController icc = next.getController();
+        	icc.setId(id);
+        	icc.setVotazione(v);
+        	if(conPreferenze) icc.setPreferenze();
+        	if(maggioranzaAssoluta) icc.setAssoluta();
         	pane.getChildren().removeAll();
         	pane.getChildren().setAll(root);
+        	
     	}
-
     }
 
     @FXML
@@ -134,23 +148,21 @@ public class OrdinaleSettingsController {
     }
 
     @FXML
-    void hanldeUndo(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
-    	pane.getChildren().removeAll();
-    	pane.getChildren().setAll(next);
+    void hanldeUndo(ActionEvent event) {
+
     }
 
     @FXML
     void initialize() {
-        assert data != null : "fx:id=\"data\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert errorMsg != null : "fx:id=\"errorMsg\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert minutiFine != null : "fx:id=\"minutiFine\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert minutiInizio != null : "fx:id=\"minutiInizio\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert okButton != null : "fx:id=\"okButton\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert oraFine != null : "fx:id=\"oraFine\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert oraInizio != null : "fx:id=\"oraInizio\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert pane != null : "fx:id=\"pane\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
-        assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'ordinaleSettingsWindow.fxml'.";
+        assert data != null : "fx:id=\"data\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert errorMsg != null : "fx:id=\"errorMsg\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert minutiFine != null : "fx:id=\"minutiFine\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert minutiInizio != null : "fx:id=\"minutiInizio\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert okButton != null : "fx:id=\"okButton\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert oraFine != null : "fx:id=\"oraFine\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert oraInizio != null : "fx:id=\"oraInizio\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert pane != null : "fx:id=\"pane\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
 
         ObservableList<String> ore = FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
     	oraInizio.setItems(ore);

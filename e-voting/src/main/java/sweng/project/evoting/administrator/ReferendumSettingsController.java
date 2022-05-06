@@ -83,7 +83,7 @@ public class ReferendumSettingsController {
     		errorMsg.setText("Data della votazione NON inserita");
     	} else if(!isTimeOk()) {
     		errorMsg.setText("L'ora di inizio NON può essere successiva o identica all'ora di fine!");
-    	} else if(referendumText != null && !referendumText.getText().toString().isEmpty()){
+    	} else if(referendumText != null && !referendumText.getText().toString().isEmpty() && !referendumText.getText().toString().isBlank()){
 	    	String text = referendumText.getText();
 	    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//riepilogoReferendumWindow.fxml"));
 	    	Parent root = next.load();

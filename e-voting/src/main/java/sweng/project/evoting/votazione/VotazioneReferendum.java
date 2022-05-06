@@ -12,7 +12,7 @@ public class VotazioneReferendum extends Votazione {
 		super(id, inizio, fine);
 		this.tipo = Objects.requireNonNull(tipo);
 		
-		if(Objects.requireNonNull(testo).isEmpty())
+		if(Objects.requireNonNull(testo).isEmpty() || Objects.requireNonNull(testo).isBlank())
 			throw new IllegalArgumentException("Il referendum deve avere un testo");
 		this.testo = testo;
 	}

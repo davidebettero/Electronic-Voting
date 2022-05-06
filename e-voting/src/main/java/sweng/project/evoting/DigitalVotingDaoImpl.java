@@ -312,5 +312,72 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			}
 		}
 	}
+
+	public void insertCategoricaVotingSession(String id, Timestamp inizio, Timestamp fine, boolean conPreferenze, String modCalcoloVincitore) {
+		String query = "INSERT INTO categorico (id,inizio,fine,conpreferenze,modcalcolovincitore) VALUES (?,?,?,?,?)"; //query da eseguire
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id); 
+			ps.setTimestamp(2,inizio); 
+			ps.setTimestamp(3,fine);
+			ps.setBoolean(4, conPreferenze);
+			ps.setString(5, modCalcoloVincitore);
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void insertCandidatoCategorico(String id, Candidato c, String cP1, String cP2, String cP3, String cP4) {
+		String query = "INSERT INTO candidaticategorico (id,nome,cognome,partito,candidatodipartito1,candidatodipartito2,candidatodipartito3,candidatodipartito4) VALUES (?,?,?,?,?,?,?,?)"; //query da eseguire
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id); 
+			ps.setString(2,c.getNome()); 
+			ps.setString(3,c.getCognome());
+			ps.setString(4,c.getPartito());
+			ps.setString(5, cP1);
+			ps.setString(6, cP2);
+			ps.setString(7, cP3);
+			ps.setString(8, cP4);
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 }
