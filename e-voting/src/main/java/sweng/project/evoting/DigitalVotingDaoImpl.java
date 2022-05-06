@@ -379,5 +379,75 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			}
 		}
 	}
+
+	public void deleteVotazioneCategorica(final String id) {
+		String query1 = "DELETE FROM candidaticategorico WHERE id = ?";	//query 1 da eseguire
+		String query2 = "DELETE FROM categorico WHERE id = ?";	//query 2 da eseguire
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);	//setto il prepareStatement
+			//inserisco i valori nella query 1
+			ps1.setString(1, id); 
+			ps1.executeUpdate();
+			
+			ps2 = conn.prepareStatement(query2);	//setto il prepareStatement
+			//inserisco i valori nella query 2
+			ps2.setString(1, id); 
+			ps2.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void deleteVotazioneOrdinale(final String id) {
+		String query1 = "DELETE FROM candidatiordinale WHERE id = ?";	//query 1 da eseguire
+		String query2 = "DELETE FROM ordinale WHERE id = ?";	//query 2 da eseguire
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);	//setto il prepareStatement
+			//inserisco i valori nella query 1
+			ps1.setString(1, id); 
+			ps1.executeUpdate();
+			
+			ps2 = conn.prepareStatement(query2);	//setto il prepareStatement
+			//inserisco i valori nella query 2
+			ps2.setString(1, id); 
+			ps2.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 }

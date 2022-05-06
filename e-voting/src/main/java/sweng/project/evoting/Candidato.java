@@ -21,12 +21,12 @@ public class Candidato {
 	}
 	
 	public String getPartito() {
-		if(partito.isEmpty()) return "Candidato votazione ordinale (non indicato il partito)";
+		if(partito.isEmpty() || partito.isBlank()) return "Candidato votazione ordinale (non indicato il partito)";
 		else return partito;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("%s %s", nome, cognome) + ((partito.isEmpty()) ? "" : ("\nPartito: " + partito));
+		return String.format("%s %s", nome, cognome) + ((partito.isEmpty() || partito.isBlank()) ? "" : ("\nPartito: " + partito));
 	}
 }

@@ -38,5 +38,9 @@ public class VotazioneCategorica extends Votazione {
 	public void insertCandidato(final Candidato c, final String cP1, final String cP2, final String cP3, final String cP4) {
 		new DigitalVotingDaoImpl().insertCandidatoCategorico(this.getId(), c, cP1, cP2, cP3, cP4);
 	}
+	
+	public void deleteVotazione() {
+		new DigitalVotingDaoImpl().deleteVotazioneCategorica(this.getId());
+	}
 
 }

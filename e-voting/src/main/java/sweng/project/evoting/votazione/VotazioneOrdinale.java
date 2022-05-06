@@ -24,4 +24,8 @@ public class VotazioneOrdinale extends Votazione {
 		return "Ordinale";
 	}
 
+	public void deleteVotazione() {
+		new DigitalVotingDaoImpl().deleteVotazioneOrdinale(this.getId());
+	}
+
 }

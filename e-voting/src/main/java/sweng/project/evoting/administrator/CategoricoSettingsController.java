@@ -148,8 +148,10 @@ public class CategoricoSettingsController {
     }
 
     @FXML
-    void hanldeUndo(ActionEvent event) {
-
+    void hanldeUndo(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//modalitaVotoWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
     }
 
     @FXML

@@ -12,6 +12,9 @@ public class Amministratore extends Utente {
     */
     public Amministratore(String name, String surname, String username, String password){
     	super(username, password, "Amministratore");
+    	
+    	if(name.isEmpty() || name.isBlank() || surname.isEmpty() || surname.isBlank())
+    		throw new IllegalArgumentException("Il nome e il cognome dell'amministrazione devono essere indicati");
     	this.name = name;
     	this.surname = surname;
     }
@@ -51,16 +54,23 @@ public class Amministratore extends Utente {
     
     @Override
     public String toString() {
-    	return "";
+    	return String.format("Amministratore: %s %s", name, surname);
     }
 
     @Override
     public int hashCode() {
-    	return 0;
+    	int result = super.hashCode();
+    	result = 31 * result + name.hashCode();
+    	result = 31 * result + surname.hashCode();
+    	return result;
     }
 
     @Override
     public boolean equals(Object obj) {
+    	if(obj instanceof Amministratore) {
+    		Amministratore a = (Amministratore) obj;
+    		return a.name.equals(name) && a.surname.equals(surname) && a.getUsername().equals(this.getUsername()) && a.getPassword().equals(this.getPassword());
+    	}
     	return false;
     }
     

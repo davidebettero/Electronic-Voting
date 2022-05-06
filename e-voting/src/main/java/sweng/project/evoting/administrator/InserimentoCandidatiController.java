@@ -122,7 +122,10 @@ public class InserimentoCandidatiController {
     			cP4 = candidatoPartitoQuattro.getText().toString();
     			
     		String[] generalita = candidato.getText().toString().split(" ");
-    		v.insertCandidato(new Candidato(generalita[0], generalita[1], partito.getText().toString()), cP1, cP2, cP3, cP4);
+    		if(generalita.length < 2)
+    			v.insertCandidato(new Candidato(generalita[0], "", partito.getText().toString()), cP1, cP2, cP3, cP4);
+    		else
+    			v.insertCandidato(new Candidato(generalita[0], generalita[1], partito.getText().toString()), cP1, cP2, cP3, cP4);
     		
     		FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//settingVotazioneWindow.fxml"));
         	Parent root = next.load();

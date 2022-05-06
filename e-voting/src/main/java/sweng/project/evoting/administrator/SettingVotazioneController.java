@@ -43,6 +43,7 @@ public class SettingVotazioneController {
 
     @FXML
     void handleDeleteVote(ActionEvent event) throws IOException {
+    	v.deleteVotazione();
     	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//voteDeletedWindow.fxml"));
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(next);
