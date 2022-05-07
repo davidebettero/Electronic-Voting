@@ -2,6 +2,7 @@ package sweng.project.evoting.administrator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import sweng.project.evoting.Candidato;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.votazione.VotazioneOrdinale;
 
 public class SettingVotazioneOrdinaleController {
@@ -50,8 +53,16 @@ public class SettingVotazioneOrdinaleController {
     }
 
     @FXML
-    void handleGoSummary(ActionEvent event) {
-
+    void handleGoSummary(ActionEvent event) throws IOException {
+    	List<Candidato> lista = new DigitalVotingDaoImpl().candidatiOrdinale(id);
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//riepilogoVotazioneOrdinaleWindow.fxml"));
+    	Parent root = next.load();
+    	RiepilogoVotazioneOrdinaleController rvoc = next.getController();
+    	rvoc.setTabella(lista);
+    	rvoc.setId(id);
+    	rvoc.setVotazione(v);
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

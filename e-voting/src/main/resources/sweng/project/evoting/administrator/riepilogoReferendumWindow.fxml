@@ -38,7 +38,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="27.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:">
+      <Text layoutX="27.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data inizio:">
          <font>
             <Font size="20.0" />
          </font>
@@ -53,7 +53,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="dataVotazione" layoutX="82.0" layoutY="86.0" onDragDetected="#handleData" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.89459228515625">
+      <Text fx:id="dataInizioVotazione" layoutX="136.0" layoutY="86.0" onDragDetected="#handleData" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="182.49456787109375">
          <font>
             <Font size="20.0" />
          </font>
@@ -64,6 +64,16 @@
          </font>
       </Text>
       <Text fx:id="oraFineVotazione" layoutX="387.0" layoutY="138.0" onDragDetected="#handleOraFine" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="145.8251953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="318.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data fine:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="dataFineVotazione" layoutX="414.0" layoutY="85.0" onDragDetected="#handleData" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.49456787109375">
          <font>
             <Font size="20.0" />
          </font>

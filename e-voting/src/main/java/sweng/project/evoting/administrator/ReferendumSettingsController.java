@@ -2,6 +2,7 @@ package sweng.project.evoting.administrator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -27,7 +28,10 @@ public class ReferendumSettingsController {
     private Text errorMsg;
 	
 	@FXML
-    private DatePicker data;
+    private DatePicker dataFine;
+
+    @FXML
+    private DatePicker dataInizio;
 	
 	@FXML
     private ChoiceBox<String> minutiFine;
@@ -76,12 +80,21 @@ public class ReferendumSettingsController {
     	
     	return true;
     }
+    
+    // restituisce true se la data di inzizio della votazione è antecedente o uguale alla data di fine
+    private boolean isDataOk() {
+    	LocalDate inizio = dataInizio.getValue();
+    	LocalDate fine = dataFine.getValue();
+    	return inizio.isBefore(fine) || inizio.equals(fine);
+    }
 
     @FXML
     private void handleOk(ActionEvent event) throws IOException {
-    	if(data.getValue() == null) {
+    	if(dataInizio.getValue() == null || dataFine.getValue() == null) {
     		errorMsg.setText("Data della votazione NON inserita");
-    	} else if(!isTimeOk()) {
+    	} else if(!isDataOk()) {
+    		errorMsg.setText("La data di inizio NON può essere successiva alla data di fine");
+    	}else if(!isTimeOk() && dataInizio.getValue().equals(dataFine.getValue())) {
     		errorMsg.setText("L'ora di inizio NON può essere successiva o identica all'ora di fine!");
     	} else if(referendumText != null && !referendumText.getText().toString().isEmpty() && !referendumText.getText().toString().isBlank()){
 	    	String text = referendumText.getText();
@@ -91,7 +104,8 @@ public class ReferendumSettingsController {
 	    	// se quorum = true allora il referendum sarà con quorum, senza altrimenti.
 	    	if(quorum) rrc.insertType("CON"); else rrc.insertType("SENZA");
 	    	rrc.insertText(text);
-	    	rrc.insertData(data.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+	    	rrc.insertDataInizio(dataInizio.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+	    	rrc.insertDataFine(dataFine.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 	    	rrc.insertOraInizio(oraInizio.getSelectionModel().getSelectedItem() + ":" + minutiInizio.getSelectionModel().getSelectedItem());
 	    	rrc.insertOraFine(oraFine.getSelectionModel().getSelectedItem() + ":" + minutiFine.getSelectionModel().getSelectedItem());
 	    	pane.getChildren().removeAll();
@@ -105,7 +119,12 @@ public class ReferendumSettingsController {
     }
     
     @FXML
-    private void handleData(ActionEvent event) {
+    private void handleDataInizio(ActionEvent event) {
+
+    }
+    
+    @FXML
+    private void handleDataFine(ActionEvent event) {
 
     }
 
@@ -138,7 +157,8 @@ public class ReferendumSettingsController {
 
     @FXML
     private void initialize() {
-    	assert data != null : "fx:id=\"data\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";
+    	assert dataFine != null : "fx:id=\"dataFine\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";
+    	assert dataInizio != null : "fx:id=\"data\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";
         assert minutiFine != null : "fx:id=\"minutiFine\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";
         assert minutiInizio != null : "fx:id=\"minutiInizio\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";
         assert okButton != null : "fx:id=\"okButton\" was not injected: check your FXML file 'referendumSettingsWindow.fxml'.";

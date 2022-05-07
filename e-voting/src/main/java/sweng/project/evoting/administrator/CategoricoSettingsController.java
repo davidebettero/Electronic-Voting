@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -20,6 +21,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import sweng.project.evoting.votazione.VotazioneCategorica;
 
@@ -34,7 +36,10 @@ public class CategoricoSettingsController {
     private URL location;
 
     @FXML
-    private DatePicker data;
+    private DatePicker dataFine;
+
+    @FXML
+    private DatePicker dataInizio;
 
     @FXML
     private Text errorMsg;
@@ -69,7 +74,12 @@ public class CategoricoSettingsController {
     }
 
     @FXML
-    void handleData(ActionEvent event) {
+    void handleDataFine(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleDataInizio(ActionEvent event) {
 
     }
 
@@ -95,27 +105,40 @@ public class CategoricoSettingsController {
     	
     	return true;
     }
+    
+    // restituisce true se la data di inzizio della votazione è antecedente o uguale alla data di fine
+    private boolean isDataOk() {
+    	LocalDate inizio = dataInizio.getValue();
+    	LocalDate fine = dataFine.getValue();
+    	return inizio.isBefore(fine) || inizio.equals(fine);
+    }
 
     @FXML
     void handleOk(ActionEvent event) throws ParseException, IOException {
-    	if(data.getValue() == null) {
+    	if(dataInizio.getValue() == null || dataFine.getValue() == null) {
+    		errorMsg.setFill(Color.RED);
     		errorMsg.setText("Data della votazione NON inserita");
-    	} else if(!isTimeOk()) {
+    	}else if(!isDataOk()) {
+    		errorMsg.setFill(Color.RED);
+    		errorMsg.setText("La data di inizio NON può essere successiva alla data di fine");
+    	}else if(!isTimeOk() && dataInizio.getValue().equals(dataFine.getValue())) {
+    		errorMsg.setFill(Color.RED);
     		errorMsg.setText("L'ora di inizio NON può essere successiva o identica all'ora di fine!");
     	} else {
     		// inserisco la votazione nel database
     		final String id = UUID.randomUUID().toString(); 
-    		String[] d = data.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString().split("-");
+    		String[] dI = dataInizio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString().split("-");
         	String[] hI = (oraInizio.getSelectionModel().getSelectedItem() + ":" + minutiInizio.getSelectionModel().getSelectedItem()).toString().split(":");
         	
-        	String start = d[0] + "/" + d[1] + "/" + d[2] + " " + hI[0] + ":" + hI[1] + ":00";
+        	String start = dI[0] + "/" + dI[1] + "/" + dI[2] + " " + hI[0] + ":" + hI[1] + ":00";
         	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         	Date dateI = sdf.parse(start);
         	long millisStart = dateI.getTime();
     		final Timestamp inizio = new Timestamp(millisStart);
     		
+    		String[] dF = dataFine.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString().split("-");
         	String[] hF = (oraFine.getSelectionModel().getSelectedItem() + ":" + minutiFine.getSelectionModel().getSelectedItem()).toString().split(":");
-        	String end = d[0] + "/" + d[1] + "/" + d[2] + " " + hF[0] + ":" + hF[1] + ":00";
+        	String end = dF[0] + "/" + dF[1] + "/" + dF[2] + " " + hF[0] + ":" + hF[1] + ":00";
         	Date dateF = sdf.parse(end);
         	long millisEnd = dateF.getTime();
     		final Timestamp fine = new Timestamp(millisEnd);
@@ -156,7 +179,8 @@ public class CategoricoSettingsController {
 
     @FXML
     void initialize() {
-        assert data != null : "fx:id=\"data\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+    	assert dataFine != null : "fx:id=\"dataFine\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
+        assert dataInizio != null : "fx:id=\"data\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
         assert errorMsg != null : "fx:id=\"errorMsg\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
         assert minutiFine != null : "fx:id=\"minutiFine\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";
         assert minutiInizio != null : "fx:id=\"minutiInizio\" was not injected: check your FXML file 'categoricoSettingsWindow.fxml'.";

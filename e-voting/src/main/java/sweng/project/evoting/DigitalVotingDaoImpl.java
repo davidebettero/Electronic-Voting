@@ -450,4 +450,67 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		}
 	}
 	
+	public void eliminaCandidatoOrdinale(final String id, final Candidato c) {
+		String query = "DELETE FROM candidaticategorico WHERE id = ? AND nome = ? AND cognome = ?"; //query da eseguire
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id); 
+			ps.setString(2,c.getNome()); 
+			ps.setString(3,c.getCognome());
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<Candidato> candidatiOrdinale(final String id) {
+		String query = "SELECT nome, cognome FROM candidatiordinale WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		List<Candidato> lst = new ArrayList<>();
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				lst.add(new Candidato(res.getString("nome"), res.getString("cognome"), null));
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return lst;
+	}
+	
 }

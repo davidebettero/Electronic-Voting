@@ -16,14 +16,14 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextArea fx:id="referendumText" layoutX="24.0" layoutY="62.0" onDragDetected="#handleReferendumText" prefHeight="173.0" prefWidth="552.0" promptText="Inserisci il testo del referendum" />
+      <TextArea fx:id="referendumText" layoutX="24.0" layoutY="62.0" onDragDetected="#handleReferendumText" prefHeight="146.0" prefWidth="552.0" promptText="Inserisci il testo del referendum" />
       <Button fx:id="okButton" layoutX="533.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleOk" text="OK">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <DatePicker fx:id="data" editable="false" layoutX="399.0" layoutY="255.0" onAction="#handleData" promptText="Seleziona data" showWeekNumbers="true" />
-      <Text fill="#2b00ff" layoutX="27.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci la data della votazione:">
+      <DatePicker fx:id="dataInizio" editable="false" layoutX="376.0" layoutY="217.0" onAction="#handleDataInizio" promptText="Seleziona data" showWeekNumbers="true" />
+      <Text fill="#2b00ff" layoutX="27.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci data inizio votazione:">
          <font>
             <Font size="24.0" />
          </font>
@@ -57,5 +57,11 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <Text fill="#2b00ff" layoutX="27.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci data fine votazione:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="dataFine" editable="false" layoutX="376.0" layoutY="256.0" onAction="#handleDataFine" promptText="Seleziona data" showWeekNumbers="true" />
    </children>
 </AnchorPane>

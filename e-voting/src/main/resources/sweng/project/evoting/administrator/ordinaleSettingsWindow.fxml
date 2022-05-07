@@ -15,8 +15,8 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <DatePicker fx:id="data" editable="false" layoutX="383.0" layoutY="107.0" onAction="#handleData" promptText="Seleziona data" showWeekNumbers="true" />
-      <Text fill="#2b00ff" layoutX="24.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci la data della votazione:">
+      <DatePicker fx:id="dataInizio" editable="false" layoutX="383.0" layoutY="107.0" onAction="#handleDataInizio" promptText="Seleziona data" showWeekNumbers="true" />
+      <Text fill="#2b00ff" layoutX="24.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di inizio della votazione:">
          <font>
             <Font size="24.0" />
          </font>
@@ -53,6 +53,17 @@
       <Text fill="RED" layoutX="163.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOTO ORDINALE" underline="true">
          <font>
             <Font size="36.0" />
+         </font>
+      </Text>
+      <Text fill="#2b00ff" layoutX="24.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di fine della votazione:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="dataFine" editable="false" layoutX="383.0" layoutY="148.0" onAction="#handleDataFine" promptText="Seleziona data" showWeekNumbers="true" />
+      <Text fx:id="errorMsg" fill="RED" layoutX="24.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="552.0000305175781">
+         <font>
+            <Font size="16.0" />
          </font>
       </Text>
    </children>

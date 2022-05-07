@@ -26,7 +26,10 @@ public class RiepilogoReferendumController {
     private URL location;
     
     @FXML
-    private Text dataVotazione;
+    private Text dataFineVotazione;
+
+    @FXML
+    private Text dataInizioVotazione;
 
     @FXML
     private Text oraFineVotazione;
@@ -70,17 +73,18 @@ public class RiepilogoReferendumController {
     	final String id = UUID.randomUUID().toString();  
     	final String tipo = typeOfReferendum.getText().toString().split(" ", 2)[1];
 
-    	String[] d = dataVotazione.getText().toString().split("-");
+    	String[] dI = dataInizioVotazione.getText().toString().split("-");
     	String[] hI = oraInizioVotazione.getText().toString().split(":");
     	
-    	String start = d[2] + "/" + d[1] + "/" + d[0] + " " + hI[0] + ":" + hI[1] + ":00";
+    	String start = dI[2] + "/" + dI[1] + "/" + dI[0] + " " + hI[0] + ":" + hI[1] + ":00";
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     	Date dateI = sdf.parse(start);
     	long millisStart = dateI.getTime();
 		final Timestamp inizio = new Timestamp(millisStart);
 		
+		String[] dF = dataFineVotazione.getText().toString().split("-");
     	String[] hF = oraFineVotazione.getText().toString().split(":");
-    	String end = d[2] + "/" + d[1] + "/" + d[0] + " " + hF[0] + ":" + hF[1] + ":00";
+    	String end = dF[2] + "/" + dF[1] + "/" + dF[0] + " " + hF[0] + ":" + hF[1] + ":00";
     	Date dateF = sdf.parse(end);
     	long millisEnd = dateF.getTime();
 		final Timestamp fine = new Timestamp(millisEnd);
@@ -110,9 +114,14 @@ public class RiepilogoReferendumController {
     	pane.getChildren().setAll(next);
     }
     
-    public void insertData(String data) {
-    	dataVotazione.setFill(Color.BLUE);
-    	dataVotazione.setText(data);
+    public void insertDataInizio(String data) {
+    	dataInizioVotazione.setFill(Color.BLUE);
+    	dataInizioVotazione.setText(data);
+    }
+    
+    public void insertDataFine(String data) {   	
+    	dataFineVotazione.setFill(Color.BLUE);
+    	dataFineVotazione.setText(data);
     }
     
     public void insertOraInizio(String oI) {
