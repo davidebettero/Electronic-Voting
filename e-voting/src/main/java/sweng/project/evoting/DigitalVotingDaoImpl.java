@@ -461,7 +461,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			st.execute("set search_path=digitalvoting"); //set search_path
 			
 			ps = conn.prepareStatement(query);	//setto il prepareStatement
-
+			
 			//inserisco i valori nella query
 			ps.setString(1, id); 
 			ps.setString(2,c.getNome()); 
@@ -511,6 +511,48 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			}
 		}
 		return lst;
+	}
+	
+	// restituisce un array che contiene in ordine data d'inizio, ora d'inizio, data di fine, ora di fine della votazione ordinale con questo id
+	public String[] getInfoVotazioneOrdinale(final String id) {
+		String query = "SELECT inizio, fine FROM ordinale WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		String[] result = new String[4];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				String[] i = res.getString("inizio").split(" ");
+				String[] dI = i[0].split("-");
+				result[0] = dI[2] + "-" + dI[1] + "-" + dI[0];
+				result[1] = i[1].substring(0, 5);
+				
+				String[] f = res.getString("fine").split(" ");
+				String[] dF = f[0].split("-");
+				result[2] = dF[2] + "-" + dF[1] + "-" + dF[0];
+				result[3] = f[1].substring(0, 5);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 	
 }

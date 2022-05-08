@@ -58,9 +58,10 @@ public class SettingVotazioneOrdinaleController {
     	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//riepilogoVotazioneOrdinaleWindow.fxml"));
     	Parent root = next.load();
     	RiepilogoVotazioneOrdinaleController rvoc = next.getController();
-    	rvoc.setTabella(lista);
+    	rvoc.setTabella(id, lista);
     	rvoc.setId(id);
     	rvoc.setVotazione(v);
+    	rvoc.setInfo(id);
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(root);
     }

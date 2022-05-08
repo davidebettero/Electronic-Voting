@@ -1,15 +1,20 @@
 package sweng.project.evoting.administrator;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import sweng.project.evoting.Candidato;
 import sweng.project.evoting.DigitalVotingDaoImpl;
@@ -65,26 +70,45 @@ public class RiepilogoVotazioneOrdinaleController {
     	this.v = v;
     }
     
-    public void setTabella(List<Candidato> l) {
+    public void setTabella(final String id, final List<Candidato> l) {
     	this.lista = l;
     	colonnaCandidati.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         colonnaAzioni.setCellValueFactory(new PropertyValueFactory<>("ButtonBar"));
-        
-        //List<Candidato> lista = new DigitalVotingDaoImpl().candidatiOrdinale("2acb3b3f-4b01-4776-a1d8-43952b4daa19");
+
         for(Candidato c : lista) {
-        	RowCandidato rc = new RowCandidato(id, c);
+        	RowCandidato rc = new RowCandidato(id, c, pane);
         	tabellaCandidati.getItems().add(rc);
         }
     }
-
-    @FXML
-    void handleOk(ActionEvent event) {
-    	System.out.println(id);
+    
+    public void setInfo(final String id) {
+    	String[] info = new DigitalVotingDaoImpl().getInfoVotazioneOrdinale(id);
+    	dataInizioValue.setText(info[0]);
+    	dataInizioValue.setFill(Color.BLUE);
+    	oIValue.setText(info[1]);
+    	oIValue.setFill(Color.BLUE);
+    	dataFineValue.setText(info[2]);
+    	dataFineValue.setFill(Color.BLUE);
+    	oFValue.setText(info[3]);
+    	oFValue.setFill(Color.BLUE);
     }
 
     @FXML
-    void hanldeUndo(ActionEvent event) {
+    void handleOk(ActionEvent event) throws IOException {
+    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//votazioneOrdinaleCreataWindow.fxml"));
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(next);
+    }
 
+    @FXML
+    void hanldeUndo(ActionEvent event) throws IOException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//settingVotazioneOrdinaleWindow.fxml"));
+    	Parent root = next.load();
+    	SettingVotazioneOrdinaleController svoc = next.getController();
+    	svoc.setId(id);
+    	svoc.setVotazione(v);
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML
