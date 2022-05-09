@@ -451,7 +451,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	}
 	
 	public void eliminaCandidatoOrdinale(final String id, final Candidato c) {
-		String query = "DELETE FROM candidaticategorico WHERE id = ? AND nome = ? AND cognome = ?"; //query da eseguire
+		String query = "DELETE FROM candidatiordinale WHERE id = ? AND nome = ? AND cognome = ?"; //query da eseguire
 		Connection conn = null; 
 		PreparedStatement ps = null;
 		try {
