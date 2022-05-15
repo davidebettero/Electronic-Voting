@@ -42,5 +42,10 @@ public class VotazioneCategorica extends Votazione {
 	public void deleteVotazione() {
 		new DigitalVotingDaoImpl().deleteVotazioneCategorica(this.getId());
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s a %s", getTipo(), modCalcoloVincitore.toLowerCase());
+	}
 
 }

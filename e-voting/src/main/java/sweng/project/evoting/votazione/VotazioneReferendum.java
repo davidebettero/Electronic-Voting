@@ -30,4 +30,9 @@ public class VotazioneReferendum extends Votazione {
 	public String getTipo() {
 		return this.tipo;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Referendum %s", tipo);
+	}
 }

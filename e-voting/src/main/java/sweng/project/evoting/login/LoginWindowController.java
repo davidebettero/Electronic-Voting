@@ -16,7 +16,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.Utente;
+import sweng.project.evoting.voter.VoterWindowController;
 import javafx.scene.control.PasswordField;
 
 public class LoginWindowController {
@@ -65,8 +67,18 @@ public class LoginWindowController {
     			e.printStackTrace();
     		}
     	} else if(isIn && type.equals("Elettore")) {
-    		errorMsg.setFill(Color.GREEN);
-	    	errorMsg.setText("Benvenuto elettore " + user);
+    		login.getScene().getWindow().hide();
+    		try {
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//voterWindow.fxml"));
+    			Stage stage = new Stage();
+    			stage.setScene(new Scene(loader.load()));
+    			VoterWindowController vwc = loader.getController();
+    			vwc.setTabella(new DigitalVotingDaoImpl().getAllVotazioni());
+    			stage.setTitle("Benvenuto " + user);
+    			stage.show();
+    		}catch (Exception e) {
+    			e.printStackTrace();
+    		}
     	}else {
     		errorMsg.setFill(Color.RED);
 	    	errorMsg.setText("Errore. Username o password errati.");

@@ -27,5 +27,10 @@ public class VotazioneOrdinale extends Votazione {
 	public void deleteVotazione() {
 		new DigitalVotingDaoImpl().deleteVotazioneOrdinale(this.getId());
 	}
+	
+	@Override
+	public String toString() {
+		return "Votazione ordinale";
+	}
 
 }

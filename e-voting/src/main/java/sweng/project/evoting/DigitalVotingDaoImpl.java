@@ -7,8 +7,16 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import sweng.project.evoting.votazione.Votazione;
+import sweng.project.evoting.votazione.VotazioneCategorica;
+import sweng.project.evoting.votazione.VotazioneOrdinale;
+import sweng.project.evoting.votazione.VotazioneReferendum;
 
 
 public class DigitalVotingDaoImpl implements DigitalVotingDao {
@@ -547,6 +555,94 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		}finally{
 			try {
 				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	// restituisce tutte le votazioni attive nel momento in cui viene invocato il metodo, ossia tutte le votazioni già iniziate ma non ancora terminate
+	public List<Votazione> getAllVotazioni() throws ParseException {
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		List<Votazione> result = new ArrayList<>();
+		
+		try {
+			conn = getConnection(); //apro connessione
+			String query1 = "SELECT id, inizio, fine, tipo, testo FROM referendum WHERE inizio <= CURRENT_TIMESTAMP AND fine > CURRENT_TIMESTAMP";
+			String query2 = "SELECT id, inizio, fine FROM ordinale WHERE inizio <= CURRENT_TIMESTAMP AND fine > CURRENT_TIMESTAMP";
+			String query3 = "SELECT id, inizio, fine, conpreferenze, modcalcolovincitore FROM categorico WHERE inizio <= CURRENT_TIMESTAMP AND fine > CURRENT_TIMESTAMP";
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);
+			ResultSet res1 = ps1.executeQuery();
+			
+			while(res1.next()) {
+				String id = res1.getString("id");
+				String inizio = res1.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
+				
+				String fine = res1.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
+				
+				String tipo = res1.getString("tipo");
+				String testo = res1.getString("testo");
+				result.add(new VotazioneReferendum(id, i, f, tipo, testo));
+			}
+			
+			ps2 = conn.prepareStatement(query2);
+			ResultSet res2 = ps1.executeQuery();
+			
+			while(res2.next()) {
+				String id = res2.getString("id");
+				String inizio = res2.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
+				
+				String fine = res2.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
+				
+				result.add(new VotazioneOrdinale(id, i, f));
+			}
+			
+			ps3 = conn.prepareStatement(query3);
+			ResultSet res3 = ps3.executeQuery();
+
+			while(res3.next()) {
+				String id = res3.getString("id");
+				String inizio = res3.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
+				
+				String fine = res3.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
+				
+				boolean conPreferenze = res3.getBoolean("conpreferenze");
+				String modCalcoloVincitore = res3.getString("modcalcolovincitore");
+				result.add(new VotazioneCategorica(id, i, f, conPreferenze, modCalcoloVincitore));
+			}
+			
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				ps3.close();
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

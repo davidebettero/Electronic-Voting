@@ -8,13 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import sweng.project.evoting.Candidato;
-import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.administrator.DeleteCandidatoController;
-import sweng.project.evoting.administrator.SettingVotazioneOrdinaleController;
 
 public class RowCandidato {
 	@FXML
@@ -25,8 +21,8 @@ public class RowCandidato {
 	private ButtonBar b;
 	
 	public RowCandidato(final String id, final Candidato c, final Pane p) {
-		this.pane = p;
-		this.id = id;
+		this.pane = Objects.requireNonNull(p);
+		this.id = Objects.requireNonNull(id);
 		this.c = Objects.requireNonNull(c);
 		this.b = new ButtonBar();
 		Button button_elimina = new Button("elimina");
