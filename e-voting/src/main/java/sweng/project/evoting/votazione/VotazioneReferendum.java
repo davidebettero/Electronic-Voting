@@ -28,7 +28,7 @@ public class VotazioneReferendum extends Votazione {
 	
 	@Override
 	public String getTipo() {
-		return this.tipo;
+		return "Referendum " + this.tipo;
 	}
 	
 	@Override

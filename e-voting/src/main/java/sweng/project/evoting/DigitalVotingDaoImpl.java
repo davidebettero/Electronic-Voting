@@ -600,7 +600,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			}
 			
 			ps2 = conn.prepareStatement(query2);
-			ResultSet res2 = ps1.executeQuery();
+			ResultSet res2 = ps2.executeQuery();
 			
 			while(res2.next()) {
 				String id = res2.getString("id");
@@ -649,6 +649,91 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			}
 		}
 		return result;
+	}
+	
+	public String[] getInfoReferendum(final String id) {
+		String query = "SELECT inizio, fine, tipo, testo FROM referendum WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		String[] result = new String[4];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				result[0] = res.getString("inizio");
+				result[1] = res.getString("fine");
+				result[2] = res.getString("tipo");
+				result[3] = res.getString("testo");
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public String[] getInfoOrdinale(final String id) {
+		String query1 = "SELECT inizio, fine FROM ordinale WHERE id = ?";
+		String query2 = "SELECT nome, cognome FROM candidatiordinale WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		List<String> r = new ArrayList<>();
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps1.setString(1, id);
+			ResultSet res1 = ps1.executeQuery();
+			while(res1.next()) {
+				r.add(res1.getString("inizio"));
+				r.add(res1.getString("fine"));
+			}
+			
+			ps2 = conn.prepareStatement(query2);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps2.setString(1, id);
+			ResultSet res2 = ps2.executeQuery();
+			while(res2.next()) {
+				String nome = res2.getString("nome");
+				String cognome = res2.getString("cognome");
+				r.add(String.format("%s %s", nome, cognome));
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		String[] result = new String[r.size()];
+		return r.toArray(result);
 	}
 	
 }
