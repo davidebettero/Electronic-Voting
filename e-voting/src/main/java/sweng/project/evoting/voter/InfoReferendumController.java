@@ -55,6 +55,7 @@ public class InfoReferendumController {
     	this.testo.setText(testo.replace("\n", " "));
     	this.testo.setFill(Color.BLUE);
     	this.testo.setTextAlignment(TextAlignment.JUSTIFY);
+    	this.testo.setStyle("-fx-font: 14 arial;");
     }
 
     @FXML

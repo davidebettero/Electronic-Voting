@@ -7,8 +7,8 @@ public class VotoCategorico extends Voto {
     private String candidatoUno;
     private String candidatoDue;
 
-    public VotoCategorico(String id, String idVotazione, String partito, String candidatoPrincipale, String candidatoUno, String candidatoDue){
-        super(id,idVotazione);
+    public VotoCategorico(String idVotazione, String partito, String candidatoPrincipale, String candidatoUno, String candidatoDue){
+        super(idVotazione);
 
         this.partito = partito;
         this.candidatoPrincipale = candidatoPrincipale;

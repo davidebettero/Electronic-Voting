@@ -5,20 +5,16 @@ import java.util.Objects;
 public class Voto {
 
     private String idVotazione;
-    private String idVoto;
 
-    public Voto(String idVotazione, String idVoto) {
-    	this.idVotazione = Objects.requireNonNull(idVotazione);
-    	this.idVoto = Objects.requireNonNull(idVoto);
+    public Voto(String idVotazione) {
+    	if(Objects.requireNonNull(idVotazione).isEmpty() || Objects.requireNonNull(idVotazione).isBlank())
+    		throw new IllegalArgumentException("Deve essere indicato l'ID della votazione a cui appartiene questo voto");
+    	
+    	this.idVotazione = idVotazione;
     }
 
     //effects: restituisce l'id della votazione
     public String getVotazione(){
         return this.idVotazione;
-    }
-
-    //effects: restituisce l'id del voto this
-    public String getId(){
-        return this.idVoto;
     }
 }

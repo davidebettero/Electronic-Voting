@@ -1,6 +1,7 @@
 package sweng.project.evoting;
 
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 /*
  * OVERVIEW: questa classe istanzia un oggetto di tipo Elettore che fa parte di un sistema di voto elettronico.
@@ -18,7 +19,7 @@ public class Elettore extends Utente {
      * ofAge indica se l'elettore � maggiorenne (true) oppure no (false),
      * birthDateValid indica se la data di nascita � una data valida.
     */
-    private boolean birthDateValid, ofAge, hasVoted, city15K;
+    private boolean city15K;
     /*
 	 * Attributi che rappresentano il paese e la citt� di nascita dell'elettore
 	*/
@@ -35,21 +36,57 @@ public class Elettore extends Utente {
      * 			Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
     */
     
-    public Elettore(String name, String surname, String username, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, String codiceFiscale){
+    public Elettore(String name, String surname, String username, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, boolean city15K, String codiceFiscale){
 		super(username, password, "Elettore");
-		this.name = name;
-		this.surname = surname;
+		this.name = Objects.requireNonNull(name);
+		this.surname = Objects.requireNonNull(surname);
 		this.gender = gender;
+		
+		if(birthDay <= 0 || birthDay > 31 || birthMonth <= 0 || birthMonth > 12 || birthYear <= 0 || !isDateOfBirthValid())
+			throw new IllegalArgumentException("Data di nascita non valida");
+		
+		switch(birthMonth) {
+			case 11:
+			case 4:
+			case 6:
+			case 9:
+				if(birthDay == 31) throw new IllegalArgumentException("Data di nascita non valida");
+				break;
+			case 2:
+				if((!isLeapYear(birthYear) && birthDay > 28) || (isLeapYear(birthYear) && birthDay > 28))
+					throw new IllegalArgumentException("Data di nascita non valida");
+				break;
+			default:
+				break;
+		}
+		
 		this.birthDay = birthDay;
 		this.birthMonth = birthMonth;
 		this.birthYear = birthYear;
-		this.birthDateValid = this.isDateOfBirthValid();
-		this.ofAge = this.isOfAge();
-		this.hasVoted = false;
+		
+		if(Objects.requireNonNull(birthPlace).isEmpty() || Objects.requireNonNull(birthPlace).isBlank())
+			throw new IllegalArgumentException("Paese di nascita non indicato");
+		if(Objects.requireNonNull(countryOfBirth).isEmpty() || Objects.requireNonNull(countryOfBirth).isBlank())
+			throw new IllegalArgumentException("Nazione di nascita non indicata");
+		
 		this.countryOfBirth = countryOfBirth;
 		this.birthPlace = birthPlace;
+		this.city15K = city15K;
+		
+		if(Objects.requireNonNull(codiceFiscale).length() != 16)
+			throw new IllegalArgumentException("Codice fiscale non valido");
 		this.taxCode = codiceFiscale.toCharArray();
 	}
+    
+    private boolean isLeapYear(int anno) {
+    	if(anno % 4 == 0) {
+    		if(anno % 100 == 0 && anno % 400 != 0) {
+    			return false;
+    		}
+    		return true;
+    	}
+    	return false;
+    }
     
     public String getName() {
     	return this.name;
@@ -57,6 +94,10 @@ public class Elettore extends Utente {
     
     public String getSurname() {
     	return this.surname;
+    }
+    
+    public char getGender() {
+    	return this.gender;
     }
     
     /* Effects: restituisce true se la data di nascita � valida (ovvero non successiva alla data corrente),
@@ -76,34 +117,66 @@ public class Elettore extends Utente {
         GregorianCalendar today = new GregorianCalendar();
         return birthDate.before(today);
 	}
+	
+	public String getTaxCode() {
+		return new String(taxCode);
+	}
+	
+	public String getLuogoDiNascita() {
+		return String.format("%s, %s", birthPlace, countryOfBirth);
+	}
+	
+	public boolean hasTheCityMoreThan15KPeople() {
+		return city15K;
+	}
 
     /*
-     * Effects: permette all'elettore di votare
+     * Effects: permette all'elettore di votare per la votazione avente lo stesso id passato come argomento
     */
-    public void esprimi_voto(){
-    	hasVoted = true;
+    public void esprimi_voto(final String idVotazione){
+    	if(idVotazione == null || idVotazione.isEmpty() || idVotazione.isBlank()) throw new IllegalArgumentException("ID della votazione non valido");
+    	
+    	if(isOfAge()) {
+    		
+    	} else {
+    		throw new IllegalArgumentException("L'elettore non può votare in quanto non maggiorenne");
+    	}
     }
 
     /*
-     * Effects: restituisce true se l'elettore ha gi� effettuato la votazione,
+     * Effects: restituisce true se l'elettore ha gi� effettuato la votazione avente lo stesso id passato come argomento,
      *          false altrimenti.
     */
-    public boolean checkAlreadyVoted(){
+    public boolean checkAlreadyVoted(final String idVotazione){
+    	if(idVotazione == null || idVotazione.isEmpty() || idVotazione.isBlank())
+    		throw new IllegalArgumentException("ID della votazione non valido");
     	return false;
     }
     
     @Override
     public String toString() {
-    	return "";
+    	return String.format("%s %s, %s, elettore", name, surname, new String(taxCode));
     }
 
     @Override
     public int hashCode() {
-    	return 0;
+    	int result = name.hashCode();
+    	result = 31 * result + surname.hashCode();
+    	result = 31 * result + Character.hashCode(gender);
+    	result = 31 * result + countryOfBirth.hashCode();
+    	result = 31 * result + birthPlace.hashCode();
+    	result = 31 * result + String.format("%d/%d/%d", birthDay, birthMonth, birthYear).hashCode();
+    	return 31 * result + new String(taxCode).hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
+    	if(obj instanceof Elettore) {
+    		Elettore e = (Elettore) obj;
+    		return e.name.equals(this.name) && e.surname.equals(this.surname) && new String(e.taxCode).equals(new String(this.taxCode))
+    				&& e.gender == this.gender && e.countryOfBirth.equals(this.countryOfBirth) && e.birthPlace.equals(this.birthPlace) &&
+    				e.birthDay == this.birthDay && e.birthMonth == this.birthMonth && e.birthYear == this.birthYear && e.city15K == this.city15K;
+    	}
     	return false;
     }
 }

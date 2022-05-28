@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -141,7 +143,9 @@ public class RiepilogoReferendumController {
     
     public void insertText(String text) {
     	testo.setFill(Color.BLUE);
-    	testo.setText(text);
+    	testo.setText(text.replace("\n", " "));
+    	testo.setTextAlignment(TextAlignment.JUSTIFY);
+    	testo.setStyle("-fx-font: 14 arial;");
     }
 
     @FXML

@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.SessioneSingleton;
 
 public class AdministratorWindowController {
 	
@@ -40,6 +41,8 @@ public class AdministratorWindowController {
     @FXML
     private void handleLogout(ActionEvent event) {
     	try {
+    		SessioneSingleton.getSessioneSingleton().logoutUser();
+    		
     		logoutButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//login//loginWindow.fxml"));
     		Stage stage = new Stage();

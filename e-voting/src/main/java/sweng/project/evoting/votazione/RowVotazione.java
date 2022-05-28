@@ -11,8 +11,11 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.SessioneSingleton;
+import sweng.project.evoting.Utente;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
+import sweng.project.evoting.voter.SchedaVotoReferendumController;
 
 public class RowVotazione {
 	@FXML
@@ -50,7 +53,23 @@ public class RowVotazione {
 	}
 	
 	private void handleVota() throws IOException {
-		
+		// controllare prima che l'utente non abbia già votato e nel caso permettergli di votare
+		//final String idVotazione = v.getId();
+		//Utente u = SessioneSingleton.getSessioneSingleton().getUser();
+		try {
+			String[] info = new DigitalVotingDaoImpl().getInfoReferendum(v.getId());
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//schedaVotoReferendumWindow.fxml"));
+			Stage stage = new Stage();
+			stage.setScene(new Scene(loader.load()));
+			SchedaVotoReferendumController svrc = loader.getController();
+			svrc.setInfo(info[3], String.format("Referendum %s".toUpperCase(), info[2]));
+			stage.setTitle("Scheda elettorale referendum");
+			stage.setResizable(false);
+			stage.show();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void handleInfo() throws IOException {
