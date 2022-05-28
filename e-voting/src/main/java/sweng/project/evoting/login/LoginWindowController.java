@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.Utente;
 import sweng.project.evoting.voter.VoterWindowController;
 import javafx.scene.control.PasswordField;
@@ -56,6 +57,8 @@ public class LoginWindowController {
     	boolean isIn = new Utente(user, psw, type).login();
     	
     	if(isIn && type.equals("Amministratore")) {
+    		SessioneSingleton.getSessioneSingleton().setUser(new Utente(user, psw, type));	// da mettere amministratore
+    		
     		login.getScene().getWindow().hide();
     		try {
     			Parent root = FXMLLoader.load(getClass().getResource("..//administrator//administratorWindow.fxml"));
@@ -67,6 +70,8 @@ public class LoginWindowController {
     			e.printStackTrace();
     		}
     	} else if(isIn && type.equals("Elettore")) {
+    		SessioneSingleton.getSessioneSingleton().setUser(new Utente(user, psw, type));	// da mettere elettore
+    		
     		login.getScene().getWindow().hide();
     		try {
     			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//voterWindow.fxml"));

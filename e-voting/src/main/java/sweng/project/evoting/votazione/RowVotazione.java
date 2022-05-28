@@ -73,14 +73,14 @@ public class RowVotazione {
     		}
 		}else if (v.getTipo().toLowerCase().contains("ordinale")) {
 			String[] info = new DigitalVotingDaoImpl().getInfoOrdinale(v.getId());
-			
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//infoOrdinaleWindow.fxml"));
 			Stage stage = new Stage();
 			stage.setScene(new Scene(loader.load()));
-			
+
 			InfoOrdinaleController ioc = loader.getController();
 			if(info.length >= 2)
-				ioc.setInfo(info[0], info[1], Arrays.copyOfRange(info, 2, info.length-1));
+				ioc.setInfo(info[0], info[1], Arrays.copyOfRange(info, 2, info.length));
 			
 			stage.setTitle("Info votazione ordinale");
 			stage.setResizable(false);

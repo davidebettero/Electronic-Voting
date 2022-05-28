@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.RowVotazione;
 import sweng.project.evoting.votazione.Votazione;
 
@@ -62,6 +63,8 @@ public class VoterWindowController {
     @FXML
     void handleLogout(ActionEvent event) {
     	try {
+    		SessioneSingleton.getSessioneSingleton().logoutUser();
+    		
     		logoutButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//login//loginWindow.fxml"));
     		Stage stage = new Stage();
