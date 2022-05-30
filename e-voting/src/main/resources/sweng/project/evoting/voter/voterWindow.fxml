@@ -28,5 +28,6 @@
             <Image url="@vote.png" />
          </image>
       </ImageView>
+      <Text fx:id="infoVoter" layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="135.7366943359375" />
    </children>
 </Pane>

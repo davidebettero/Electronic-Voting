@@ -1,18 +1,23 @@
 package sweng.project.evoting.votazione;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.Utente;
+import sweng.project.evoting.administrator.RiepilogoReferendumController;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
 import sweng.project.evoting.voter.SchedaVotoReferendumController;
@@ -54,21 +59,29 @@ public class RowVotazione {
 	
 	private void handleVota() throws IOException {
 		// controllare prima che l'utente non abbia già votato e nel caso permettergli di votare
-		//final String idVotazione = v.getId();
-		//Utente u = SessioneSingleton.getSessioneSingleton().getUser();
-		try {
-			String[] info = new DigitalVotingDaoImpl().getInfoReferendum(v.getId());
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//schedaVotoReferendumWindow.fxml"));
+		final String idVotazione = v.getId();
+		Elettore e = (Elettore) SessioneSingleton.getSessioneSingleton().getUser();
+		if(new DigitalVotingDaoImpl().hasAlreadyVoted(idVotazione, e.getTaxCode(), e.getUsername())) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//giaVotatoWindow.fxml"));
 			Stage stage = new Stage();
 			stage.setScene(new Scene(loader.load()));
-			SchedaVotoReferendumController svrc = loader.getController();
-			svrc.setInfo(info[3], String.format("Referendum %s".toUpperCase(), info[2]));
-			stage.setTitle("Scheda elettorale referendum");
+			stage.setTitle("Errore");
 			stage.setResizable(false);
 			stage.show();
-		}catch (Exception e) {
-			e.printStackTrace();
+		}else {
+			try {
+				String[] info = new DigitalVotingDaoImpl().getInfoReferendum(v.getId());
+				
+				FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//schedaVotoReferendumWindow.fxml"));
+		    	Parent root = next.load();
+		    	SchedaVotoReferendumController svrc = next.getController();
+				svrc.setInfo(idVotazione, info[3], String.format("Referendum %s".toUpperCase(), info[2]));
+		    	pane.getChildren().removeAll();
+		    	pane.getChildren().setAll(root);
+		    	
+			}catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.Utente;
 import sweng.project.evoting.voter.VoterWindowController;
@@ -70,7 +71,7 @@ public class LoginWindowController {
     			e.printStackTrace();
     		}
     	} else if(isIn && type.equals("Elettore")) {
-    		SessioneSingleton.getSessioneSingleton().setUser(new Utente(user, psw, type));	// da mettere elettore
+    		SessioneSingleton.getSessioneSingleton().setUser(new Elettore(user, psw));
     		
     		login.getScene().getWindow().hide();
     		try {

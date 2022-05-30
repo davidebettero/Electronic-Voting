@@ -36,11 +36,20 @@ public class Elettore extends Utente {
      * 			Se name, surname e/o documentID sono null viene sollevata un'eccezione di tipo NullPointerException.
     */
     
-    public Elettore(String name, String surname, String username, String password, char gender, int birthDay, int birthMonth, int birthYear, String countryOfBirth, String birthPlace, boolean city15K, String codiceFiscale){
+    public Elettore(String username, String password){
 		super(username, password, "Elettore");
-		this.name = Objects.requireNonNull(name);
-		this.surname = Objects.requireNonNull(surname);
-		this.gender = gender;
+		
+		String[] info = new DigitalVotingDaoImpl().getVoterInfo(username, password);
+		
+		this.name = Objects.requireNonNull(info[0]);
+		this.surname = Objects.requireNonNull(info[1]);
+		this.gender = Character.valueOf(info[2].charAt(0));
+		
+		int birthDay, birthMonth, birthYear;
+		String[] nascita = info[3].split("-");
+		birthDay = Integer.parseInt(nascita[2]);
+		birthMonth = Integer.parseInt(nascita[1]);
+		birthYear = Integer.parseInt(nascita[0]);
 		
 		if(birthDay <= 0 || birthDay > 31 || birthMonth <= 0 || birthMonth > 12 || birthYear <= 0 || !isDateOfBirthValid())
 			throw new IllegalArgumentException("Data di nascita non valida");
@@ -64,18 +73,18 @@ public class Elettore extends Utente {
 		this.birthMonth = birthMonth;
 		this.birthYear = birthYear;
 		
-		if(Objects.requireNonNull(birthPlace).isEmpty() || Objects.requireNonNull(birthPlace).isBlank())
+		if(Objects.requireNonNull(info[4]).isEmpty() || Objects.requireNonNull(info[4]).isBlank())
 			throw new IllegalArgumentException("Paese di nascita non indicato");
-		if(Objects.requireNonNull(countryOfBirth).isEmpty() || Objects.requireNonNull(countryOfBirth).isBlank())
+		if(Objects.requireNonNull(info[5]).isEmpty() || Objects.requireNonNull(info[5]).isBlank())
 			throw new IllegalArgumentException("Nazione di nascita non indicata");
 		
-		this.countryOfBirth = countryOfBirth;
-		this.birthPlace = birthPlace;
-		this.city15K = city15K;
+		this.countryOfBirth = info[5];
+		this.birthPlace = info[4];
+		this.city15K = (info[7].equalsIgnoreCase("false")) ? false : true;
 		
-		if(Objects.requireNonNull(codiceFiscale).length() != 16)
+		if(Objects.requireNonNull(info[6]).length() != 16)
 			throw new IllegalArgumentException("Codice fiscale non valido");
-		this.taxCode = codiceFiscale.toCharArray();
+		this.taxCode = info[6].toCharArray();
 	}
     
     private boolean isLeapYear(int anno) {
@@ -120,6 +129,10 @@ public class Elettore extends Utente {
 	
 	public String getTaxCode() {
 		return new String(taxCode);
+	}
+	
+	public String getBirthDate() {
+		return String.format("%d/%d/%d", birthDay, birthMonth, birthYear);
 	}
 	
 	public String getLuogoDiNascita() {

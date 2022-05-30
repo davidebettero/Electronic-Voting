@@ -15,9 +15,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.RowVotazione;
 import sweng.project.evoting.votazione.Votazione;
+import javafx.scene.text.Text;
 
 public class VoterWindowController {
 	private List<Votazione> lista;
@@ -39,6 +41,9 @@ public class VoterWindowController {
 
     @FXML
     private ImageView img;
+    
+    @FXML
+    private Text infoVoter;
 
     @FXML
     private Button logoutButton;
@@ -86,6 +91,10 @@ public class VoterWindowController {
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'voterWindow.fxml'.";
         assert pane != null : "fx:id=\"pane\" was not injected: check your FXML file 'voterWindow.fxml'.";
         assert tabellaVotazioni != null : "fx:id=\"tabellaVotazioni\" was not injected: check your FXML file 'voterWindow.fxml'.";
-
+        assert infoVoter != null : "fx:id=\"infoVoter\" was not injected: check your FXML file 'voterWindow.fxml'.";
+        
+        Elettore e = (Elettore) SessioneSingleton.getSessioneSingleton().getUser();
+        infoVoter.setText(String.format("%s %s\n%s\n%s", e.getName(), e.getSurname(), e.getBirthDate(), e.getTaxCode()));
+        infoVoter.setStyle("-fx-font: 14 calibri;");
     }
 }

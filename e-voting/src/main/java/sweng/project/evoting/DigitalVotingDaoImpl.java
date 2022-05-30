@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import sweng.project.evoting.votazione.Votazione;
 import sweng.project.evoting.votazione.VotazioneCategorica;
 import sweng.project.evoting.votazione.VotazioneOrdinale;
@@ -33,7 +32,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	 * Come richiesto vengono utilizzati i prepared statement per fare in modo che non siano possibili 
 	 * attacchi di tipo SQL injection nell'esecuzione della query SQL.
 	 */
-	public boolean isValid(String user, String psw,String type) {
+	public boolean isValid(String user, String psw, String type) {
 		 try {
 			 // creazione della connessione
 			 conn = getConnection();
@@ -190,9 +189,141 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return null;
 	}
 	
+	// restituisce le info personali dell'elettore identificato da username e password passate al metodo
+	public String[] getVoterInfo(final String username, final String password) {
+		String query = "SELECT name, surname, gender, birthdate, birthplace, countryofbirth, taxcode, city15k FROM elettore WHERE username = ? AND password = ?;";
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		String[] result = new String[8];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, username);
+			ps.setString(2, App.encoding(password));
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				result[0] = res.getString("name");
+				result[1] = res.getString("surname");
+				result[2] = res.getString("gender");
+				result[3] = String.valueOf(res.getDate("birthdate"));
+				result[4] = res.getString("birthplace");
+				result[5] = res.getString("countryofbirth");
+				result[6] = res.getString("taxcode");
+				result[7] = String.valueOf(res.getBoolean("city15k"));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 	
+	public boolean hasAlreadyVoted(final String idVotazione, final String taxCode, final String username) {
+		String query = "SELECT * FROM votanti WHERE idvotazione = ? AND codicefiscale = ? AND username = ?;";
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ps.setString(2, taxCode);
+			ps.setString(3, username);
+			ResultSet res = ps.executeQuery();
+			return res.isBeforeFirst();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 	
+	public void insertVotanteReferendum(final String idVotazione, final String taxCode, final String username) {
+		String query = "INSERT INTO votanti VALUES(?,?,?);";
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ps.setString(2, taxCode);
+			ps.setString(3, username);
+			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
+	public void insertVotoReferendum(final String idVotazione, final String scelta){
+		if(!scelta.equalsIgnoreCase("si") && !scelta.equalsIgnoreCase("no") && !scelta.equalsIgnoreCase("scheda bianca"))
+			throw new IllegalArgumentException("Scelta non valida per una votazione di tipo referendum");
+		
+		String query = "INSERT INTO votireferendum VALUES(?,?);";
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ps.setString(2, scelta);
+			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package sweng.project.evoting.administrator;
 
 import java.io.IOException;
+import java.text.ParseException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.SessioneSingleton;
 
 public class AdministratorWindowController {
@@ -34,8 +36,13 @@ public class AdministratorWindowController {
     private Text titleMsg;
 
     @FXML
-    private void endVote(ActionEvent event) {
-    	
+    private void endVote(ActionEvent event) throws IOException, ParseException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//terminaVotazioniWindow.fxml"));
+    	Parent root = next.load();
+		TerminaVotazioniController tvc = next.getController();
+		tvc.setTabella(new DigitalVotingDaoImpl().getAllVotazioni());
+		pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

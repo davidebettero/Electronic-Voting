@@ -1,10 +1,14 @@
 package sweng.project.evoting.voter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -15,6 +19,9 @@ public class SchedaVotoReferendumController {
 
     @FXML
     private URL location;
+    
+    @FXML
+    private Pane pane;
 
     @FXML
     private Button noButton;
@@ -31,7 +38,11 @@ public class SchedaVotoReferendumController {
     @FXML
     private Text titoloReferendum;
     
-    public void setInfo(final String testo, final String titolo) {
+    private String idVotazione;
+    
+    public void setInfo(final String idVotazione, final String testo, final String titolo) {
+    	this.idVotazione = idVotazione;
+    	
     	testoReferendum.setText(testo.replace("\n", " "));
     	testoReferendum.setTextAlignment(TextAlignment.JUSTIFY);
     	
@@ -41,18 +52,33 @@ public class SchedaVotoReferendumController {
     }
 
     @FXML
-    void handleNo(ActionEvent event) {
-
+    void handleNo(ActionEvent event) throws IOException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//confermaVotoReferendumWindow.fxml"));
+    	Parent root = next.load();
+    	ConfermaVotoReferendumController cvrc = next.getController();
+		cvrc.setScelta(idVotazione, "NO");
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML
-    void handleSchedaBianca(ActionEvent event) {
-
+    void handleSchedaBianca(ActionEvent event) throws IOException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//confermaVotoReferendumWindow.fxml"));
+    	Parent root = next.load();
+    	ConfermaVotoReferendumController cvrc = next.getController();
+		cvrc.setScelta(idVotazione, "SCHEDA BIANCA");
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML
-    void handleSi(ActionEvent event) {
-
+    void handleSi(ActionEvent event) throws IOException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//confermaVotoReferendumWindow.fxml"));
+    	Parent root = next.load();
+    	ConfermaVotoReferendumController cvrc = next.getController();
+		cvrc.setScelta(idVotazione, "SI");
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML
