@@ -61,7 +61,7 @@ public class RowVotazione {
 		// controllare prima che l'utente non abbia già votato e nel caso permettergli di votare
 		final String idVotazione = v.getId();
 		Elettore e = (Elettore) SessioneSingleton.getSessioneSingleton().getUser();
-		if(new DigitalVotingDaoImpl().hasAlreadyVoted(idVotazione, e.getTaxCode(), e.getUsername())) {
+		if(e.checkAlreadyVoted(idVotazione)) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//giaVotatoWindow.fxml"));
 			Stage stage = new Stage();
 			stage.setScene(new Scene(loader.load()));

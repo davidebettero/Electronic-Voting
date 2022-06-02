@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.Amministratore;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
@@ -58,7 +59,7 @@ public class LoginWindowController {
     	boolean isIn = new Utente(user, psw, type).login();
     	
     	if(isIn && type.equals("Amministratore")) {
-    		SessioneSingleton.getSessioneSingleton().setUser(new Utente(user, psw, type));	// da mettere amministratore
+    		SessioneSingleton.getSessioneSingleton().setUser(new Amministratore(user, psw));
     		
     		login.getScene().getWindow().hide();
     		try {

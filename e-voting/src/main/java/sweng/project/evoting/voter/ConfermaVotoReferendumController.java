@@ -53,7 +53,7 @@ public class ConfermaVotoReferendumController {
     @FXML
     void handleConferma(ActionEvent event) {
     	Elettore el = (Elettore)SessioneSingleton.getSessioneSingleton().getUser();
-    	new DigitalVotingDaoImpl().insertVotanteReferendum(idVotazione, el.getTaxCode(), el.getUsername());
+    	el.esprimi_voto(idVotazione);
     	new DigitalVotingDaoImpl().insertVotoReferendum(idVotazione, scelta.getText().toString());
     	
     	confermaButton.getScene().getWindow().hide();

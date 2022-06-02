@@ -231,6 +231,42 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return result;
 	}
 	
+	public String[] getAdministratorInfo(final String username, final String password) {
+		String query = "SELECT nome, cognome, taxcode FROM amministratore WHERE username = ? AND password = ?;";
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		String[] result = new String[3];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, username);
+			ps.setString(2, App.encoding(password));
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				result[0] = res.getString("nome");
+				result[1] = res.getString("cognome");
+				result[2] = res.getString("taxcode");
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	public boolean hasAlreadyVoted(final String idVotazione, final String taxCode, final String username) {
 		String query = "SELECT * FROM votanti WHERE idvotazione = ? AND codicefiscale = ? AND username = ?;";
 		

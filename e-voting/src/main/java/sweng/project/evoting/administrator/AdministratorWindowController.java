@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sweng.project.evoting.Amministratore;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.SessioneSingleton;
 
@@ -22,6 +23,9 @@ public class AdministratorWindowController {
 
     @FXML
     private Button creaNuovaVotazione;
+    
+    @FXML
+    private Text infoAdmin;
 
     @FXML
     private Button logoutButton;
@@ -79,11 +83,15 @@ public class AdministratorWindowController {
     @FXML
     private void initialize() {
         assert creaNuovaVotazione != null : "fx:id=\"creaNuovaVotazione\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        assert infoAdmin != null : "fx:id=\"infoAdmin\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert terminaVotazione != null : "fx:id=\"terminaVotazione\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert visualizzaRisultati != null : "fx:id=\"visualizzaRisultati\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert titleMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'administratorWindow.fxml'.";
 
+        Amministratore a = (Amministratore) SessioneSingleton.getSessioneSingleton().getUser();
+        infoAdmin.setText(String.format("%s %s\n%s", a.getName(), a.getSurname(), a.getTaxCode()));
+        infoAdmin.setStyle("-fx-font: 14 calibri;");
     }
 
 }

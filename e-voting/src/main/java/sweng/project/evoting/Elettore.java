@@ -62,7 +62,7 @@ public class Elettore extends Utente {
 				if(birthDay == 31) throw new IllegalArgumentException("Data di nascita non valida");
 				break;
 			case 2:
-				if((!isLeapYear(birthYear) && birthDay > 28) || (isLeapYear(birthYear) && birthDay > 28))
+				if((!isLeapYear(birthYear) && birthDay > 28) || (isLeapYear(birthYear) && birthDay > 29))
 					throw new IllegalArgumentException("Data di nascita non valida");
 				break;
 			default:
@@ -150,7 +150,7 @@ public class Elettore extends Utente {
     	if(idVotazione == null || idVotazione.isEmpty() || idVotazione.isBlank()) throw new IllegalArgumentException("ID della votazione non valido");
     	
     	if(isOfAge()) {
-    		
+    		new DigitalVotingDaoImpl().insertVotanteReferendum(idVotazione, getTaxCode(), getUsername());
     	} else {
     		throw new IllegalArgumentException("L'elettore non può votare in quanto non maggiorenne");
     	}
@@ -163,7 +163,8 @@ public class Elettore extends Utente {
     public boolean checkAlreadyVoted(final String idVotazione){
     	if(idVotazione == null || idVotazione.isEmpty() || idVotazione.isBlank())
     		throw new IllegalArgumentException("ID della votazione non valido");
-    	return false;
+    	
+    	return new DigitalVotingDaoImpl().hasAlreadyVoted(idVotazione, getTaxCode(), getUsername());
     }
     
     @Override
@@ -173,7 +174,8 @@ public class Elettore extends Utente {
 
     @Override
     public int hashCode() {
-    	int result = name.hashCode();
+    	int result = super.hashCode();
+    	result = 31 * result + name.hashCode();
     	result = 31 * result + surname.hashCode();
     	result = 31 * result + Character.hashCode(gender);
     	result = 31 * result + countryOfBirth.hashCode();
