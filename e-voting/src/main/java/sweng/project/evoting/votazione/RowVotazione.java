@@ -1,7 +1,6 @@
 package sweng.project.evoting.votazione;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import javafx.fxml.FXML;
@@ -10,14 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
-import sweng.project.evoting.Utente;
-import sweng.project.evoting.administrator.RiepilogoReferendumController;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
 import sweng.project.evoting.voter.SchedaVotoReferendumController;

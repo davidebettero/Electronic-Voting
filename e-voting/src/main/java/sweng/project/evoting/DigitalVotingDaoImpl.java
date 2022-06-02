@@ -903,4 +903,40 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return r.toArray(result);
 	}
 	
+	public void terminaVotazione(final String id, final String tipo) {
+		String query;
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		
+		if(tipo.equalsIgnoreCase("referendum")) {
+			query = "UPDATE referendum SET fine = CURRENT_TIMESTAMP WHERE id = ?;";
+		}else if(tipo.equalsIgnoreCase("categorica")) {
+			query = "UPDATE categorico SET fine = CURRENT_TIMESTAMP WHERE id = ?;";
+		}else {
+			query = "UPDATE ordinale SET fine = CURRENT_TIMESTAMP WHERE id = ?;";
+		}
+		
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			
+			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

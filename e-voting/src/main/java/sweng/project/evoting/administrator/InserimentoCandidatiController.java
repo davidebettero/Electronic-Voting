@@ -71,6 +71,10 @@ public class InserimentoCandidatiController {
     public void setVotazione(final VotazioneCategorica v) {
     	this.v = v;
     }
+    
+    public boolean isAMaggioranzaAssoluta() {
+    	return assoluta;
+    }
 
     @FXML
     private void handleCandidato(ActionEvent event) {

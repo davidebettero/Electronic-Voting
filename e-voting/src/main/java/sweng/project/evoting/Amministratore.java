@@ -59,7 +59,22 @@ public class Amministratore extends Utente {
     /*
      * Effects: permette allo scrutatore di terminare la votazione in corso
     */
-    public void terminaVotazione(){}
+    public void terminaVotazione(final String id, final String tipo){
+    	if(Objects.requireNonNull(id).isEmpty() || Objects.requireNonNull(id).isBlank())
+    		throw new IllegalArgumentException("Deve essere indicato l'ID della votazione che si vuole terminare");
+    	if(Objects.requireNonNull(tipo).isEmpty() || Objects.requireNonNull(tipo).isBlank())
+    		throw new IllegalArgumentException("Non è indicato il tipo della votazione che si vuole terminare");
+    	if(!tipo.toLowerCase().contains("referendum") && !tipo.toLowerCase().contains("categorica") && !tipo.toLowerCase().contains("ordinale"))
+    		throw new IllegalArgumentException("Il tipo indicato della votazione che si vuole terminare non è valido");
+    		
+    	if(tipo.toLowerCase().contains("referendum")) {
+    		new DigitalVotingDaoImpl().terminaVotazione(id, "referendum");
+    	}else if(tipo.toLowerCase().contains("categorica")) {
+    		new DigitalVotingDaoImpl().terminaVotazione(id, "categorica");
+    	}else if(tipo.toLowerCase().contains("ordinale")) {
+    		new DigitalVotingDaoImpl().terminaVotazione(id, "ordinale");
+    	}
+    }
 
     /*
      * Effects: permette allo scrutatore di visualizzare l'esito della votazione

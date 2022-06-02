@@ -10,11 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import sweng.project.evoting.votazione.Votazione;
 
 public class TerminaVotazioniController {
+	private List<Votazione> lista;
+	
 	@FXML
     private ResourceBundle resources;
 
@@ -37,13 +40,23 @@ public class TerminaVotazioniController {
     private Pane pane;
 
     @FXML
-    private TableView<?> tabellaVotazioni;
+    private TableView<RowVotazioneAttiva> tabellaVotazioni;
 
     @FXML
     private Button undoButton;
     
     public void setTabella(final List<Votazione> l) {
+    	this.lista = l;
     	
+    	colonnaVotazioniAttive.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+    	colonnaInizio.setCellValueFactory(new PropertyValueFactory<>("Inizio"));
+    	colonnaFine.setCellValueFactory(new PropertyValueFactory<>("Fine"));
+    	colonnaTermina.setCellValueFactory(new PropertyValueFactory<>("ButtonBar"));
+    	
+    	for(Votazione v : lista) {
+    		RowVotazioneAttiva rva = new RowVotazioneAttiva(v, pane);
+        	tabellaVotazioni.getItems().add(rva);
+    	}
     }
 
     @FXML
