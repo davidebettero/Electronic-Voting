@@ -26,16 +26,16 @@ public class TerminaVotazioniController {
     private URL location;
 
     @FXML
-    private TableColumn<?, ?> colonnaFine;
+    private TableColumn<RowVotazioneAttiva, String> colonnaFine;
 
     @FXML
-    private TableColumn<?, ?> colonnaInizio;
+    private TableColumn<RowVotazioneAttiva, String> colonnaInizio;
 
     @FXML
-    private TableColumn<?, ?> colonnaTermina;
+    private TableColumn<RowVotazioneAttiva, Button> colonnaTermina;
 
     @FXML
-    private TableColumn<?, ?> colonnaVotazioniAttive;
+    private TableColumn<RowVotazioneAttiva, String> colonnaVotazioniAttive;
 
     @FXML
     private Pane pane;

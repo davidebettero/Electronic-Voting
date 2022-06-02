@@ -32,13 +32,10 @@ public class VoterWindowController {
     private URL location;
 
     @FXML
-    private TableColumn<?, ?> colonnaAzioni;
+    private TableColumn<RowVotazione, Button> colonnaAzioni;
 
     @FXML
-    private TableColumn<?, ?> colonnaInfo;
-
-    @FXML
-    private TableColumn<?, ?> colonnaVotazioni;
+    private TableColumn<RowVotazione, String> colonnaVotazioni;
 
     @FXML
     private ImageView img;
@@ -89,7 +86,6 @@ public class VoterWindowController {
     @FXML
     void initialize() {
         assert colonnaAzioni != null : "fx:id=\"colonnaAzioni\" was not injected: check your FXML file 'voterWindow.fxml'.";
-        assert colonnaInfo != null : "fx:id=\"colonnaInfo\" was not injected: check your FXML file 'voterWindow.fxml'.";
         assert colonnaVotazioni != null : "fx:id=\"colonnaVotazioni\" was not injected: check your FXML file 'voterWindow.fxml'.";
         assert img != null : "fx:id=\"img\" was not injected: check your FXML file 'voterWindow.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'voterWindow.fxml'.";

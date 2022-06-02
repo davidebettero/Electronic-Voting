@@ -25,16 +25,16 @@ public class VisualizzaRisultatiController {
     private URL location;
 
     @FXML
-    private TableColumn<?, ?> colonnaFine;
+    private TableColumn<RowVotazioneAdmin, String> colonnaFine;
 
     @FXML
-    private TableColumn<?, ?> colonnaInizio;
+    private TableColumn<RowVotazioneAdmin, String> colonnaInizio;
 
     @FXML
-    private TableColumn<?, ?> colonnaRisultati;
+    private TableColumn<RowVotazioneAdmin, Button> colonnaRisultati;
 
     @FXML
-    private TableColumn<?, ?> colonnaVotazioni;
+    private TableColumn<RowVotazioneAdmin, String> colonnaVotazioni;
 
     @FXML
     private Pane pane;
