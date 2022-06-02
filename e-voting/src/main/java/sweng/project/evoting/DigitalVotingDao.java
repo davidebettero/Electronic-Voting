@@ -1,7 +1,10 @@
 package sweng.project.evoting;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.List;
+
+import sweng.project.evoting.votazione.Votazione;
 
 public interface DigitalVotingDao {
 	
@@ -13,10 +16,16 @@ public interface DigitalVotingDao {
 	
 	public List<Utente> getAllUtenti();
 	
-	public void addVotoCategorico(String id,String idVoto,String [] scelte);
+	public String[] getVoterInfo(String username, String password);
 	
-	public void addVotoReferendum(String id,String idVoto,Boolean scelte);
+	public String[] getAdministratorInfo(String username, String password);
 	
+	public boolean hasAlreadyVoted(String idVotazione, String taxCode, String username);
+	
+	public void insertVotanteReferendum(String idVotazione, String taxCode, String username);
+	
+	public void insertVotoReferendum(String idVotazione, String scelta);
+
 	public void insertReferendumVotingSession(String id,Timestamp inizio,Timestamp fine,String tipo,String Testo);
 	
 	public void insertOrdinaleVotingSession(String id, Timestamp inizio, Timestamp fine);
@@ -36,4 +45,12 @@ public interface DigitalVotingDao {
 	public List<Candidato> candidatiOrdinale(final String id);
 	
 	public String[] getInfoVotazioneOrdinale(final String id);
+	
+	public List<Votazione> getAllVotazioni() throws ParseException;
+	
+	public String[] getInfoReferendum(String id);
+	
+	public String[] getInfoOrdinale(String id);
+	
+	public void terminaVotazione(String id, String tipo);
 }

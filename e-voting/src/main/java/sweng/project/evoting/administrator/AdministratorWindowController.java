@@ -74,10 +74,13 @@ public class AdministratorWindowController {
     }
 
     @FXML
-    private void viewElectionResults(ActionEvent event) throws IOException {
-    	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//errVotazioneApertaWindow.fxml"));
-    	pane.getChildren().removeAll();
-    	pane.getChildren().setAll(next);
+    private void viewElectionResults(ActionEvent event) throws IOException, ParseException {
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//visualizzaRisultatiWindow.fxml"));
+    	Parent root = next.load();
+    	VisualizzaRisultatiController vrc = next.getController();
+    	vrc.setTabella(new DigitalVotingDaoImpl().getAllExistingVotazioni());
+		pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

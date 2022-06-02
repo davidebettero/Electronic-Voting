@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +63,9 @@ public class VoterWindowController {
     	for(Votazione v : lista) {
     		RowVotazione rv = new RowVotazione(v, pane);
         	tabellaVotazioni.getItems().add(rv);
+    	}
+    	if(lista.size() == 0) {
+    		tabellaVotazioni.setPlaceholder(new Label("Non c'è nessuna votazione per cui puoi votare"));
     	}
     }
 

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,6 +57,9 @@ public class TerminaVotazioniController {
     	for(Votazione v : lista) {
     		RowVotazioneAttiva rva = new RowVotazioneAttiva(v, pane);
         	tabellaVotazioni.getItems().add(rva);
+    	}
+    	if(lista.size() == 0) {
+    		tabellaVotazioni.setPlaceholder(new Label("Non è attiva nessuna votazione"));
     	}
     }
 

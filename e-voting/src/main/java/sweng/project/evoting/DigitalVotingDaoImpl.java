@@ -361,42 +361,6 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		}
 	}
 	
-	
-	
-	//inserisce un voto all'interno del db nella tabella categorico
-	public void addVotoCategorico(String id,String idVoto,String [] scelte) {
-		try{
-			conn = getConnection();
-            conn.setAutoCommit(true);
-            Statement st = conn.createStatement();
-            st.execute("set search_path=digitalvoting");
-            st.execute("insert into categorico (id,id_votazione,partito,candidato_principale,candidato1,candidato2) values ("+id+","+idVoto+",'"+scelte[0]+"','"+scelte[1]+"','"+scelte[2]+"','"+scelte[3]+"');");
-            // Turn use of the cursor on.
-            st.setFetchSize(50);
-            st.close();
-    
-        }catch(SQLException e) {
-             e.printStackTrace();
-        }  	
-	}
-	
-	//inserisce un voto all interno del db nella tabella referendum
-	public void addVotoReferendum(String id,String idVoto,Boolean scelte) {
-         try{
-        	conn = getConnection();
-            conn.setAutoCommit(true);
-            Statement st = conn.createStatement();
-            st.execute("set search_path=digitalvoting");
-            st.execute("insert into referendum (id,id_votazione,scelta) values ("+id+","+idVoto+","+scelte+");");
-            // Turn use of the cursor on.
-            st.setFetchSize(50);
-            st.close();
-         }catch(SQLException e) {
-            e.printStackTrace();
-       }
-	
-    }
-	
 	//inserisce una votazione ti tipo 'referendum' all'interno del db 
 	public void insertReferendumVotingSession(String id, Timestamp inizio, Timestamp fine, String tipo, String testo) {
 		String query = "INSERT INTO referendum (id,inizio,fine,tipo,testo) VALUES (?,?,?,?,?)"; //query da eseguire
@@ -729,6 +693,94 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		}
 		return result;
 	}
+	
+	// restituisce tutte le votazioni presenti
+		public List<Votazione> getAllExistingVotazioni() throws ParseException {
+			Connection conn = null; 
+			PreparedStatement ps1 = null;
+			PreparedStatement ps2 = null;
+			PreparedStatement ps3 = null;
+			List<Votazione> result = new ArrayList<>();
+			
+			try {
+				conn = getConnection(); //apro connessione
+				String query1 = "SELECT id, inizio, fine, tipo, testo FROM referendum";
+				String query2 = "SELECT id, inizio, fine FROM ordinale";
+				String query3 = "SELECT id, inizio, fine, conpreferenze, modcalcolovincitore FROM categorico";
+				conn.setAutoCommit(true);
+				Statement st = conn.createStatement();
+				st.execute("set search_path=digitalvoting"); //set search_path
+				
+				ps1 = conn.prepareStatement(query1);
+				ResultSet res1 = ps1.executeQuery();
+				
+				while(res1.next()) {
+					String id = res1.getString("id");
+					String inizio = res1.getString("inizio");
+					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Date start = datetimeFormatter.parse(inizio);
+					Timestamp i = new Timestamp(start.getTime());
+					
+					String fine = res1.getString("fine");
+					Date end = datetimeFormatter.parse(fine);
+					Timestamp f = new Timestamp(end.getTime());
+					
+					String tipo = res1.getString("tipo");
+					String testo = res1.getString("testo");
+					result.add(new VotazioneReferendum(id, i, f, tipo, testo));
+				}
+				
+				ps2 = conn.prepareStatement(query2);
+				ResultSet res2 = ps2.executeQuery();
+				
+				while(res2.next()) {
+					String id = res2.getString("id");
+					String inizio = res2.getString("inizio");
+					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Date start = datetimeFormatter.parse(inizio);
+					Timestamp i = new Timestamp(start.getTime());
+					
+					String fine = res2.getString("fine");
+					Date end = datetimeFormatter.parse(fine);
+					Timestamp f = new Timestamp(end.getTime());
+					
+					result.add(new VotazioneOrdinale(id, i, f));
+				}
+				
+				ps3 = conn.prepareStatement(query3);
+				ResultSet res3 = ps3.executeQuery();
+
+				while(res3.next()) {
+					String id = res3.getString("id");
+					String inizio = res3.getString("inizio");
+					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Date start = datetimeFormatter.parse(inizio);
+					Timestamp i = new Timestamp(start.getTime());
+					
+					String fine = res3.getString("fine");
+					Date end = datetimeFormatter.parse(fine);
+					Timestamp f = new Timestamp(end.getTime());
+					
+					boolean conPreferenze = res3.getBoolean("conpreferenze");
+					String modCalcoloVincitore = res3.getString("modcalcolovincitore");
+					result.add(new VotazioneCategorica(id, i, f, conPreferenze, modCalcoloVincitore));
+				}
+				
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				try {
+					ps1.close();
+					ps2.close();
+					ps3.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return result;
+		}
 	
 	// restituisce tutte le votazioni attive nel momento in cui viene invocato il metodo, ossia tutte le votazioni già iniziate ma non ancora terminate
 	public List<Votazione> getAllVotazioni() throws ParseException {

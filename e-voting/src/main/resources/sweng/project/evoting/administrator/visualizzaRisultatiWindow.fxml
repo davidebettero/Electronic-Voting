@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.VisualizzaRisultatiController">
+   <children>
+      <Text fill="RED" layoutX="207.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOTAZIONI" underline="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button fx:id="undoButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleUndo" text="←" />
+      <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="517.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@result.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tabellaVotazioni" layoutX="15.0" layoutY="100.0" prefHeight="282.0" prefWidth="569.0">
+        <columns>
+          <TableColumn fx:id="colonnaVotazioni" prefWidth="275.2000732421875" text="VOTAZIONI" />
+          <TableColumn fx:id="colonnaInizio" minWidth="0.0" prefWidth="102.39996337890625" text="INIZIO" />
+            <TableColumn fx:id="colonnaFine" minWidth="0.0" prefWidth="100.0" text="FINE" />
+            <TableColumn fx:id="colonnaRisultati" prefWidth="91.99993896484375" text="RISULTATI" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>
