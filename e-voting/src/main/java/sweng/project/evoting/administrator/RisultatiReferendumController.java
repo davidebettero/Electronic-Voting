@@ -56,7 +56,7 @@ public class RisultatiReferendumController {
     	numVotiSi.setFill(Color.RED);
     	numVotiNo.setText(Integer.toString(res[1]));
     	numVotiNo.setFill(Color.RED);
-    	numVotiSchedaBianca.setText(Integer.toString(res[1]));
+    	numVotiSchedaBianca.setText(Integer.toString(res[2]));
     	numVotiSchedaBianca.setFill(Color.RED);
     }
 
