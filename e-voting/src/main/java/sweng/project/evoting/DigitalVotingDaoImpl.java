@@ -694,93 +694,93 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return result;
 	}
 	
-	// restituisce tutte le votazioni presenti
-		public List<Votazione> getAllExistingVotazioni() throws ParseException {
-			Connection conn = null; 
-			PreparedStatement ps1 = null;
-			PreparedStatement ps2 = null;
-			PreparedStatement ps3 = null;
-			List<Votazione> result = new ArrayList<>();
+	// restituisce tutte le votazioni presenti nel db
+	public List<Votazione> getAllExistingVotazioni() throws ParseException {
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		List<Votazione> result = new ArrayList<>();
+		
+		try {
+			conn = getConnection(); //apro connessione
+			String query1 = "SELECT id, inizio, fine, tipo, testo FROM referendum";
+			String query2 = "SELECT id, inizio, fine FROM ordinale";
+			String query3 = "SELECT id, inizio, fine, conpreferenze, modcalcolovincitore FROM categorico";
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
 			
-			try {
-				conn = getConnection(); //apro connessione
-				String query1 = "SELECT id, inizio, fine, tipo, testo FROM referendum";
-				String query2 = "SELECT id, inizio, fine FROM ordinale";
-				String query3 = "SELECT id, inizio, fine, conpreferenze, modcalcolovincitore FROM categorico";
-				conn.setAutoCommit(true);
-				Statement st = conn.createStatement();
-				st.execute("set search_path=digitalvoting"); //set search_path
+			ps1 = conn.prepareStatement(query1);
+			ResultSet res1 = ps1.executeQuery();
+			
+			while(res1.next()) {
+				String id = res1.getString("id");
+				String inizio = res1.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
 				
-				ps1 = conn.prepareStatement(query1);
-				ResultSet res1 = ps1.executeQuery();
+				String fine = res1.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
 				
-				while(res1.next()) {
-					String id = res1.getString("id");
-					String inizio = res1.getString("inizio");
-					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					Date start = datetimeFormatter.parse(inizio);
-					Timestamp i = new Timestamp(start.getTime());
-					
-					String fine = res1.getString("fine");
-					Date end = datetimeFormatter.parse(fine);
-					Timestamp f = new Timestamp(end.getTime());
-					
-					String tipo = res1.getString("tipo");
-					String testo = res1.getString("testo");
-					result.add(new VotazioneReferendum(id, i, f, tipo, testo));
-				}
-				
-				ps2 = conn.prepareStatement(query2);
-				ResultSet res2 = ps2.executeQuery();
-				
-				while(res2.next()) {
-					String id = res2.getString("id");
-					String inizio = res2.getString("inizio");
-					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					Date start = datetimeFormatter.parse(inizio);
-					Timestamp i = new Timestamp(start.getTime());
-					
-					String fine = res2.getString("fine");
-					Date end = datetimeFormatter.parse(fine);
-					Timestamp f = new Timestamp(end.getTime());
-					
-					result.add(new VotazioneOrdinale(id, i, f));
-				}
-				
-				ps3 = conn.prepareStatement(query3);
-				ResultSet res3 = ps3.executeQuery();
-
-				while(res3.next()) {
-					String id = res3.getString("id");
-					String inizio = res3.getString("inizio");
-					SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					Date start = datetimeFormatter.parse(inizio);
-					Timestamp i = new Timestamp(start.getTime());
-					
-					String fine = res3.getString("fine");
-					Date end = datetimeFormatter.parse(fine);
-					Timestamp f = new Timestamp(end.getTime());
-					
-					boolean conPreferenze = res3.getBoolean("conpreferenze");
-					String modCalcoloVincitore = res3.getString("modcalcolovincitore");
-					result.add(new VotazioneCategorica(id, i, f, conPreferenze, modCalcoloVincitore));
-				}
-				
-				
-			}catch(SQLException e){
-				e.printStackTrace();
-			}finally{
-				try {
-					ps1.close();
-					ps2.close();
-					ps3.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				String tipo = res1.getString("tipo");
+				String testo = res1.getString("testo");
+				result.add(new VotazioneReferendum(id, i, f, tipo, testo));
 			}
-			return result;
+			
+			ps2 = conn.prepareStatement(query2);
+			ResultSet res2 = ps2.executeQuery();
+			
+			while(res2.next()) {
+				String id = res2.getString("id");
+				String inizio = res2.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
+				
+				String fine = res2.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
+				
+				result.add(new VotazioneOrdinale(id, i, f));
+			}
+			
+			ps3 = conn.prepareStatement(query3);
+			ResultSet res3 = ps3.executeQuery();
+
+			while(res3.next()) {
+				String id = res3.getString("id");
+				String inizio = res3.getString("inizio");
+				SimpleDateFormat datetimeFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date start = datetimeFormatter.parse(inizio);
+				Timestamp i = new Timestamp(start.getTime());
+				
+				String fine = res3.getString("fine");
+				Date end = datetimeFormatter.parse(fine);
+				Timestamp f = new Timestamp(end.getTime());
+				
+				boolean conPreferenze = res3.getBoolean("conpreferenze");
+				String modCalcoloVincitore = res3.getString("modcalcolovincitore");
+				result.add(new VotazioneCategorica(id, i, f, conPreferenze, modCalcoloVincitore));
+			}
+			
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				ps3.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		return result;
+	}
 	
 	// restituisce tutte le votazioni attive nel momento in cui viene invocato il metodo, ossia tutte le votazioni già iniziate ma non ancora terminate
 	public List<Votazione> getAllVotazioni() throws ParseException {
@@ -990,5 +990,62 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public int[] getRisultatiReferendum(final String id) {
+		String query1 = "SELECT COUNT(*) AS total FROM votireferendum WHERE idvotazione = ? AND scelta = 'SI';";
+		String query2 = "SELECT COUNT(*) AS total FROM votireferendum WHERE idvotazione = ? AND scelta = 'NO';";
+		String query3 = "SELECT COUNT(*) AS total FROM votireferendum WHERE idvotazione = ? AND scelta = 'SCHEDA BIANCA';";
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		PreparedStatement ps3 = null;
+		int[] result = new int[3];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps1.setString(1, id);
+			ResultSet res1 = ps1.executeQuery();
+			while(res1.next()) {
+				result[0] = res1.getInt("total");
+			}
+			
+			ps2 = conn.prepareStatement(query2);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps2.setString(1, id);
+			ResultSet res2 = ps2.executeQuery();
+			while(res2.next()) {
+				result[1] = res2.getInt("total");
+			}
+			
+			ps3 = conn.prepareStatement(query3);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps3.setString(1, id);
+			ResultSet res3 = ps3.executeQuery();
+			while(res3.next()) {
+				result[2] = res3.getInt("total");
+			}
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				ps3.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 }

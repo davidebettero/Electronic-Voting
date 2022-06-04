@@ -95,6 +95,6 @@ public class VoterWindowController {
         
         Elettore e = (Elettore) SessioneSingleton.getSessioneSingleton().getUser();
         infoVoter.setText(String.format("%s %s\n%s\n%s", e.getName(), e.getSurname(), e.getBirthDate(), e.getTaxCode()));
-        infoVoter.setStyle("-fx-font: 14 calibri;");
+        infoVoter.setStyle("-fx-font: 14 system;");
     }
 }

@@ -53,4 +53,6 @@ public interface DigitalVotingDao {
 	public String[] getInfoOrdinale(String id);
 	
 	public void terminaVotazione(String id, String tipo);
+	
+	public int[] getRisultatiReferendum(final String id);
 }

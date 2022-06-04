@@ -35,4 +35,20 @@ public class VotazioneReferendum extends Votazione {
 	public String toString() {
 		return String.format("Referendum %s", tipo);
 	}
+	
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + tipo.hashCode();
+		return 31 * result + testo.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof VotazioneReferendum) {
+			VotazioneReferendum vr = (VotazioneReferendum) obj;
+			return super.equals(vr) && vr.tipo.equals(this.tipo) && vr.testo.equalsIgnoreCase(this.testo);
+		}
+		return false;
+	}
 }

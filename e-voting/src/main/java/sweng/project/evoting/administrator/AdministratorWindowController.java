@@ -94,7 +94,7 @@ public class AdministratorWindowController {
 
         Amministratore a = (Amministratore) SessioneSingleton.getSessioneSingleton().getUser();
         infoAdmin.setText(String.format("%s %s\n%s", a.getName(), a.getSurname(), a.getTaxCode()));
-        infoAdmin.setStyle("-fx-font: 14 calibri;");
+        infoAdmin.setStyle("-fx-font: 14 system;");
     }
 
 }

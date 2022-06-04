@@ -50,6 +50,28 @@ public class RowVotazioneAdmin {
 			stage.show();
 		}else {
 			//mostrare i risultati
+			if(v.getTipo().toLowerCase().contains("referendum")) {
+				try {
+					
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiReferendumWindow.fxml"));
+	    			Stage stage = new Stage();
+	    			stage.setScene(new Scene(loader.load()));
+	    			
+	    			RisultatiReferendumController rrc = loader.getController();
+	    			rrc.setInfo(v);
+	    			
+	    			stage.setTitle("Risultati referendum");
+	    			stage.setResizable(false);
+	    			stage.show();
+	    		}catch (Exception e) {
+	    			e.printStackTrace();
+	    		}
+			} else if(v.getTipo().toLowerCase().contains("ordinale")) {
+				
+			} else if(v.getTipo().toLowerCase().contains("categorica")) {
+				
+			}
 		}
 	}
 	

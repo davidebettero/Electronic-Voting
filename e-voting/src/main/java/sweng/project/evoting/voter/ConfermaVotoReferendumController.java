@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
+import sweng.project.evoting.votazione.VotoReferendum;
 
 public class ConfermaVotoReferendumController {
 	@FXML
@@ -54,7 +55,8 @@ public class ConfermaVotoReferendumController {
     void handleConferma(ActionEvent event) {
     	Elettore el = (Elettore)SessioneSingleton.getSessioneSingleton().getUser();
     	el.esprimi_voto(idVotazione);
-    	new DigitalVotingDaoImpl().insertVotoReferendum(idVotazione, scelta.getText().toString());
+    	VotoReferendum voto = new VotoReferendum(idVotazione, scelta.getText().toString());
+    	new DigitalVotingDaoImpl().insertVotoReferendum(voto.getVotazione(), voto.getPreferenza());
     	
     	confermaButton.getScene().getWindow().hide();
     	try {

@@ -11,7 +11,7 @@ public class VotoReferendum extends Voto{
         
         if(Objects.requireNonNull(scelta).isEmpty() || Objects.requireNonNull(scelta).isBlank())
         	throw new IllegalArgumentException("Deve essere indicata una scelta");
-        if(!scelta.equalsIgnoreCase("si") && !scelta.equalsIgnoreCase("no") && !scelta.equalsIgnoreCase("bianca"))
+        if(!scelta.equalsIgnoreCase("si") && !scelta.equalsIgnoreCase("no") && !scelta.equalsIgnoreCase("scheda bianca"))
         	throw new IllegalArgumentException("Scelta non valida");
         this.scelta = scelta;
     }

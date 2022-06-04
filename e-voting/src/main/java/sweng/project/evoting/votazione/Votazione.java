@@ -49,4 +49,25 @@ public abstract class Votazione {
     	return inizio.before(fine);
     }
     
+    @Override
+    public String toString() {
+    	return String.format("ID votazione: %s\nInizio: %s\tFine: %s", id, inizio.toString(), fine.toString());
+    }
+    
+    @Override
+    public int hashCode() {
+    	int result = id.hashCode();
+    	result = 31 * result + inizio.hashCode();
+    	return 31 * result + fine.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if(obj instanceof Votazione) {
+    		Votazione v = (Votazione) obj;
+    		return v.id.equals(this.id) && v.inizio.equals(this.inizio) && v.fine.equals(this.fine);
+    	}
+    	return false;
+    }
+    
 }
