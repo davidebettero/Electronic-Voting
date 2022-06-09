@@ -14,10 +14,7 @@ public class Elettore extends Utente {
 	*/
 	private int birthDay, birthMonth, birthYear;
     /*
-     * L'attributo booleano hasVoted indica se l'elettore ha gi� votato (true) oppure no (false),
-     * city15K indica se l'elettore vive in un comune con pi� di 15.000 abitanti (true) o no (false),
-     * ofAge indica se l'elettore � maggiorenne (true) oppure no (false),
-     * birthDateValid indica se la data di nascita � una data valida.
+     * city15K indica se l'elettore vive in un comune con pi� di 15.000 abitanti (true) o no (false)
     */
     private boolean city15K;
     /*
