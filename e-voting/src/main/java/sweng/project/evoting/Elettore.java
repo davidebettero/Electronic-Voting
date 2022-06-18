@@ -147,7 +147,7 @@ public class Elettore extends Utente {
     	if(idVotazione == null || idVotazione.isEmpty() || idVotazione.isBlank()) throw new IllegalArgumentException("ID della votazione non valido");
     	
     	if(isOfAge()) {
-    		new DigitalVotingDaoImpl().insertVotanteReferendum(idVotazione, getTaxCode(), getUsername());
+    		new DigitalVotingDaoImpl().insertVotante(idVotazione, getTaxCode(), getUsername());
     	} else {
     		throw new IllegalArgumentException("L'elettore non può votare in quanto non maggiorenne");
     	}

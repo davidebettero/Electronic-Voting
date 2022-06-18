@@ -16,6 +16,7 @@ import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
+import sweng.project.evoting.voter.SchedaVotoOrdinaleController;
 import sweng.project.evoting.voter.SchedaVotoReferendumController;
 
 public class RowVotazione {
@@ -65,18 +66,37 @@ public class RowVotazione {
 			stage.setResizable(false);
 			stage.show();
 		}else {
-			try {
-				String[] info = new DigitalVotingDaoImpl().getInfoReferendum(v.getId());
+			if(v.getTipo().toLowerCase().contains("referendum")) {
+				try {
+					String[] info = new DigitalVotingDaoImpl().getInfoReferendum(v.getId());
+					
+					FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//schedaVotoReferendumWindow.fxml"));
+			    	Parent root = next.load();
+			    	SchedaVotoReferendumController svrc = next.getController();
+					svrc.setInfo(idVotazione, info[3], String.format("Referendum %s".toUpperCase(), info[2]));
+			    	pane.getChildren().removeAll();
+			    	pane.getChildren().setAll(root);
+			    	
+				}catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else if(v.getTipo().toLowerCase().contains("ordinale")) {
+				try {
+					String[] info = new DigitalVotingDaoImpl().getInfoOrdinale(v.getId());
+	
+					FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//schedaVotoOrdinaleWindow.fxml"));
+					Parent root = next.load();
+					SchedaVotoOrdinaleController svoc = next.getController();
+					if(info.length >= 2)
+						svoc.setInfo(Arrays.copyOfRange(info, 2, info.length), v.getId());
+			    	
+			    	pane.getChildren().removeAll();
+			    	pane.getChildren().setAll(root);
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			} else if(v.getTipo().toLowerCase().contains("categorica")) {
 				
-				FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//schedaVotoReferendumWindow.fxml"));
-		    	Parent root = next.load();
-		    	SchedaVotoReferendumController svrc = next.getController();
-				svrc.setInfo(idVotazione, info[3], String.format("Referendum %s".toUpperCase(), info[2]));
-		    	pane.getChildren().removeAll();
-		    	pane.getChildren().setAll(root);
-		    	
-			}catch (Exception ex) {
-				ex.printStackTrace();
 			}
 		}
 	}

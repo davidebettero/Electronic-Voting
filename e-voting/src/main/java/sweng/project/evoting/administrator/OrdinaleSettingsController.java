@@ -94,7 +94,7 @@ public class OrdinaleSettingsController {
     	return true;
     }
     
-    // restituisce true se la data di inzizio della votazione è antecedente o uguale alla data di fine
+    // restituisce true se la data di inzizio della votazione è antecedente o uguale alla data di fine; false altrimenti
     private boolean isDataOk() {
     	LocalDate inizio = dataInizio.getValue();
     	LocalDate fine = dataFine.getValue();

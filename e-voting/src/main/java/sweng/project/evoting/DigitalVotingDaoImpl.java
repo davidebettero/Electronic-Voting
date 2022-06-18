@@ -299,7 +299,7 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return false;
 	}
 	
-	public void insertVotanteReferendum(final String idVotazione, final String taxCode, final String username) {
+	public void insertVotante(final String idVotazione, final String taxCode, final String username) {
 		String query = "INSERT INTO votanti VALUES(?,?,?);";
 		
 		Connection conn = null; 
@@ -359,6 +359,11 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	// da implementare!!!!!!!!!!!!
+	public void insertVotoOrdinale() {
+		
 	}
 	
 	//inserisce una votazione ti tipo 'referendum' all'interno del db 

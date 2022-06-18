@@ -22,7 +22,7 @@ public interface DigitalVotingDao {
 	
 	public boolean hasAlreadyVoted(String idVotazione, String taxCode, String username);
 	
-	public void insertVotanteReferendum(String idVotazione, String taxCode, String username);
+	public void insertVotante(String idVotazione, String taxCode, String username);
 	
 	public void insertVotoReferendum(String idVotazione, String scelta);
 
