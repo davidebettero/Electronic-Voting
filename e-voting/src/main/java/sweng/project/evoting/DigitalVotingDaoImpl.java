@@ -12,10 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import sweng.project.evoting.votazione.Votazione;
 import sweng.project.evoting.votazione.VotazioneCategorica;
 import sweng.project.evoting.votazione.VotazioneOrdinale;
 import sweng.project.evoting.votazione.VotazioneReferendum;
+import sweng.project.evoting.votazione.VotoOrdinale;
 
 
 public class DigitalVotingDaoImpl implements DigitalVotingDao {
@@ -361,9 +364,70 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		}
 	}
 	
-	// da implementare!!!!!!!!!!!!
-	public void insertVotoOrdinale() {
+	public void insertVotoOrdinale(final String idVotazione, final VotoOrdinale v) {
+		List<Candidato> preferenze = Objects.requireNonNull(v).getOrdinePreferenze();
+		String scelta = new String();
+		for(int i = 0; i < preferenze.size(); i++) {
+			if(i != preferenze.size() - 1) scelta += String.format("%d°: %s ", (i+1), preferenze.get(i));
+			else scelta += String.format("%d°: %s", (i+1), preferenze.get(i));
+		}
+		String query = "INSERT INTO votiordinale (idVotazione,scelta) VALUES (?,?)"; //query da eseguire
 		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ps.setString(2, scelta);
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// inserisce un voto ordinale di tipo 'SCHEDA BIANCA' nel database
+	public void insertVotoOrdinale(final String idVotazione) {
+		String query = "INSERT INTO votiordinale (idVotazione,scelta) VALUES (?,'SCHEDA BIANCA')"; //query da eseguire
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione); 
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//inserisce una votazione ti tipo 'referendum' all'interno del db 

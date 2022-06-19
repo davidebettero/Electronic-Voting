@@ -19,4 +19,9 @@ public class VotoReferendum extends Voto{
     public String getPreferenza(){
         return this.scelta;
     }
+    
+    @Override
+    public String toString() {
+    	return String.format("VOTO REFERENDUM\nID votazione: %s\nScelta: %s", super.getVotazione(), scelta);
+    }
 }

@@ -2,9 +2,11 @@ package sweng.project.evoting.voter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import sweng.project.evoting.Candidato;
 
 public class SchedaVotoOrdinaleController {
 	private String idVotazione;
@@ -57,28 +60,71 @@ public class SchedaVotoOrdinaleController {
         }
         return true;
     }
+    
+    private boolean areSequentials(final ObservableList<RowCandidatoOrdinale> lista) {
+    	List<Integer> lst = new ArrayList<>();
+    	for(int i = 0; i < lista.size(); i++) {
+    		if(!lista.get(i).getTextField().getText().toString().isEmpty() && isInteger(lista.get(i).getTextField().getText().toString()))
+    			lst.add(Integer.parseInt(lista.get(i).getTextField().getText().toString()));
+    	}
+    	Collections.sort(lst);
+    	if(lst.size() > 0) {
+	    	if(lst.get(0) != 1) return false;
+	    	for(int i = 0; i < lst.size() - 1; i++) {
+	    		if(lst.get(i) != lst.get(i + 1) - 1)
+	    			return false;
+	    	}
+    	}
+    	return true;
+    }
 
     @FXML
-    void handleConferma(ActionEvent event) {
+    void handleConferma(ActionEvent event) throws IOException {
     	ObservableList<RowCandidatoOrdinale> lista = tabellaCandidati.getItems();
-    	boolean isOk = true, isOnlyNumber = true;
+    	boolean isOk = true, isOnlyNumber = true, isSchedaBianca = true, isSequential = true;
     	for(int i = 0; i < lista.size(); i++) {
     		if(!isInteger(lista.get(i).getTextField().getText().toString())) isOnlyNumber = false;
+    		if(!lista.get(i).getTextField().getText().toString().isEmpty()) isSchedaBianca = false;
     		for(int j = i+1; j < lista.size(); j++) {
     			if(lista.get(i).getTextField().getText().toString().isEmpty() || lista.get(j).getTextField().getText().toString().isEmpty()) continue;
     			if(lista.get(i).getTextField().getText().toString().equals(lista.get(j).getTextField().getText().toString())) isOk = false;
     		}
     	}
     	
-    	if(isOk && isOnlyNumber) {
-    		// da implementare!!!!!!!!!!!!!!!!!!
+    	// controllo se i numeri sono in ordine sequenziale
+    	isSequential = areSequentials(lista);
+    	
+    	if(!isSequential) {
+    		errorText.setText("L'ordine delle preferenze deve essere sequenziale!");
+    		errorText.setTextAlignment(TextAlignment.CENTER);
+    	} else if(isOk && isOnlyNumber) {
+    		if(isSchedaBianca) {
+    			handleSchedaBianca(event);
+    		}else {
+    			List<Candidato> preferenze = new ArrayList<>();
+    			for(int i = 0; i < lista.size(); i++) {
+    				for(int j = 0; j < lista.size(); j++) {
+    					if(lista.get(j).getTextField().getText().toString().equals(Integer.valueOf(i+1).toString())) {
+    						preferenze.add(new Candidato(lista.get(j).getNome(), lista.get(j).getCognome(), null));
+    					}
+    				}
+    			}
+    			
+    			FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//confermaVotazioneOrdinaleWindow.fxml"));
+    	    	Parent root = next.load();
+    	    	ConfermaVotazioneOrdinaleController cvoc = next.getController();
+    	    	cvoc.setText(idVotazione, preferenze);
+    			pane.getChildren().removeAll();
+    	    	pane.getChildren().setAll(root);
+    			
+    		}
     	} else if(!isOnlyNumber) {
     		errorText.setText("Numero non riconosciuto!");
     		errorText.setTextAlignment(TextAlignment.CENTER);
     	} else if(!isOk) {
     		errorText.setText("Non può essere espresso lo stesso grado di preferenza per più di un candidato!");
     		errorText.setTextAlignment(TextAlignment.CENTER);
-    	} 
+    	}
     }
 
     @FXML

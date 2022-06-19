@@ -29,4 +29,13 @@ public class Candidato {
 	public String toString() {
 		return String.format("%s %s", nome, cognome) + ((partito.isEmpty() || partito.isBlank()) ? "" : ("\nPartito: " + partito));
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Candidato) {
+			Candidato c = (Candidato) obj;
+			return c.nome.equals(this.nome) && c.cognome.equals(this.cognome) && c.partito.equals(this.partito);
+		}
+		return false;
+	}
 }

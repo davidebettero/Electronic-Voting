@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import sweng.project.evoting.votazione.Votazione;
+import sweng.project.evoting.votazione.VotoOrdinale;
 
 public interface DigitalVotingDao {
 	
@@ -25,6 +26,10 @@ public interface DigitalVotingDao {
 	public void insertVotante(String idVotazione, String taxCode, String username);
 	
 	public void insertVotoReferendum(String idVotazione, String scelta);
+	
+	public void insertVotoOrdinale(final String idVotazione);
+	
+	public void insertVotoOrdinale(final String idVotazione, final VotoOrdinale v);
 
 	public void insertReferendumVotingSession(String id,Timestamp inizio,Timestamp fine,String tipo,String Testo);
 	
