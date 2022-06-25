@@ -2,6 +2,7 @@ package sweng.project.evoting.administrator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.votazione.VotazioneCategorica;
 
 public class SettingVotazioneController {
@@ -50,8 +52,20 @@ public class SettingVotazioneController {
     }
 
     @FXML
-    void handleGoSummary(ActionEvent event) {
-
+    void handleGoSummary(ActionEvent event) throws IOException {
+    	String[] info = new DigitalVotingDaoImpl().getInfoVotazioneCategorica(id);
+    	List<String[]> candidati = new DigitalVotingDaoImpl().getCandidatiVotazioneCategorica(id);
+    	
+    	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//riepilogoVotazioneCategoricaWindow.fxml"));
+    	Parent root = next.load();
+    	RiepilogoVotazioneCategoricaController rvcc = next.getController();
+    	rvcc.setId(id);
+    	rvcc.setVotazione(v);
+    	//imposta le info (inizio/fine/ora/...)
+    	rvcc.setInfo(info[1], info[3], info[0], info[2], (info[4].equalsIgnoreCase("true") ? "SÌ" : "NO"), info[5].toUpperCase());
+    	rvcc.setTabella(candidati);
+    	pane.getChildren().removeAll();
+    	pane.getChildren().setAll(root);
     }
 
     @FXML

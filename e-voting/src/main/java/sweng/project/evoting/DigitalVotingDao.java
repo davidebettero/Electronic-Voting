@@ -51,6 +51,10 @@ public interface DigitalVotingDao {
 	
 	public String[] getInfoVotazioneOrdinale(final String id);
 	
+	public String[] getInfoVotazioneCategorica(final String id);
+	
+	public List<String[]> getCandidatiVotazioneCategorica(final String id);
+	
 	public List<Votazione> getAllVotazioni() throws ParseException;
 	
 	public String[] getInfoReferendum(String id);

@@ -763,6 +763,91 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		return result;
 	}
 	
+	public String[] getInfoVotazioneCategorica(final String id) {
+		String query = "SELECT inizio, fine, conpreferenze, modcalcolovincitore FROM categorico WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		String[] result = new String[6];
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				String[] i = res.getString("inizio").split(" ");
+				String[] dI = i[0].split("-");
+				result[0] = dI[2] + "-" + dI[1] + "-" + dI[0];
+				result[1] = i[1].substring(0, 5);
+				
+				String[] f = res.getString("fine").split(" ");
+				String[] dF = f[0].split("-");
+				result[2] = dF[2] + "-" + dF[1] + "-" + dF[0];
+				result[3] = f[1].substring(0, 5);
+				
+				result[4] = Boolean.valueOf(res.getBoolean("conpreferenze")).toString();
+				result[5] = res.getString("modcalcolovincitore");
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public List<String[]> getCandidatiVotazioneCategorica(final String id){
+		String query = "SELECT nome, cognome, partito, candidatodipartito1, candidatodipartito2, candidatodipartito3, candidatodipartito4 FROM candidaticategorico WHERE id = ?";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		List<String[]> result = new ArrayList<>();
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, id);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				String[] item = new String[7];
+				item[0] = res.getString("nome");
+				item[1] = res.getString("cognome");
+				item[2] = res.getString("partito");
+				item[3] = res.getString("candidatodipartito1");
+				item[4] = res.getString("candidatodipartito2");
+				item[5] = res.getString("candidatodipartito3");
+				item[6] = res.getString("candidatodipartito4");
+				result.add(item);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	// restituisce tutte le votazioni presenti nel db
 	public List<Votazione> getAllExistingVotazioni() throws ParseException {
 		Connection conn = null; 
