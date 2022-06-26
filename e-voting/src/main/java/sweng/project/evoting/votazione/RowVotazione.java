@@ -2,6 +2,7 @@ package sweng.project.evoting.votazione;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.Elettore;
 import sweng.project.evoting.SessioneSingleton;
+import sweng.project.evoting.voter.InfoCategoricaController;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
 import sweng.project.evoting.voter.SchedaVotoOrdinaleController;
@@ -119,7 +121,7 @@ public class RowVotazione {
     		}catch (Exception e) {
     			e.printStackTrace();
     		}
-		}else if (v.getTipo().toLowerCase().contains("ordinale")) {
+		} else if (v.getTipo().toLowerCase().contains("ordinale")) {
 			String[] info = new DigitalVotingDaoImpl().getInfoOrdinale(v.getId());
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//infoOrdinaleWindow.fxml"));
@@ -133,8 +135,20 @@ public class RowVotazione {
 			stage.setTitle("Info votazione ordinale");
 			stage.setResizable(false);
 			stage.show();
-		}else if(v.getTipo().toLowerCase().contains("categorica")) {
+		} else if(v.getTipo().toLowerCase().contains("categorica")) {
+			String[] info = new DigitalVotingDaoImpl().getInfoVotazioneCategorica(v.getId());
+	    	List<String[]> candidati = new DigitalVotingDaoImpl().getCandidatiVotazioneCategorica(v.getId());
+	    	
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("..//voter//infoCategoricaWindow.fxml"));
+	    	Stage stage = new Stage();
+			stage.setScene(new Scene(loader.load()));
 			
+			InfoCategoricaController icc = loader.getController();
+	    	icc.setInfo(info[1], info[3], info[0], info[2], (info[4].equalsIgnoreCase("true") ? "SÌ" : "NO"), info[5].toUpperCase());
+	    	icc.setTabella(candidati);
+	    	stage.setTitle("Info votazione categorica");
+			stage.setResizable(false);
+			stage.show();
 		}
 	}
 	
