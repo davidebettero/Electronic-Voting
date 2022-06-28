@@ -18,6 +18,7 @@ import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.voter.InfoCategoricaController;
 import sweng.project.evoting.voter.InfoOrdinaleController;
 import sweng.project.evoting.voter.InfoReferendumController;
+import sweng.project.evoting.voter.SchedaVotoCategoricoController;
 import sweng.project.evoting.voter.SchedaVotoOrdinaleController;
 import sweng.project.evoting.voter.SchedaVotoReferendumController;
 
@@ -98,7 +99,19 @@ public class RowVotazione {
 					ex.printStackTrace();
 				}
 			} else if(v.getTipo().toLowerCase().contains("categorica")) {
-				
+				try {
+					List<String[]> candidati = new DigitalVotingDaoImpl().getCandidatiVotazioneCategorica(v.getId());
+					FXMLLoader next = new FXMLLoader(getClass().getResource("..//voter//schedaVotoCategoricoWindow.fxml"));
+					Parent root = next.load();
+					SchedaVotoCategoricoController svcc = next.getController();
+					svcc.setId(v.getId());
+					svcc.setTabella(candidati);
+			    	
+			    	pane.getChildren().removeAll();
+			    	pane.getChildren().setAll(root);
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
