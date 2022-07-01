@@ -68,7 +68,23 @@ public class RowVotazioneAdmin {
 	    			e.printStackTrace();
 	    		}
 			} else if(v.getTipo().toLowerCase().contains("ordinale")) {
-				
+				try {
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiOrdinaleWindow.fxml"));
+	    			Stage stage = new Stage();
+	    			stage.setScene(new Scene(loader.load()));
+	    			
+	    			RisultatiOrdinaleController roc = loader.getController();
+	    			int[] biancheTot = new DigitalVotingDaoImpl().getSchedeBiancheETotaleVotantiOrdinale(v.getId());
+	    			roc.setInfo(biancheTot[0], biancheTot[1]);
+	    			roc.setRisultati(new DigitalVotingDaoImpl().getRisultatiOrdinale(v.getId()));
+	    			
+	    			stage.setTitle("Risultati votazione ordinale");
+	    			stage.setResizable(false);
+	    			stage.show();
+	    		}catch (Exception e) {
+	    			e.printStackTrace();
+	    		}
 			} else if(v.getTipo().toLowerCase().contains("categorica")) {
 				try {
 					

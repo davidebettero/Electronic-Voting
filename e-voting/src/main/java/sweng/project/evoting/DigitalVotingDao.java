@@ -74,4 +74,8 @@ public interface DigitalVotingDao {
 	public int[] getSchedeBiancheETotaleVotantiCategorico(final String idVotazione);
 	
 	public Map<String, Integer> getRisultatiCategorico(final String idVotazione);
+	
+	public int[] getSchedeBiancheETotaleVotantiOrdinale(final String idVotazione);
+	
+	public Map<String, Map<String, Integer>> getRisultatiOrdinale(final String idVotazione);
 }
