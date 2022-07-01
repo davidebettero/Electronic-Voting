@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -34,10 +35,10 @@ public class SchedaVotoOrdinaleController {
     private Text errorText;
 
     @FXML
-    private TableColumn<?, ?> colonnaCandidati;
+    private TableColumn<RowCandidatoOrdinale, String> colonnaCandidati;
 
     @FXML
-    private TableColumn<?, ?> colonnaOrdine;
+    private TableColumn<RowCandidatoOrdinale, TextField> colonnaOrdine;
 
     @FXML
     private Button confermaButton;

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sweng.project.evoting.DigitalVotingDaoImpl;
 import sweng.project.evoting.votazione.Votazione;
 
 public class RowVotazioneAdmin {
@@ -53,7 +54,6 @@ public class RowVotazioneAdmin {
 			if(v.getTipo().toLowerCase().contains("referendum")) {
 				try {
 					
-					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiReferendumWindow.fxml"));
 	    			Stage stage = new Stage();
 	    			stage.setScene(new Scene(loader.load()));
@@ -70,7 +70,23 @@ public class RowVotazioneAdmin {
 			} else if(v.getTipo().toLowerCase().contains("ordinale")) {
 				
 			} else if(v.getTipo().toLowerCase().contains("categorica")) {
-				
+				try {
+					
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiCategoricaWindow.fxml"));
+	    			Stage stage = new Stage();
+	    			stage.setScene(new Scene(loader.load()));
+	    			
+	    			RisultatiCategoricaController rcc = loader.getController();
+	    			int[] biancheTot = new DigitalVotingDaoImpl().getSchedeBiancheETotaleVotantiCategorico(v.getId());
+	    			rcc.setInfo(biancheTot[0], biancheTot[1]);
+	    			rcc.setTabella(new DigitalVotingDaoImpl().getRisultatiCategorico(v.getId()));
+	    			
+	    			stage.setTitle("Risultati votazione categorica");
+	    			stage.setResizable(false);
+	    			stage.show();
+	    		}catch (Exception e) {
+	    			e.printStackTrace();
+	    		}
 			}
 		}
 	}

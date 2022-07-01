@@ -12,7 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import sweng.project.evoting.votazione.Votazione;
 import sweng.project.evoting.votazione.VotazioneCategorica;
@@ -20,7 +22,6 @@ import sweng.project.evoting.votazione.VotazioneOrdinale;
 import sweng.project.evoting.votazione.VotazioneReferendum;
 import sweng.project.evoting.votazione.VotoCategorico;
 import sweng.project.evoting.votazione.VotoOrdinale;
-
 
 public class DigitalVotingDaoImpl implements DigitalVotingDao {
 	private Connection conn = null;
@@ -1262,6 +1263,94 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 				e.printStackTrace();
 			}
 		}
+		return result;
+	}
+	
+	public int[] getSchedeBiancheETotaleVotantiCategorico(final String idVotazione) {
+		int[] result = new int[2];
+		String query1 = "SELECT COUNT(*) AS totalBianche FROM voticategorico WHERE idvotazione = ? AND scelta = 'SCHEDA BIANCA';";
+		String query2 = "SELECT COUNT(*) AS totalVotanti FROM voticategorico WHERE idvotazione = ?;";
+		Connection conn = null; 
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps1 = conn.prepareStatement(query1);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps1.setString(1, idVotazione);
+			ResultSet res1 = ps1.executeQuery();
+			while(res1.next()) {
+				result[0] = res1.getInt("totalBianche");
+			}
+			
+			ps2 = conn.prepareStatement(query2);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps2.setString(1, idVotazione);
+			ResultSet res2 = ps2.executeQuery();
+			while(res2.next()) {
+				result[1] = res2.getInt("totalVotanti");
+			}
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps1.close();
+				ps2.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public Map<String, Integer> getRisultatiCategorico(final String idVotazione){
+		Map<String, Integer> result = new HashMap<>();
+		String query = "SELECT scelta FROM voticategorico WHERE idvotazione = ? AND scelta <> 'SCHEDA BIANCA';";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				String[] scelta = res.getString("scelta").split(", ");
+				for(String s : scelta) {
+					String[] pref = s.split(": ");
+					if(pref.length == 2 && !pref[1].isEmpty()) {
+						if(result.containsKey(pref[1])) {
+							result.put(pref[1], result.get(pref[1]) + 1);
+						}else {
+							result.put(pref[1], 1);
+						}
+					}
+				}	
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return result;
 	}
 }

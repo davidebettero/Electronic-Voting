@@ -3,6 +3,7 @@ package sweng.project.evoting;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import sweng.project.evoting.votazione.Votazione;
 import sweng.project.evoting.votazione.VotoCategorico;
@@ -69,4 +70,8 @@ public interface DigitalVotingDao {
 	public void terminaVotazione(String id, String tipo);
 	
 	public int[] getRisultatiReferendum(final String id);
+	
+	public int[] getSchedeBiancheETotaleVotantiCategorico(final String idVotazione);
+	
+	public Map<String, Integer> getRisultatiCategorico(final String idVotazione);
 }

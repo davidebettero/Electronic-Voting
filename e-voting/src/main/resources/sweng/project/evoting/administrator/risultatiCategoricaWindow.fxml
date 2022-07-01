@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sweng.project.evoting.administrator.RisultatiCategoricaController">
+   <children>
+      <Button fx:id="okButton" layoutX="537.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleOk" text="OK">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fill="RED" layoutX="139.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOTAZIONE CATEGORICA" underline="true">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text layoutX="32.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTALE VOTANTI:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="numeroTotaleVotanti" layoutX="185.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="254.39996337890625">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tabellaRisultati" layoutX="14.0" layoutY="58.0" prefHeight="262.0" prefWidth="573.0">
+        <columns>
+          <TableColumn fx:id="colonnaCandidatiEPartiti" prefWidth="405.60003662109375" text="CANDIDATO/PARTITO/CANDIDATO DI PARTITO" />
+          <TableColumn fx:id="colonnaNumVotiOttenuti" prefWidth="165.5999755859375" text="NUMERO VOTI OTTENUTI" />
+        </columns>
+      </TableView>
+      <Text layoutX="32.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCHEDE BIANCHE:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="numeroSchedeBianche" layoutX="185.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="254.39996337890625">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>
