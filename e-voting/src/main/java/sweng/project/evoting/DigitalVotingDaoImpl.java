@@ -10,14 +10,15 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
 import sweng.project.evoting.votazione.Votazione;
 import sweng.project.evoting.votazione.VotazioneCategorica;
 import sweng.project.evoting.votazione.VotazioneOrdinale;
 import sweng.project.evoting.votazione.VotazioneReferendum;
+import sweng.project.evoting.votazione.VotoCategorico;
 import sweng.project.evoting.votazione.VotoOrdinale;
 
 
@@ -352,6 +353,67 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 			ps.setString(1, idVotazione);
 			ps.setString(2, scelta);
 			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertVotoCategorico(final String idVotazione) {
+		String query = "INSERT INTO voticategorico (idVotazione,scelta) VALUES (?,'SCHEDA BIANCA')"; //query da eseguire
+		
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione); 
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertVotoCategorico(final String idVotazione, final VotoCategorico v) {
+		String[] preferenza = Objects.requireNonNull(v).getPreferenza();
+		String scelta = Arrays.toString(preferenza).replace("[", "").replace("]", "");
+		
+		String query = "INSERT INTO voticategorico (idVotazione,scelta) VALUES (?,?)"; //query da eseguire
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setString(1, idVotazione);
+			ps.setString(2, scelta);
+			ps.executeUpdate();
+			
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{

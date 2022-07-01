@@ -24,10 +24,10 @@ public class VotoCategorico extends Voto {
     //restituisce un array di stringhe di 4 elementi con le scelte di voto
     public String[] getPreferenza(){
         return new String[]{
-        		(candidatoPrincipale.trim().isEmpty()) ? "" : "Candidato: " + candidatoPrincipale, 
-        		(partito.trim().isEmpty()) ? "" : "Partito: " + partito, 
-        		(candidatoUno.trim().isEmpty()) ? "" : "Candidato di partito 1: " + candidatoUno, 
-        		(candidatoDue.trim().isEmpty()) ? "" : "Candidato di partito 1: " + candidatoDue
+        		(candidatoPrincipale.trim().isEmpty()) ? "Candidato: " : "Candidato: " + candidatoPrincipale, 
+        		(partito.trim().isEmpty()) ? "Partito: " : "Partito: " + partito, 
+        		(candidatoUno.trim().isEmpty()) ? "Candidato di partito 1: " : "Candidato di partito 1: " + candidatoUno, 
+        		(candidatoDue.trim().isEmpty()) ? "Candidato di partito 2: " : "Candidato di partito 2: " + candidatoDue
         };
     }
     
