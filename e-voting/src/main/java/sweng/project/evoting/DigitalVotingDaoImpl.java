@@ -1453,4 +1453,75 @@ public class DigitalVotingDaoImpl implements DigitalVotingDao {
 		
 		return result;
 	}
+	
+	public void insertIntoLogTable(final Timestamp data, final Amministratore admin, final String azione) {
+		Objects.requireNonNull(data);
+		Objects.requireNonNull(admin);
+		if(Objects.requireNonNull(azione).isEmpty() || Objects.requireNonNull(azione).isBlank())
+			throw new IllegalArgumentException("Non è specificata alcuna azione!");
+		
+		String query = "INSERT INTO logtable(dataeora, utente, azione) VALUES(?,?,?);";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			//inserisco i valori nella query
+			ps.setTimestamp(1, data);
+			ps.setString(2, admin.getTaxCode());
+			ps.setString(3, azione);
+			ps.execute();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<String[]> getLog(){
+		List<String[]> result = new ArrayList<>();
+		String query = "select dataeora, utente, azione from logtable order by dataeora desc;";
+		Connection conn = null; 
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection(); //apro connessione
+			conn.setAutoCommit(true);
+			Statement st = conn.createStatement();
+			st.execute("set search_path=digitalvoting"); //set search_path
+			
+			ps = conn.prepareStatement(query);	//setto il prepareStatement
+
+			ResultSet res = ps.executeQuery();
+			while(res.next()) {
+				String[] info = new String[3];
+				info[0] = res.getTimestamp("dataeora").toString();
+				info[1] = res.getString("utente");
+				info[2] = res.getString("azione");
+				result.add(info);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 }

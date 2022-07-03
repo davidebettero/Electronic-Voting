@@ -17,7 +17,12 @@ import javafx.scene.text.TextAlignment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
+
+import sweng.project.evoting.Amministratore;
+import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.VotazioneReferendum;
 
 public class RiepilogoReferendumController {
@@ -71,9 +76,15 @@ public class RiepilogoReferendumController {
 
     @FXML
     // inserisce il nuovo referendum nel database
-    private void handleConferma(ActionEvent event) throws IOException, ParseException {
+    private void handleConferma(ActionEvent event) throws IOException, ParseException { 	
     	final String id = UUID.randomUUID().toString();  
     	final String tipo = typeOfReferendum.getText().toString().split(" ", 2)[1];
+    	
+    	new DigitalVotingDaoImpl().insertIntoLogTable(
+    			Timestamp.from(Instant.now()), 
+    			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+    			String.format("Ha creato il referendum %s con id: %s", tipo, id)
+    		);
 
     	String[] dI = dataInizioVotazione.getText().toString().split("-");
     	String[] hI = oraInizioVotazione.getText().toString().split(":");

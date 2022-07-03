@@ -78,4 +78,8 @@ public interface DigitalVotingDao {
 	public int[] getSchedeBiancheETotaleVotantiOrdinale(final String idVotazione);
 	
 	public Map<String, Map<String, Integer>> getRisultatiOrdinale(final String idVotazione);
+	
+	public void insertIntoLogTable(final Timestamp data, final Amministratore admin, final String azione);
+	
+	public List<String[]> getLog();
 }

@@ -1,5 +1,8 @@
 package sweng.project.evoting.login;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,6 +63,12 @@ public class LoginWindowController {
     	
     	if(isIn && type.equals("Amministratore")) {
     		SessioneSingleton.getSessioneSingleton().setUser(new Amministratore(user, psw));
+    		
+    		new DigitalVotingDaoImpl().insertIntoLogTable(
+        			Timestamp.from(Instant.now()), 
+        			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+        			"Si è autenticato"
+        		);
     		
     		login.getScene().getWindow().hide();
     		try {

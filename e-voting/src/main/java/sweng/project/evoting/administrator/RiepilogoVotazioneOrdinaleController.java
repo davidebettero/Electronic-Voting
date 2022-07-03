@@ -2,6 +2,8 @@ package sweng.project.evoting.administrator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -16,8 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import sweng.project.evoting.Amministratore;
 import sweng.project.evoting.Candidato;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.RowCandidato;
 import sweng.project.evoting.votazione.VotazioneOrdinale;
 
@@ -95,6 +99,12 @@ public class RiepilogoVotazioneOrdinaleController {
 
     @FXML
     void handleOk(ActionEvent event) throws IOException {
+    	new DigitalVotingDaoImpl().insertIntoLogTable(
+    			Timestamp.from(Instant.now()), 
+    			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(),
+    			String.format("Ha creato la votazione ordinale con id: %s", id)
+    		);
+    	
     	AnchorPane next = FXMLLoader.load(getClass().getResource("..//administrator//votazioneOrdinaleCreataWindow.fxml"));
     	pane.getChildren().removeAll();
     	pane.getChildren().setAll(next);

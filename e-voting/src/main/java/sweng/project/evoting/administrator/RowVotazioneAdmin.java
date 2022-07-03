@@ -11,7 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sweng.project.evoting.Amministratore;
 import sweng.project.evoting.DigitalVotingDaoImpl;
+import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.Votazione;
 
 public class RowVotazioneAdmin {
@@ -53,6 +55,11 @@ public class RowVotazioneAdmin {
 			//mostrare i risultati
 			if(v.getTipo().toLowerCase().contains("referendum")) {
 				try {
+					new DigitalVotingDaoImpl().insertIntoLogTable(
+			    			Timestamp.from(Instant.now()), 
+			    			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+			    			String.format("Ha visualizzato i risultati del referendum con id: %s", v.getId())
+			    		);
 					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiReferendumWindow.fxml"));
 	    			Stage stage = new Stage();
@@ -69,6 +76,11 @@ public class RowVotazioneAdmin {
 	    		}
 			} else if(v.getTipo().toLowerCase().contains("ordinale")) {
 				try {
+					new DigitalVotingDaoImpl().insertIntoLogTable(
+			    			Timestamp.from(Instant.now()), 
+			    			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+			    			String.format("Ha visualizzato i risultati della votazione ordinale con id: %s", v.getId())
+			    		);
 					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiOrdinaleWindow.fxml"));
 	    			Stage stage = new Stage();
@@ -87,6 +99,11 @@ public class RowVotazioneAdmin {
 	    		}
 			} else if(v.getTipo().toLowerCase().contains("categorica")) {
 				try {
+					new DigitalVotingDaoImpl().insertIntoLogTable(
+			    			Timestamp.from(Instant.now()), 
+			    			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+			    			String.format("Ha visualizzato i risultati della votazione categorica con id: %s", v.getId())
+			    		);
 					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//risultatiCategoricaWindow.fxml"));
 	    			Stage stage = new Stage();

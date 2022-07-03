@@ -2,7 +2,9 @@ package sweng.project.evoting.administrator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.Instant;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +53,12 @@ public class ConfermaTerminaVotazioneController {
     void handleConferma(ActionEvent event) throws IOException, ParseException {
     	Amministratore a = (Amministratore) SessioneSingleton.getSessioneSingleton().getUser();
     	a.terminaVotazione(idVotazione, tipo);
+    	
+    	new DigitalVotingDaoImpl().insertIntoLogTable(
+    			Timestamp.from(Instant.now()), 
+    			a, 
+    			String.format("Ha terminzato la votazione %s con id: %s", tipo, idVotazione)
+    		);
     	
     	FXMLLoader next = new FXMLLoader(getClass().getResource("..//administrator//terminaVotazioniWindow.fxml"));
     	Parent root = next.load();

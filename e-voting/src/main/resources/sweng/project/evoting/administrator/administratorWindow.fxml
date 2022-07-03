@@ -29,5 +29,10 @@
          </font>
       </Text>
       <Text fx:id="infoAdmin" layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="254.93671417236328" />
+      <Button fx:id="visualizzaLogButton" layoutX="17.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleLogButton" text="Visualizza log">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

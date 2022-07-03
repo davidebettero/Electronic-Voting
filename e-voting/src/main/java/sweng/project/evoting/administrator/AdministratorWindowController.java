@@ -1,7 +1,10 @@
 package sweng.project.evoting.administrator;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.Instant;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +38,9 @@ public class AdministratorWindowController {
 
     @FXML
     private Button visualizzaRisultati;
+    
+    @FXML
+    private Button visualizzaLogButton;
 
     @FXML
     private Text titleMsg;
@@ -53,6 +59,12 @@ public class AdministratorWindowController {
     private void handleLogout(ActionEvent event) {
     	try {
     		SessioneSingleton.getSessioneSingleton().logoutUser();
+    		
+    		new DigitalVotingDaoImpl().insertIntoLogTable(
+        			Timestamp.from(Instant.now()), 
+        			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
+        			"Si è disconnesso"
+        		);
     		
     		logoutButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//login//loginWindow.fxml"));
@@ -82,6 +94,20 @@ public class AdministratorWindowController {
 		pane.getChildren().removeAll();
     	pane.getChildren().setAll(root);
     }
+    
+    @FXML
+    void handleLogButton(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("..//administrator//logWindow.fxml"));
+		Stage stage = new Stage();
+		stage.setScene(new Scene(loader.load()));
+		
+		LogController lc = loader.getController();
+		lc.setTabella(new DigitalVotingDaoImpl().getLog());
+		
+		stage.setTitle("Log");
+		stage.setResizable(false);
+		stage.show();
+    }
 
     @FXML
     private void initialize() {
@@ -91,7 +117,8 @@ public class AdministratorWindowController {
         assert terminaVotazione != null : "fx:id=\"terminaVotazione\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert visualizzaRisultati != null : "fx:id=\"visualizzaRisultati\" was not injected: check your FXML file 'administratorWindow.fxml'.";
         assert titleMsg != null : "fx:id=\"welcomeMsg\" was not injected: check your FXML file 'administratorWindow.fxml'.";
-
+        assert visualizzaLogButton != null : "fx:id=\"visualizzaLogButton\" was not injected: check your FXML file 'administratorWindow.fxml'.";
+        
         Amministratore a = (Amministratore) SessioneSingleton.getSessioneSingleton().getUser();
         infoAdmin.setText(String.format("%s %s\n%s", a.getName(), a.getSurname(), a.getTaxCode()));
         infoAdmin.setStyle("-fx-font: 14 system;");
