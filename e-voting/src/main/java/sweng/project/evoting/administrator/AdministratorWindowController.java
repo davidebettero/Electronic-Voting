@@ -58,13 +58,13 @@ public class AdministratorWindowController {
     @FXML
     private void handleLogout(ActionEvent event) {
     	try {
-    		SessioneSingleton.getSessioneSingleton().logoutUser();
-    		
     		new DigitalVotingDaoImpl().insertIntoLogTable(
         			Timestamp.from(Instant.now()), 
         			(Amministratore) SessioneSingleton.getSessioneSingleton().getUser(), 
         			"Si è disconnesso"
         		);
+    		
+    		SessioneSingleton.getSessioneSingleton().logoutUser();
     		
     		logoutButton.getScene().getWindow().hide();
     		Parent root = FXMLLoader.load(getClass().getResource("..//login//loginWindow.fxml"));
