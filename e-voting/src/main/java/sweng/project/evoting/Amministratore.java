@@ -42,21 +42,6 @@ public class Amministratore extends Utente {
 	}
 
     /*
-     * Effects: permette allo scrutatore di settare la modalit� di voto (referendum / politiche)
-    */
-    public void setVotingMethod(){}
-
-    /*
-     * Effects: permette allo scrutatore di settare le modalit� di calcolo del vincitore
-    */
-    public void setWinnerCalculation(){}
-
-    /*
-     * Effects: permette allo scrutatore di settare la votazione nella sua completezza
-    */
-    public void configure(){}
-
-    /*
      * Effects: permette allo scrutatore di terminare la votazione in corso
     */
     public void terminaVotazione(final String id, final String tipo){
@@ -75,15 +60,10 @@ public class Amministratore extends Utente {
     		new DigitalVotingDaoImpl().terminaVotazione(id, "ordinale");
     	}
     }
-
-    /*
-     * Effects: permette allo scrutatore di visualizzare l'esito della votazione
-    */
-    public void visualizzaEsiti(){}
     
     @Override
     public String toString() {
-    	return String.format("%s %s, %s, elettore", name, surname, new String(taxCode));
+    	return String.format("%s %s, %s, amministratore", name, surname, new String(taxCode));
     }
 
     @Override

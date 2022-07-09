@@ -84,7 +84,7 @@ public class Elettore extends Utente {
 		this.taxCode = info[6].toCharArray();
 	}
     
-    private boolean isLeapYear(int anno) {
+    public static boolean isLeapYear(int anno) {
     	if(anno % 4 == 0) {
     		if(anno % 100 == 0 && anno % 400 != 0) {
     			return false;
@@ -106,7 +106,7 @@ public class Elettore extends Utente {
     	return this.gender;
     }
     
-    /* Effects: restituisce true se la data di nascita � valida (ovvero non successiva alla data corrente),
+    /* Effects: restituisce true se la data di nascita è valida (ovvero non successiva alla data corrente),
 	 * 			false altrimenti.
 	 */
     public boolean isDateOfBirthValid(){
@@ -115,7 +115,7 @@ public class Elettore extends Utente {
         return birthDate.before(today);
 	}
     
-    /* Effects: restituisce true se l'elettore � maggiorenne (ovvero ha 18 o pi� anni),
+    /* Effects: restituisce true se l'elettore è maggiorenne (ovvero ha 18 o più anni),
 	 * 			false altrimenti.
 	 */
 	public boolean isOfAge(){
