@@ -1,6 +1,10 @@
 package sweng.project.evoting;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import sweng.project.evoting.administrator.RowVotazioneAdmin;
+import sweng.project.evoting.votazione.Votazione;
 
 /*
  * OVERVIEW: questa classe istanzia un oggetto scrutatore per un sistema di voto elettronico, che rappresenta l'impiegato 
@@ -40,6 +44,14 @@ public class Amministratore extends Utente {
     public String getTaxCode() {
 		return new String(taxCode);
 	}
+    
+    /*
+     * Effects: permette all'amministratore di vedere i risultati della votazione v (se terminata)
+     */
+    public void visualizzaRisultati(final Votazione v) throws IOException {
+    	Objects.requireNonNull(v);
+    	new RowVotazioneAdmin(v).handleVisualizzaRisultati();
+    }
 
     /*
      * Effects: permette allo scrutatore di terminare la votazione in corso

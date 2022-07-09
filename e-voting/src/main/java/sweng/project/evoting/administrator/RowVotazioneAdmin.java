@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
-import javafx.fxml.FXML;
+//import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.layout.Pane;
+//import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sweng.project.evoting.Amministratore;
 import sweng.project.evoting.DigitalVotingDaoImpl;
@@ -17,22 +17,24 @@ import sweng.project.evoting.SessioneSingleton;
 import sweng.project.evoting.votazione.Votazione;
 
 public class RowVotazioneAdmin {
-	@FXML
-    private Pane pane;
+	//@FXML
+    //private Pane pane;
 	
 	private ButtonBar b;
 	private final Votazione v;
 	
-	public RowVotazioneAdmin(final Votazione v, final Pane p) {
+	public RowVotazioneAdmin(final Votazione v) {//, final Pane p) {
 		this.v = Objects.requireNonNull(v);
-		this.pane = Objects.requireNonNull(p);
+		//this.pane = Objects.requireNonNull(p);
 		
 		this.b = new ButtonBar();
 		Button button_risultati = new Button("risultati");
 		
 		button_risultati.setOnAction(event -> {
 			try {
-				handleVisualizzaRisultati();
+				Amministratore a = (Amministratore) SessioneSingleton.getSessioneSingleton().getUser();
+				a.visualizzaRisultati(v);
+				//handleVisualizzaRisultati();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

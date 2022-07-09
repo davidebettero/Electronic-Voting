@@ -83,5 +83,11 @@ public class ElettoreTest {
 		boolean result = Elettore.isLeapYear(2012);
 		assertTrue(result);
 	}
+	
+	@Test
+	public void testLeapYear1999() {
+		boolean result = Elettore.isLeapYear(1999);
+		assertFalse(result);
+	}
 
 }

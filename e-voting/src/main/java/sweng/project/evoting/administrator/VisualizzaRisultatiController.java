@@ -53,7 +53,7 @@ public class VisualizzaRisultatiController {
     	colonnaRisultati.setCellValueFactory(new PropertyValueFactory<>("ButtonBar"));
     	
     	for(Votazione v : lista) {
-    		RowVotazioneAdmin rv = new RowVotazioneAdmin(v, pane);
+    		RowVotazioneAdmin rv = new RowVotazioneAdmin(v);//, pane);
         	tabellaVotazioni.getItems().add(rv);
     	}
     	if(lista.size() == 0) {
