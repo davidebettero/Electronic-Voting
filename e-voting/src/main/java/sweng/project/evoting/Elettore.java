@@ -2,6 +2,8 @@ package sweng.project.evoting;
 
 import java.util.GregorianCalendar;
 import java.util.Objects;
+import java.time.Period;
+import java.time.LocalDate;
 
 /*
  * OVERVIEW: questa classe istanzia un oggetto di tipo Elettore che fa parte di un sistema di voto elettronico.
@@ -12,7 +14,9 @@ public class Elettore extends Utente {
 	/*
 	 * Attributi che rappresentano giorno, mese e anno dell'elettore
 	*/
-	private int birthDay, birthMonth, birthYear;
+	private /*@spec_public@*/ int birthDay;
+	private /*@spec_public@*/ int birthMonth;
+	private /*@spec_public@*/ int birthYear;
     /*
      * city15K indica se l'elettore vive in un comune con pi� di 15.000 abitanti (true) o no (false)
     */
@@ -94,10 +98,12 @@ public class Elettore extends Utente {
     	return false;
     }
     
+    //@ensures \result != null && \result.length() > 0;
     public String getName() {
     	return this.name;
     }
     
+    //@ensures \result != null && \result.length() > 0;
     public String getSurname() {
     	return this.surname;
     }
@@ -124,6 +130,27 @@ public class Elettore extends Utente {
         return birthDate.before(today);
 	}
 	
+	//@requires birthDay > 0 && birthDay <= 31 && birthMonth > 0 && birthMonth <= 12 && birthYear > 0;
+	public int getEta() {
+		switch(birthMonth) {
+		case 11:
+		case 4:
+		case 6:
+		case 9:
+			if(birthDay == 31) throw new IllegalArgumentException("Data di nascita non valida");
+			break;
+		case 2:
+			if((!isLeapYear(birthYear) && birthDay > 28) || (isLeapYear(birthYear) && birthDay > 29))
+				throw new IllegalArgumentException("Data di nascita non valida");
+			break;
+		default:
+			break;
+	}
+
+		return Period.between(LocalDate.of(birthYear, birthMonth, birthDay), LocalDate.now()).getYears();
+	}
+	
+	//@ensures \result != null && \result.length() == 16;
 	public String getTaxCode() {
 		return new String(taxCode);
 	}

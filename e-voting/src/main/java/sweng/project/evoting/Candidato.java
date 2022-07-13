@@ -3,7 +3,8 @@ package sweng.project.evoting;
 import java.util.Objects;
 
 public class Candidato {
-	private final String nome, cognome, partito;
+	private final String nome, cognome;
+	private /*@ spec_public non_null@*/ final String partito;
 	
 	public Candidato(final String nome, final String cognome, final String partito) {
 		if(nome.isEmpty() || cognome.isEmpty()) throw new IllegalArgumentException("Nome e cognome del candidato devono essere specificati");
@@ -20,6 +21,7 @@ public class Candidato {
 		return cognome;
 	}
 	
+	//@ensures (partito.trim().length() == 0) ==> (\result.equals("Candidato votazione ordinale (non indicato il partito)"))
 	public String getPartito() {
 		if(partito.isEmpty() || partito.isBlank()) return "Candidato votazione ordinale (non indicato il partito)";
 		else return partito;

@@ -21,14 +21,14 @@ public class ElettoreTest {
 	
 	@Test
 	public void testNameNotNull() {
-		Elettore e = new Elettore("Davide", "db");
+		Elettore e = new Elettore("Andrea", "ab");
 		String result = e.getName();
 		assertNotNull(result);
 	}
 	
 	@Test
 	public void testSurnameNotNull() {
-		Elettore e = new Elettore("Davide", "db");
+		Elettore e = new Elettore("Andrea", "ab");
 		String result = e.getSurname();
 		assertNotNull(result);
 	}
@@ -42,7 +42,7 @@ public class ElettoreTest {
 	
 	@Test
 	public void testTaxCodeLengthFalse() {
-		Elettore e = new Elettore("Davide", "db");
+		Elettore e = new Elettore("Andrea", "ab");
 		String result = e.getTaxCode();
 		assertNotEquals(15, result.length());
 	}

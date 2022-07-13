@@ -33,14 +33,17 @@ public class Amministratore extends Utente {
 		this.taxCode = info[2].toCharArray();
     }
     
+    //@ensures \result != null && \result.length() > 0;
     public String getName() {
     	return this.name;
     }
     
+    //@ensures \result != null && \result.length() > 0;
     public String getSurname() {
     	return this.surname;
     }
     
+    //@ensures \result != null && \result.length() == 16;
     public String getTaxCode() {
 		return new String(taxCode);
 	}
